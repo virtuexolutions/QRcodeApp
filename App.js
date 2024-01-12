@@ -18,7 +18,8 @@ import {
   requestWritePermission,
 } from './SRC/Utillity/utils';
 import SplashScreen from './SRC/Screens/SplashScreen';
-
+import WalkThroughScreen from './SRC/Screens/WalkthroughScreen';
+import LoginScreen from './SRC/Screens/LoginScreen'
 
 const App = () => {
   const [publishableKey, setPublishableKey] = useState('');
@@ -66,7 +67,7 @@ const MainContainer = () => {
   if (isloading == true) {
     return <SplashScreen />;
   }
-  return <SplashScreen/>
+  return <WalkThroughScreen/>
 
 };
 

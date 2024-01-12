@@ -103,7 +103,7 @@ const LoginScreen = (props) => {
     // height: windowHeight*0.8,
     alignItems: 'center',
   }}
-  source={require('../Assets/Images/bgc.png')}
+  // source={require('../Assets/Images/bgc.png')}
   >
 <View
             style={{
