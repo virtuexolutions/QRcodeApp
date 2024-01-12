@@ -50,6 +50,10 @@ const TextInputWithTitle = props => {
             // borderColor: Color.veryLightGray,
             backgroundColor: props.backgroundColor,
           },
+          props.borderBottomWidth  && {
+            borderBottomWidth:1
+          },
+
           props.elevation && {
             shadowColor: Color.themeColor,
             shadowOffset: {
@@ -88,6 +92,7 @@ const TextInputWithTitle = props => {
             !props.rightIcon && {
               paddingLeft: moderateScale(15, 0.3),
             },
+            
         ]}>
         {props.iconName && (
           <Icon
@@ -172,7 +177,7 @@ const TextInputWithTitle = props => {
               <Icon
                 name={showPassword ? 'eye' : 'eye-slash'}
                 as={FontAwesome}
-                color={Color.themeLightGray}
+                color={Color.white}
                 size={moderateScale(18, 0.3)}
               />
             </TouchableOpacity>

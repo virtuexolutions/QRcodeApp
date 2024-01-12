@@ -18,6 +18,11 @@ import {
   requestWritePermission,
 } from './SRC/Utillity/utils';
 import SplashScreen from './SRC/Screens/SplashScreen';
+import WalkThroughScreen from './SRC/Screens/WalkthroughScreen';
+import LoginScreen from './SRC/Screens/LoginScreen';
+import HomeScreen from './SRC/Screens/HomeScreen';
+import Signup from './SRC/Screens/Signup';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 const App = () => {
@@ -66,8 +71,8 @@ const MainContainer = () => {
   if (isloading == true) {
     return <SplashScreen />;
   }
-  return <SplashScreen/>
-
+  return <LoginScreen />
+  
 };
 
 const useloader = value => {

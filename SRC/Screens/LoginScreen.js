@@ -27,6 +27,7 @@ import {setUserData} from '../Store/slices/common';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
 import { useNavigation } from '@react-navigation/native';
 import {Icon} from 'native-base';
+import Entypo from 'react-native-vector-icons/Entypo'
 import ImagePickerModal from '../Components/ImagePickerModal';
 
 const LoginScreen = (props) => {
@@ -37,7 +38,8 @@ const LoginScreen = (props) => {
   const [password, setPassword] = useState('');
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
-  const navigation = useNavigation()
+  const [confirmPass,setconfirmPass] =useState('')
+  // const navigation = useNavigation()
 
 
   const dispatch = useDispatch();
@@ -103,19 +105,19 @@ const LoginScreen = (props) => {
     // height: windowHeight*0.8,
     alignItems: 'center',
   }}
-  source={require('../Assets/Images/bgc.png')}
+  source={require('../Assets/Images/bg.png')}
   >
 <View
             style={{
               marginTop: 40,
-              // alignItems:'center',
-              backgroundColor: 'red',
+              alignItems:'center',
+              // backgroundColor: 'red',
               height: windowHeight * 0.13,
               width: windowHeight * 0.13,
               borderRadius: moderateScale((windowHeight * 0.13) / 2),
               // overflow : 'hidden'
             }}>
-            <CustomImage
+            {/* <CustomImage
               resizeMode="contain"
               source={require('../Assets/Images/dummyUser1.png')}
               style={{
@@ -143,7 +145,27 @@ const LoginScreen = (props) => {
                   setImagePicker(true);
                 }}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+              <CustomText
+            numberOfLine={3}
+              isBold
+              style={{
+                fontSize: moderateScale(20, 0.6),
+                color: Color.white,
+                textAlign:'center',
+              }}>
+              logo here
+            </CustomText>
+            <CustomText
+            // isBold
+            style={{
+              fontSize: moderateScale(11, 0.6),
+              color: Color.white,
+              width:windowWidth*0.6,
+              // backgroundColor:'red', 
+              paddingVertical:moderateScale(10,.4),
+
+              }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</CustomText>
           </View>
           <View
             style={{
@@ -153,7 +175,7 @@ const LoginScreen = (props) => {
               marginTop: moderateScale(20, 0.3),
             }}>
             <TextInputWithTitle
-              iconName={'user-circle-o'}
+              iconName={'user'}
               iconType={FontAwesome}
               LeftIcon={true}
               titleText={'Username'}
@@ -163,19 +185,18 @@ const LoginScreen = (props) => {
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              backgroundColor={Color.white}
-              borderColor={Color.black}
+              borderBottomWidth={1}
+              borderColor={Color.white}
               marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
+              marginBottom={moderateScale(10,.3)}
+              color={Color.white}
+              placeholderColor={Color.white}
+              // elevation
             />
             
             <TextInputWithTitle
-              iconName={'lock1'}
-              iconType={AntDesign}
+              iconName={'key'}
+              iconType={Entypo}
               LeftIcon={true}
               titleText={'Password'}
               placeholder={'Password'}
@@ -185,14 +206,33 @@ const LoginScreen = (props) => {
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              borderColor={'#000'}
-              backgroundColor={Color.white}
+              borderBottomWidth={1}
+              marginBottom={moderateScale(10,.3)}
+              borderColor={Color.white}
               marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
+              color={Color.white}
+              placeholderColor={Color.white}
+              // elevation
+            />
+               <TextInputWithTitle
+              iconName={'check'}
+              iconType={FontAwesome}
+              LeftIcon={true}
+              titleText={'confirm password'}
+              placeholder={'confirm password'}
+              setText={setconfirmPass}
+              value={confirmPass}
+              secureText={true}
+              viewHeight={0.06}
+              viewWidth={0.75}
+              inputWidth={0.55}
+              borderBottomWidth={1}
+              marginBottom={moderateScale(10,.3)}
+              borderColor={Color.white}
+              marginTop={moderateScale(10, 0.3)}
+              color={Color.white}
+              placeholderColor={Color.white}
+              // elevation
             />
 
 <View
@@ -203,93 +243,52 @@ const LoginScreen = (props) => {
                 justifyContent: 'space-around',
                 paddingHorizontal: moderateScale(15, 0.3),
               }}>
-              <CustomButton
-                onPress={() => navigationService.navigate('Signup')}
-                text={
-                  isLoading ? (
-                    <ActivityIndicator color={Color.white} size={'small'} />
-                  ) : (
-                    'SIGN UP'
-                  )
-                }
-                fontSize={moderateScale(12, 0.3)}
-                textColor={Color.black}
-                borderRadius={moderateScale(30, 0.3)}
-                width={windowWidth * 0.3}
-                height={windowHeight * 0.04}
-                marginTop={moderateScale(20, 0.3)}
-                bgColor={Color.white}
-                isBold
-                // isGradient
-              />
+           
+            </View>
               <CustomButton
                 onPress={() =>  dispatch(setUserToken({token : 'meerab'}))}
                 text={
                   isLoading ? (
                     <ActivityIndicator color={Color.white} size={'small'} />
                   ) : (
-                    'SIGN in'
+                    'log in'
                   )
                 }
                 fontSize={moderateScale(12, 0.3)}
                 textColor={Color.white}
                 borderRadius={moderateScale(30, 0.3)}
                 width={windowWidth * 0.3}
-                height={windowHeight * 0.04}
+                height={windowHeight * 0.06}
                 marginTop={moderateScale(20, 0.3)}
-                bgColor={Color.themeColor2}
+                // bgColor={Color.themeColor2}
+                borderWidth={1}
+                borderColor={Color.white}
                 isBold
                 // isGradient
               />
-            </View>
 
-            <CustomText style={styles.txt5}>Or login with </CustomText>
-            <View
-              style={{
-                // width: windowWidth * 0.2,
-                // backgroundColor:'green',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <View style={styles.icon}>
-                <Icon
-                  name="twitter"
-                  as={AntDesign}
-                  size={3}
-                  color={Color.black}
-                />
-              </View>
-              <View
-                style={[
-                  styles.icon,
-                  {marginHorizontal: moderateScale(5, 0.3)},
-                ]}>
-                <Icon
-                  name="sc-facebook"
-                  as={EvilIcons}
-                  size={4}
-                  color={Color.black}
-                />
-              </View>
-              <View style={styles.icon}>
-                <Icon
-                  name="googleplus"
-                  as={Zocial}
-                  size={3}
-                  color={Color.black}
-                />
-              </View>
-              {/* <View style={styles.icon}>
-                <Icon
-                  name="instagram"
-                  as={AntDesign}
-                  size={3}
-                  color={Color.black}
-                />
-              </View> */}
-            </View>
+            <CustomText style={styles.txt5}>do you have an account ? </CustomText>
+            <CustomText
+            isBold style={{
+              fontSize:moderateScale(15,.6),
+              color:Color.white,
+    // paddingVertical: moderateScale(0, 0.6 ),
+
+            }}>Sign up</CustomText>
 </View>
-<View style={{
+<CustomText
+            // isBold
+            style={{
+              fontSize: moderateScale(11, 0.6),
+              color: Color.white,
+              width:windowWidth*0.6,
+              // backgroundColor:'red', 
+              position:'absolute',
+              bottom:50,
+              paddingVertical:moderateScale(10,.4),
+
+              }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</CustomText>
+{/* <View style={{
             marginTop : moderateScale(50,0.3),
             width : windowWidth *0.50 ,
             // marginHorizontal:'20',
@@ -321,7 +320,7 @@ const LoginScreen = (props) => {
              use and term
           </CustomText>
             </View> 
-              </View>
+              </View> */}
 
 
 </ImageBackground>

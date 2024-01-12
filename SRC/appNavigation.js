@@ -11,6 +11,10 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Icon } from 'native-base';
 import { View } from 'react-native';
 import { windowHeight } from './Utillity/utils';
+import WalkThroughScreen from './Screens/WalkthroughScreen';
+import LoginScreen from './Screens/LoginScreen';
+import Signup from './Screens/Signup';
+import HomeScreen from './Screens/HomeScreen';
 
 
 const AppNavigator = () => {
@@ -36,7 +40,7 @@ const AppNavigator = () => {
     ? 'WalkThroughScreen'
     : token == null
     ? 'LoginScreen'
-    : 'TabNavigation';
+    : 'HomeScreen';
     
     console.log("🚀 ~ AppNavigatorContainer ~ firstScreen:", firstScreen)
     return (
@@ -44,7 +48,12 @@ const AppNavigator = () => {
         <RootNav.Navigator
           initialRouteName={firstScreen}
           screenOptions={{ headerShown: false }}>
-          {/* <RootNav.Screen name="TabNavigation" component={TabNavigation} /> */}
+
+          
+          <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
+          <RootNav.Screen name="LoginScreen" component={LoginScreen} />
+          <RootNav.Screen name="Signup" component={Signup} />
+          <RootNav.Screen name="HomeScreen" component={HomeScreen} />
          
 
 

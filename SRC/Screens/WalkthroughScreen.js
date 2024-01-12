@@ -62,7 +62,7 @@ const WalkThroughScreen = props => {
           source={item?.image}>
           <Image
 
-            source={require('../Assets/Images/Path.png')}
+            // source={require('../Assets/Images/Path.png')}
             resizeMode={'contain'}
             style={{
               position: 'absolute',
@@ -79,11 +79,11 @@ const WalkThroughScreen = props => {
               width: windowWidth * 0.9,
               height: windowHeight * 0.38,
               borderRadius: moderateScale(20, 0.6),
-              paddingVertical: moderateScale(26, 0.6),
+              // paddingVertical: moderateScale(26, 0.6),
               // backgroundColor: Colosr.themeColor2,
-              alignItems: 'center',
-              position: 'absolute',
-              bottom: 0,
+              alignItems: 'left',
+              // position: 'absolute',
+              // bottom: 0,
             }}>
             <CustomText
               style={{
@@ -103,7 +103,7 @@ const WalkThroughScreen = props => {
                 fontSize: moderateScale(11, 0.6),
                 width: windowWidth * 0.9,
                 lineHeight: moderateScale(15, .3),
-                textAlign: 'center',
+                textAlign: 'left',
                 paddingVertical: moderateScale(5, 0.6),
               }}
               numberOfLines={15}>
@@ -234,6 +234,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '400',
     fontSize: moderateScale(15, 0.3),
+    // position:'absolute',
+    // position:'absolute',
+    // backgroundColor:'red',
+    // top:0  
   },
   btnLeft: {
     color: Color.white,

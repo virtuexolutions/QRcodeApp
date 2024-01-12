@@ -37,6 +37,7 @@ import {Platform} from 'react-native';
 import {validateEmail} from '../Config';
 import {Icon} from 'native-base';
 import ImagePickerModal from '../Components/ImagePickerModal';
+import Entypo from 'react-native-vector-icons/Entypo'
 import { useNavigation } from '@react-navigation/native';
 
 const Signup = () => {
@@ -142,18 +143,20 @@ const Signup = () => {
             // height: windowHeight*0.8,
             alignItems: 'center',
           }}
-          source={require('../Assets/Images/bgc.png')}>
+          source={require('../Assets/Images/bg.png')}>
           <View
             style={{
               // marginTop: 40,
               // alignItems:'center',
               // backgroundColor: 'red',
               height: windowHeight * 0.13,
-              width: windowHeight * 0.13,
+              width: windowHeight * 0.5,
+              alignItems: 'center',
+              justifyContent: 'center',
               borderRadius: moderateScale((windowHeight * 0.13) / 2),
               // overflow : 'hidden'
             }}>
-            <CustomImage
+            {/* <CustomImage
               resizeMode="contain"
               source={require('../Assets/Images/dummyUser1.png')}
               style={{
@@ -163,9 +166,9 @@ const Signup = () => {
 
                 borderRadius: moderateScale((windowHeight * 0.13) / 2),
               }}
-            />
+            /> */}
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
               activeOpacity={0.6}
               style={styles.edit}
               onPress={() => {
@@ -181,7 +184,28 @@ const Signup = () => {
                   setImagePicker(true);
                 }}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
+            <CustomText
+            numberOfLine={3}
+              isBold
+              style={{
+                fontSize: moderateScale(20, 0.6),
+                color: Color.white,
+                textAlign:'center',
+              }}>
+              logo here
+            </CustomText>
+            <CustomText
+            // isBold
+            style={{
+              fontSize: moderateScale(11, 0.6),
+              color: Color.white,
+              width:windowWidth*0.6,
+              // backgroundColor:'red', 
+              paddingVertical:moderateScale(10,.4),
+
+              }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</CustomText>
           </View>
           <View
             style={{
@@ -191,8 +215,16 @@ const Signup = () => {
               marginTop: moderateScale(20, 0.3),
             }}>
             <TextInputWithTitle
-              iconName={'user-circle-o'}
+            style={{
+              borderWidth:moderateScale(1,.6),
+              backgroundColor:'red',
+              borderBottomWitdth:moderateScale(10,.6)
+            }}
+              iconName={'user'}
               iconType={FontAwesome}
+              iconStyle={{
+                backgroundColor:'red'
+              }}
               LeftIcon={true}
               titleText={'Username'}
               placeholder={'Username'}
@@ -201,16 +233,16 @@ const Signup = () => {
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              backgroundColor={Color.white}
-              borderColor={Color.black}
+              borderColor={Color.white}
+              borderBottomWidth={1}
+              marginBottom={moderateScale(10,.3)}
+              
               marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
+              color={Color.white}
+              placeholderColor={Color.white}
+              // elevation
             />
-
+            
             <TextInputWithTitle
               iconName={'email'}
               iconType={Fontisto}
@@ -222,17 +254,17 @@ const Signup = () => {
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              borderColor={Color.black}
-              backgroundColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
-              keyboardType={"email-address"}
+              borderColor={Color.white}
+              borderBottomWidth={1}
+              marginBottom={moderateScale(10,.3)}
+              // borderColor={Color.white}
+               marginTop={moderateScale(10, 0.3)}
+              color={Color.white}
+              placeholderColor={Color.white}
+              elevationss
+              keyboardType={'email-address'}
             />
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 setShowNumberModal(true);
                 console.log('first');
@@ -280,7 +312,7 @@ const Signup = () => {
                   right: moderateScale(5, 0.3),
                 }}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             {/* <TextInputWithTitle
                 iconName={'cellphone-sound'}
@@ -302,7 +334,7 @@ const Signup = () => {
                 elevation
               /> */}
 
-            <TextInputWithTitle
+            {/* <TextInputWithTitle
               iconName={'phone'}
               iconType={AntDesign}
               LeftIcon={true}
@@ -322,10 +354,10 @@ const Signup = () => {
               placeholderColor={Color.veryLightGray}
               elevation
               keyboardType={'numeric'}
-            />
+            /> */}
             <TextInputWithTitle
-              iconName={'lock1'}
-              iconType={AntDesign}
+              iconName={'key'}
+              iconType={Entypo}
               LeftIcon={true}
               titleText={'Password'}
               placeholder={'Password'}
@@ -335,19 +367,18 @@ const Signup = () => {
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              borderColor={'#000'}
-              backgroundColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
-              keyboardType={"default"}
+              borderBottomWidth={1}
+              marginBottom={moderateScale(10,.3)}
+              borderColor={Color.white}
+                marginTop={moderateScale(10, 0.3)}
+              color={Color.white}
+              placeholderColor={Color.white}
+              // elevation
+              keyboardType={'default'}
             />
 
             <TextInputWithTitle
-              iconName={'unlock'}
+              iconName={'check'}
               iconType={FontAwesome}
               LeftIcon={true}
               titleText={'confirm password'}
@@ -358,14 +389,13 @@ const Signup = () => {
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              borderColor={'#000'}
-              backgroundColor={Color.white}
+              borderBottomWidth={1}
+              marginBottom={moderateScale(10,.3)}
+              borderColor={Color.white}
               marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
+              color={Color.white}
+              placeholderColor={Color.white}
+              // elevation
             />
             <View
               style={{
@@ -374,25 +404,6 @@ const Signup = () => {
                 alignItems: 'center',
                 paddingHorizontal: moderateScale(15, 0.3),
               }}>
-              {/* <CustomButton
-                onPress={() => registerUser()}
-                text={
-                  isLoading ? (
-                    <ActivityIndicator color={Color.white} size={'small'} />
-                  ) : (
-                    'SIGN UP'
-                  )
-                }
-                fontSize={moderateScale(12, 0.3)}
-                textColor={Color.black}
-                borderRadius={moderateScale(30, 0.3)}
-                width={windowWidth * 0.3}
-                height={windowHeight * 0.04}
-                marginTop={moderateScale(20, 0.3)}
-                bgColor={Color.white}
-                isBold
-                // isGradient
-              /> */}
               <CustomButton
                 onPress={() => navigationService.navigate('LoginScreen')}
                 text={
@@ -405,10 +416,12 @@ const Signup = () => {
                 fontSize={moderateScale(12, 0.3)}
                 textColor={Color.white}
                 borderRadius={moderateScale(30, 0.3)}
-                width={windowWidth * 0.75}
+                width={windowWidth * 0.3}
                 height={windowHeight * 0.06}
                 marginTop={moderateScale(20, 0.3)}
-                bgColor={Color.themeColor2}
+                borderColor={Color.white}
+                borderWidth={1}
+                // bgColor={Color.themeColor2}
                 isBold
                 // isGradient
               />
@@ -416,87 +429,28 @@ const Signup = () => {
             <CustomText style={styles.txt5}>
               Already Have an account ?{' '}
               <CustomText
-              onPress={()=>{
-                navigation.goBack()
-              }}
+                onPress={() => {
+                  navigation.goBack();
+                }}
                 isBold
                 style={{
-                  color: Color.theme2,
+                  color: Color.white,
                   fontSize: moderateScale(13, 0.6),
                 }}>
                 Login
               </CustomText>{' '}
             </CustomText>
-            {/*
-            <View
-              style={{
-                // width: windowWidth * 0.2,
-                // backgroundColor:'green',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <View style={styles.icon}>
-                <Icon
-                  name="twitter"
-                  as={AntDesign}
-                  size={3}
-                  color={Color.black}
-                />
-              </View>
-              <View
-                style={[
-                  styles.icon,
-                  {marginHorizontal: moderateScale(5, 0.3)},
-                ]}>
-                <Icon
-                  name="sc-facebook"
-                  as={EvilIcons}
-                  size={4}
-                  color={Color.black}
-                />
-              </View>
-              <View style={styles.icon}>
-                <Icon
-                  name="googleplus"
-                  as={Zocial}
-                  size={3}
-                  color={Color.black}
-                />
-              </View> */}
-            {/* <View style={styles.icon}>
-                <Icon
-                  name="instagram"
-                  as={AntDesign}
-                  size={3}
-                  color={Color.black}
-                />
-              </View> */}
-            {/* </View> */}
+      
           </View>
-          <View
-            style={{
-              marginTop: moderateScale(20, 0.3),
-              width: windowWidth * 0.45,
-              justifyContent: 'space-between',
-              flexDirection: 'row',
-              // backgroundColor : 'red'
-            }}>
             <CustomText
               onPress={() => navigationService.navigate('LoginScreen')}
-              style={styles.txt6}>
-              Privacy policy
+              style={[styles.txt6 ,{
+                width:windowWidth*0.7,
+                position:'absolute',
+              bottom:50,
+              }]}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             </CustomText>
-            <CustomText
-              onPress={() => navigationService.navigate('LoginScreen')}
-              style={styles.txt6}>
-              |
-            </CustomText>
-            <CustomText
-              onPress={() => navigationService.navigate('LoginScreen')}
-              style={styles.txt6}>
-              use and term
-            </CustomText>
-          </View>
         </ImageBackground>
         <ImagePickerModal
           show={imagePicker}
