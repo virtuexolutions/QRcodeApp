@@ -184,7 +184,7 @@ style={{
           dispatch(setWalkThrough(true));
         }}
         isBold
-        style={{color:Color.white,fontSize: 19}}
+        style={{color:Color.white,overflow:'hidden' , fontSize:moderateScale(16, 0.9)}}
         >
         Done
       </CustomText>
@@ -200,7 +200,7 @@ style={{
           dispatch(setWalkThrough(true));
         }}
         isBold
-        style={{color:Color.white, fontSize:19}}
+        style={{color:Color.white,overflow:'hidden' ,fontSize:moderateScale(16, 0.9)}}
         >
         Skip
       </CustomText>
@@ -305,6 +305,7 @@ const styles = StyleSheet.create({
     width:windowWidth * 0.18,
     height: windowHeight * 0.09,
     alignItems:'center',
+    overflow:"hidden",
     justifyContent:'center',
     // marginTop: moderateScale(18, 0.3),
     borderRadius: moderateScale(100, 0.9),
@@ -317,30 +318,19 @@ const styles = StyleSheet.create({
   btnLeft: {
     color: Color.white,
     position:'absolute',
-    paddingHorizontal: moderateScale(8, 0.4),
-    paddingVertical: moderateScale(8, 0.4),
+    paddingHorizontal: moderateScale(7, 0.2),
+    paddingVertical: moderateScale(7, 0.2),
     top: moderateScale(-600, 0.7),
     // right: moderateScale(20,0.1),
     zIndex:1,
   },
   skip: {
-    // width:windowWidth * 0.16,
-    // height: windowHeight * 0.09,
-    // paddingHorizontal: moderateScale(8, 0.4),
-    // paddingVertical: moderateScale(8, 0.4),
-    // borderRadius: moderateScale(100, 0.9),
  
-    // opacity: 0.3,
-    // color: Color.white,
-    // position:'absolute',
     top: moderateScale(-610, 0.7),
-    // right: moderateScale(20,0.1),
-    // zIndex:1,
-    width:windowWidth * 0.18,
-    height: windowHeight * 0.09,
+    // width:windowWidth * 0.18,
+    // height: windowHeight * 0.09,
     alignItems:'center',
     justifyContent:'center',
-    // marginTop: moderateScale(18, 0.3),
     borderRadius: moderateScale(100, 0.9),
     borderColor:Color.white,
     backgroundColor: "#49C3E9",
