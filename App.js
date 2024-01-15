@@ -18,22 +18,12 @@ import {
   requestWritePermission,
 } from './SRC/Utillity/utils';
 import SplashScreen from './SRC/Screens/SplashScreen';
-<<<<<<< HEAD
-import WalkThroughScreen from './SRC/Screens/WalkthroughScreen';
-import LoginScreen from './SRC/Screens/LoginScreen';
-import HomeScreen from './SRC/Screens/HomeScreen';
-import Signup from './SRC/Screens/Signup';
-import { NavigationContainer } from '@react-navigation/native';
-import AppNavigator from './SRC/appNavigation';
-
-=======
 
 import AppNavigator from './SRC/appNavigation';
 import Signup from './SRC/Screens/Signup';
 import LoginScreen from './SRC/Screens/LoginScreen';
 import WalkThroughScreen from './SRC/Screens/WalkthroughScreen';
 import HomeScreen from './SRC/Screens/HomeScreen';
->>>>>>> origin/sheharyar
 
 const App = () => {
   const [publishableKey, setPublishableKey] = useState('');
