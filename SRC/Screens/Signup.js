@@ -41,7 +41,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { useNavigation } from '@react-navigation/native';
 
 const Signup = () => {
-  const navigation = useNavigation()
+  // const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -73,7 +73,7 @@ const Signup = () => {
   const [address, setAddress] = useState('');
   const UserRoleArray = ['seller', 'buyer'];
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const onSelect = country => {
     // console.log('dasdasdasdads =>', country);
     setCountryCode(country.cca2);
@@ -143,7 +143,7 @@ const Signup = () => {
             // height: windowHeight*0.8,
             alignItems: 'center',
           }}
-          source={require('../Assets/Images/bg.png')}>
+          source={require('../Assets/Images/login_bg.png')}>
           <View
             style={{
               // marginTop: 40,
@@ -430,7 +430,7 @@ const Signup = () => {
               Already Have an account ?{' '}
               <CustomText
                 onPress={() => {
-                  navigation.goBack();
+                  // navigation.goBack();
                 }}
                 isBold
                 style={{

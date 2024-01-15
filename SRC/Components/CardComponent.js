@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
@@ -7,13 +7,16 @@ import CustomText from './CustomText';
 import CustomImage from './CustomImage';
 import Color from '../Assets/Utilities/Color';
 import { useNavigation } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const CardComponent = ({item}) => {
-  const navigation =useNavigation()
+  // const navigation =useNavigation()
+
+  
   return (
     <TouchableOpacity 
     onPress={() => {
-      navigation.navigate('ScanScreen')
+      // navigation.navigate('ScanScreen')
       console.log('hello')
     }}
     activeOpacity={0.6}
@@ -34,7 +37,7 @@ const CardComponent = ({item}) => {
           style={{
             height: '100%',
             width: '100%',
-            tintColor : Color.black
+            // tintColor : Color.black
           }}
           source={item?.image}
         />
@@ -47,6 +50,7 @@ export default CardComponent;
 
 const styles = StyleSheet.create({
   container: {
+    // overflow:'hidden',
     backgroundColor: Color.white,
     flexDirection: 'row',
     borderRadius: moderateScale(20, 0.6),
@@ -54,7 +58,19 @@ const styles = StyleSheet.create({
     marginBottom: moderateScale(10, 0.6),
     width: windowWidth * 0.9,
     alignItems: 'center',
+    elevation: 6,
+    borderColor: "#001D55",
+    borderWidth:0.3,
     paddingHorizontal: moderateScale(15, 0.6),
+  },
+  imagecontainer:{
+    overflow: 'hidden',
+      flexDirection: 'row',
+      justifyContent:"flex-end",
+  width:windowWidth * 1.2,
+  marginright:100,
+   paddingHorizontal:  moderateScale(15, 0.6),
+ 
   },
   title: {
     fontSize: moderateScale(18, 0.6),
