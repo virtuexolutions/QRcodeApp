@@ -10,7 +10,16 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Zocial from 'react-native-vector-icons/Zocial';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {ActivityIndicator, TouchableOpacity,ImageBackground, Platform, ScrollView, ToastAndroid, View, StyleSheet} from 'react-native';
+import {
+  ActivityIndicator,
+  TouchableOpacity,
+  ImageBackground,
+  Platform,
+  ScrollView,
+  ToastAndroid,
+  View,
+  StyleSheet,
+} from 'react-native';
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
@@ -25,20 +34,20 @@ import {Post} from '../Axios/AxiosInterceptorFunction';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {setUserData} from '../Store/slices/common';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {Icon} from 'native-base';
+import Entypo from 'react-native-vector-icons/Entypo';
 import ImagePickerModal from '../Components/ImagePickerModal';
 
-const LoginScreen = (props) => {
-  // const navigation =useNavigation()
+const LoginScreen = props => {
   const [username, setUserName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
-  const navigation = useNavigation()
-
+  const [confirmPass, setconfirmPass] = useState('');
+  const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
@@ -73,49 +82,46 @@ const LoginScreen = (props) => {
 
     // console.log('LoginResponse============>>>>>>>', response?.data);
     if (response?.data?.success) {
-      console.log("Login Testing =============>>>>>>",response?.data?.user_info)
+      console.log(
+        'Login Testing =============>>>>>>',
+        response?.data?.user_info,
+      );
       dispatch(setUserData(response?.data?.user_info));
-      dispatch(SetUserRole(response?.data?.user_info?.role))
+      dispatch(SetUserRole(response?.data?.user_info?.role));
       dispatch(setUserToken({token: response?.data?.token}));
-      
-
     }
     // dispatch(setUserData(response?.data?.user_info));
-      // dispatch(setUserToken({token: 'dfhksdjlsk'}));
-      // dispatch(SetUserRole('customer'))
-
+    // dispatch(setUserToken({token: 'dfhksdjlsk'}));
+    // dispatch(SetUserRole('customer'))
   };
 
   return (
     <ScreenBoiler
       statusBarBackgroundColor={'white'}
       statusBarContentStyle={'dark-content'}>
-      <ScrollView
-   showsVerticalScrollIndicator={false}
->
-  <ImageBackground
-   style={{
-    width: windowWidth,
-    minHeight: windowHeight,
-    paddingBottom: moderateScale(40, 0.6),
-    justifyContent: 'center',
-    // backgroundColor:'red',
-    // height: windowHeight*0.8,
-    alignItems: 'center',
-  }}
-  // source={require('../Assets/Images/bgc.png')}
-  >
-<View
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ImageBackground
+          style={{
+            width: windowWidth,
+            minHeight: windowHeight,
+            paddingBottom: moderateScale(40, 0.6),
+            justifyContent: 'center',
+            // backgroundColor:'red',
+            // height: windowHeight*0.8,
+            alignItems: 'center',
+          }}
+          source={require('../Assets/Images/bg.png')}>
+          <View
             style={{
               marginTop: 40,
-              // alignItems:'center',
-              backgroundColor: 'red',
+              alignItems: 'center',
+              // backgroundColor: 'red',
               height: windowHeight * 0.13,
               width: windowHeight * 0.13,
               borderRadius: moderateScale((windowHeight * 0.13) / 2),
               // overflow : 'hidden'
             }}>
-            <CustomImage
+            {/* <CustomImage
               resizeMode="contain"
               source={require('../Assets/Images/dummyUser1.png')}
               style={{
@@ -143,7 +149,29 @@ const LoginScreen = (props) => {
                   setImagePicker(true);
                 }}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <CustomText
+              numberOfLine={3}
+              isBold
+              style={{
+                fontSize: moderateScale(20, 0.6),
+                color: Color.white,
+                textAlign: 'center',
+              }}>
+              logo here
+            </CustomText>
+            <CustomText
+              // isBold
+              style={{
+                fontSize: moderateScale(11, 0.6),
+                color: Color.white,
+                width: windowWidth * 0.6,
+                // backgroundColor:'red',
+                paddingVertical: moderateScale(10, 0.4),
+              }}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry.
+            </CustomText>
           </View>
           <View
             style={{
@@ -153,7 +181,7 @@ const LoginScreen = (props) => {
               marginTop: moderateScale(20, 0.3),
             }}>
             <TextInputWithTitle
-              iconName={'user-circle-o'}
+              iconName={'user'}
               iconType={FontAwesome}
               LeftIcon={true}
               titleText={'Username'}
@@ -163,19 +191,18 @@ const LoginScreen = (props) => {
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              backgroundColor={Color.white}
-              borderColor={Color.black}
+              borderBottomWidth={1}
+              borderColor={Color.white}
               marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
+              marginBottom={moderateScale(10, 0.3)}
+              color={Color.white}
+              placeholderColor={Color.white}
+              // elevation
             />
-            
+
             <TextInputWithTitle
-              iconName={'lock1'}
-              iconType={AntDesign}
+              iconName={'key'}
+              iconType={Entypo}
               LeftIcon={true}
               titleText={'Password'}
               placeholder={'Password'}
@@ -185,147 +212,94 @@ const LoginScreen = (props) => {
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              borderColor={'#000'}
-              backgroundColor={Color.white}
+              borderBottomWidth={1}
+              marginBottom={moderateScale(10, 0.3)}
+              borderColor={Color.white}
               marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
+              color={Color.white}
+              placeholderColor={Color.white}
+              // elevation
+            />
+            <TextInputWithTitle
+              iconName={'check'}
+              iconType={FontAwesome}
+              LeftIcon={true}
+              titleText={'confirm password'}
+              placeholder={'confirm password'}
+              setText={setconfirmPass}
+              value={confirmPass}
+              secureText={true}
+              viewHeight={0.06}
+              viewWidth={0.75}
+              inputWidth={0.55}
+              borderBottomWidth={1}
+              marginBottom={moderateScale(10, 0.3)}
+              borderColor={Color.white}
+              marginTop={moderateScale(10, 0.3)}
+              color={Color.white}
+              placeholderColor={Color.white}
+              // elevation
             />
 
-<View
+            <View
               style={{
                 width: windowWidth * 0.75,
                 flexDirection: 'row',
                 gap: 12,
                 justifyContent: 'space-around',
                 paddingHorizontal: moderateScale(15, 0.3),
-              }}>
-              <CustomButton
-                onPress={() => navigationService.navigate('Signup')}
-                text={
-                  isLoading ? (
-                    <ActivityIndicator color={Color.white} size={'small'} />
-                  ) : (
-                    'SIGN UP'
-                  )
-                }
-                fontSize={moderateScale(12, 0.3)}
-                textColor={Color.black}
-                borderRadius={moderateScale(30, 0.3)}
-                width={windowWidth * 0.3}
-                height={windowHeight * 0.04}
-                marginTop={moderateScale(20, 0.3)}
-                bgColor={Color.white}
-                isBold
-                // isGradient
-              />
-              <CustomButton
-                onPress={() =>  dispatch(setUserToken({token : 'meerab'}))}
-                text={
-                  isLoading ? (
-                    <ActivityIndicator color={Color.white} size={'small'} />
-                  ) : (
-                    'SIGN in'
-                  )
-                }
-                fontSize={moderateScale(12, 0.3)}
-                textColor={Color.white}
-                borderRadius={moderateScale(30, 0.3)}
-                width={windowWidth * 0.3}
-                height={windowHeight * 0.04}
-                marginTop={moderateScale(20, 0.3)}
-                bgColor={Color.themeColor2}
-                isBold
-                // isGradient
-              />
-            </View>
+              }}></View>
+            <CustomButton
+              onPress={() => dispatch(setUserToken({token: 'meerab'}))}
+              text={
+                isLoading ? (
+                  <ActivityIndicator color={Color.white} size={'small'} />
+                ) : (
+                  'log in'
+                )
+              }
+              fontSize={moderateScale(12, 0.3)}
+              textColor={Color.white}
+              borderRadius={moderateScale(30, 0.3)}
+              width={windowWidth * 0.3}
+              height={windowHeight * 0.06}
+              marginTop={moderateScale(20, 0.3)}
+              // bgColor={Color.themeColor2}
+              borderWidth={1}
+              borderColor={Color.white}
+              isBold
+              // isGradient
+            />
 
-            <CustomText style={styles.txt5}>Or login with </CustomText>
-            <View
+            <CustomText style={styles.txt5}>
+              do you have an account ?{' '}
+            </CustomText>
+            <CustomText
+              isBold
               style={{
-                // width: windowWidth * 0.2,
-                // backgroundColor:'green',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                fontSize: moderateScale(15, 0.6),
+                color: Color.white,
+                // paddingVertical: moderateScale(0, 0.6 ),
               }}>
-              <View style={styles.icon}>
-                <Icon
-                  name="twitter"
-                  as={AntDesign}
-                  size={3}
-                  color={Color.black}
-                />
-              </View>
-              <View
-                style={[
-                  styles.icon,
-                  {marginHorizontal: moderateScale(5, 0.3)},
-                ]}>
-                <Icon
-                  name="sc-facebook"
-                  as={EvilIcons}
-                  size={4}
-                  color={Color.black}
-                />
-              </View>
-              <View style={styles.icon}>
-                <Icon
-                  name="googleplus"
-                  as={Zocial}
-                  size={3}
-                  color={Color.black}
-                />
-              </View>
-              {/* <View style={styles.icon}>
-                <Icon
-                  name="instagram"
-                  as={AntDesign}
-                  size={3}
-                  color={Color.black}
-                />
-              </View> */}
-            </View>
-</View>
-<View style={{
-            marginTop : moderateScale(50,0.3),
-            width : windowWidth *0.50 ,
-            // marginHorizontal:'20',
-            gap:10,
-            // textAlign:'center',
-            flexDirection : 'row',
-            alignItems:'center',
-            justifyContent :'space-between', 
-            // backgroundColor : 'red'
-          }}>
-           <View>
+              Sign up
+            </CustomText>
+          </View>
           <CustomText
-            onPress={() => navigationService.navigate('PrivacyPolicy')}
-            style={styles.txt6}>
-            Privacy policy 
+            // isBold
+            style={{
+              fontSize: moderateScale(11, 0.6),
+              color: Color.white,
+              width: windowWidth * 0.6,
+              // backgroundColor:'red',
+              position: 'absolute',
+              bottom: 50,
+              paddingVertical: moderateScale(10, 0.4),
+            }}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry.
           </CustomText>
-              </View> 
-              <View>
-          <CustomText
-            onPress={() => navigationService.navigate('LoginScreen')}
-            style={styles.txt6}>
-             |
-          </CustomText>
-              </View> 
-              <View>
-          <CustomText
-            onPress={() => navigationService.navigate('TermsAndConditions')}
-            style={styles.txt6}>
-             use and term
-          </CustomText>
-            </View> 
-              </View>
-
-
-</ImageBackground>
-<ImagePickerModal
+        </ImageBackground>
+        <ImagePickerModal
           show={imagePicker}
           setShow={setImagePicker}
           setFileObject={setImage}
@@ -344,7 +318,7 @@ const styles = StyleSheet.create({
   },
   txt6: {
     fontSize: moderateScale(15, 0.6),
-   color:'white'
+    color: 'white',
   },
   edit: {
     backgroundColor: Color.white,

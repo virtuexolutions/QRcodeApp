@@ -11,12 +11,18 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Icon } from 'native-base';
 import { View } from 'react-native';
 import { windowHeight } from './Utillity/utils';
+import WalkThroughScreen from './Screens/WalkthroughScreen';
+import LoginScreen from './Screens/LoginScreen';
+import Signup from './Screens/Signup';
+import HomeScreen from './Screens/HomeScreen';
+import ScanScreen from './Screens/ScanScreen';
 
 
 const AppNavigator = () => {
   // const isLogin = false;
   const isGoalCreated = useSelector(state => state.authReducer.isGoalCreated);
   const walkThrough = useSelector(state => state.authReducer.userWalkThrough);
+  console.log("🚀 ~ AppNavigator ~ walkThrough:", walkThrough)
   const role = useSelector(state => state.authReducer.role);
   console.log('🚀 ~ file: appNavigation.js:31 ~ AppNavigator ~ role:', role);
 
@@ -36,15 +42,20 @@ const AppNavigator = () => {
     ? 'WalkThroughScreen'
     : token == null
     ? 'LoginScreen'
-    : 'TabNavigation';
+    : 'HomeScreen';
     
     console.log("🚀 ~ AppNavigatorContainer ~ firstScreen:", firstScreen)
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
           initialRouteName={firstScreen}
-          screenOptions={{ headerShown: false }}>
-          {/* <RootNav.Screen name="TabNavigation" component={TabNavigation} /> */}
+          screenOptions={{ headerShown: false }}>     
+          <RootNav.Screen name="HomeScreen" component={HomeScreen} />
+          <RootNav.Screen name="LoginScreen" component={LoginScreen} />
+          <RootNav.Screen name="Signup" component={Signup} />
+          <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
+          <RootNav.Screen name="ScanScreen" component={ScanScreen} />
+
          
 
 
@@ -170,13 +181,13 @@ export const TabNavigation = () => {
 
       })}
     >
-      <Tabs.Screen name={'HomeScreen'} component={HomeScreen} />
+      {/* <Tabs.Screen name={'HomeScreen'} component={HomeScreen} />
       <Tabs.Screen name={'Donation'} component={Donation} />
       <Tabs.Screen name={'Campaigns'} component={Campaigns} />
 
       {/* <Tabs.Screen name={'BibleCategories'} component={BibleCategories} /> */}
-      <Tabs.Screen name={'StoreScreen'} component={StoreScreen} />
-      <Tabs.Screen name={'Settings'} component={Settings} />
+      {/* <Tabs.Screen name={'StoreScreen'} component={StoreScreen} /> 
+      <Tabs.Screen name={'Settings'} component={Settings} /> */}
 
     </Tabs.Navigator>
   );
