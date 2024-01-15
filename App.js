@@ -23,6 +23,7 @@ import LoginScreen from './SRC/Screens/LoginScreen';
 import HomeScreen from './SRC/Screens/HomeScreen';
 import Signup from './SRC/Screens/Signup';
 import { NavigationContainer } from '@react-navigation/native';
+import AppNavigator from './SRC/appNavigation';
 
 
 const App = () => {
@@ -71,7 +72,7 @@ const MainContainer = () => {
   if (isloading == true) {
     return <SplashScreen />;
   }
-  return <LoginScreen />
+  return <AppNavigator />
   
 };
 

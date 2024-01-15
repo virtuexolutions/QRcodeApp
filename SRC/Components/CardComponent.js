@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
@@ -6,10 +6,18 @@ import CustomButton from './CustomButton';
 import CustomText from './CustomText';
 import CustomImage from './CustomImage';
 import Color from '../Assets/Utilities/Color';
+import { useNavigation } from '@react-navigation/native';
 
 const CardComponent = ({item}) => {
+  const navigation =useNavigation()
   return (
-    <View style={styles.container}>
+    <TouchableOpacity 
+    onPress={() => {
+      navigation.navigate('ScanScreen')
+      console.log('hello')
+    }}
+    activeOpacity={0.6}
+    style={styles.container}>
       <View>
         <CustomText isBold style={styles.title}>
           {item?.title}
@@ -31,7 +39,7 @@ const CardComponent = ({item}) => {
           source={item?.image}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
