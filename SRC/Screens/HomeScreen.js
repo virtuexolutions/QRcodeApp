@@ -19,7 +19,7 @@ import CustomButton from '../Components/CustomButton';
 import {Icon} from 'native-base';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import {Text} from 'react-native-svg';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import SearchbarComponent from '../Components/SearchbarComponent';
 import CardComponent from '../Components/CardComponent';
 import LinearGradient from 'react-native-linear-gradient';
@@ -107,7 +107,7 @@ const HomeScreen = () => {
           
           <TouchableOpacity
           onPress={()=>{
-          //  navigation.toggleDrawer()
+           navigation.toggleDrawer()
           }}
           >
           <LinearGradient style={styles.icon}
@@ -117,8 +117,8 @@ const HomeScreen = () => {
           >
             <Icon
            
-              name="tune-variant"
-              as={MaterialCommunityIcons}
+              name="menu"
+              as={Entypo}
               size={moderateScale(20, 0.6)}
               color={Color.white}
               />
@@ -236,9 +236,9 @@ const HomeScreen = () => {
     backgroundColor: Color.white
   },
   icon: {
-    height: windowHeight * 0.042,
+    height: windowHeight * 0.047,
     width: windowHeight * 0.06,
-    borderRadius: moderateScale(25.05),
+    borderRadius: moderateScale(10 ,0.6),
     // backgroundColor: Color.white,
     alignItems: 'center',
     justifyContent: 'center',

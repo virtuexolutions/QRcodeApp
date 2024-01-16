@@ -92,7 +92,7 @@ const LoginScreen = props => {
     }
     dispatch(setUserData(response?.data?.user_info));
     dispatch(setUserToken({token: 'dfhksdjlsk'}));
-    dispatch(SetUserRole('customer'))
+    dispatch(SetUserRole('customer'));
   };
 
   return (
@@ -167,6 +167,7 @@ const LoginScreen = props => {
                 color: Color.white,
                 width: windowWidth * 0.6,
                 // backgroundColor:'red',
+                textAlign: 'center',
                 paddingVertical: moderateScale(10, 0.4),
               }}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -275,6 +276,9 @@ const LoginScreen = props => {
               do you have an account ?{' '}
             </CustomText>
             <CustomText
+            onPress={()=>{
+              navigationService.navigate('Signup')
+            }}
               isBold
               style={{
                 fontSize: moderateScale(15, 0.6),
@@ -293,6 +297,7 @@ const LoginScreen = props => {
               // backgroundColor:'red',
               position: 'absolute',
               bottom: 50,
+              textAlign : 'center',
               paddingVertical: moderateScale(10, 0.4),
             }}>
             Lorem Ipsum is simply dummy text of the printing and typesetting

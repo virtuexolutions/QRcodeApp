@@ -42,6 +42,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const Signup = () => {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -405,12 +406,12 @@ const Signup = () => {
                 paddingHorizontal: moderateScale(15, 0.3),
               }}>
               <CustomButton
-                onPress={() => navigationService.navigate('LoginScreen')}
+                onPress={() =>  dispatch(setUserToken({token: 'meerab'}))}
                 text={
                   isLoading ? (
                     <ActivityIndicator color={Color.white} size={'small'} />
                   ) : (
-                    'SIGN in'
+                    'Register'
                   )
                 }
                 fontSize={moderateScale(12, 0.3)}
@@ -430,7 +431,7 @@ const Signup = () => {
               Already Have an account ?{' '}
               <CustomText
                 onPress={() => {
-                  // navigation.goBack();
+                  navigation.goBack();
                 }}
                 isBold
                 style={{

@@ -61,8 +61,7 @@ const AppNavigator = () => {
         <RootNav.Navigator
           initialRouteName={firstScreen}
           screenOptions={{ headerShown: false }}> 
-          <RootNav.Screen name='drawer' component={DrawerNavigator}/>    
-          <RootNav.Screen name="HomeScreen" component={HomeScreen} />
+          <RootNav.Screen name='drawer' component={MyDrawer}/>    
           <RootNav.Screen name="LoginScreen" component={LoginScreen} />
           <RootNav.Screen name="Signup" component={Signup} />
           <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
@@ -70,7 +69,7 @@ const AppNavigator = () => {
           <RootNav.Screen name="GenerateQr" component={GenerateQr} />
           <RootNav.Screen name="SelectCategory" component={SelectCategory} />
           <RootNav.Screen name="LinkUrlScreen" component={LinkUrlScreen} />
-          <RootNav.Screen name="ShowQr" component={ShowQR} />
+          <RootNav.Screen name="ShowQR" component={ShowQR} />
           <RootNav.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
           <RootNav.Screen name="TermsAndConditions" component={TermsAndConditions}/>
           <RootNav.Screen name="About" component={About}/>
@@ -83,29 +82,53 @@ const AppNavigator = () => {
   return <AppNavigatorContainer />;
 };
 
-export const DrawerNavigator =() =>{
+export const MyDrawer = () => {
   const DrawerNavigation = createDrawerNavigator();
+  const role = useSelector(state => state.authReducer.role);
+  console.log('🚀 ~ file: appNavigation.js:123 ~ MyDrawer ~ role:', role);
+  const firstScreen = 'HomeScreen'
+     
   return (
     <DrawerNavigation.Navigator
-    // drawerContent={props => <Drawer {...props}/>}
-    screenOptions={{
-      headerShown: false
-    }}
-    >
+      drawerContent={props => <Drawer {...props} />}
+      initialRouteName={firstScreen}
+      screenOptions={{
+        headerShown: false,
+      }}>
+      {/* <DrawerNavigation.Screen name="SellerProduct" component={SellerProduct} />
       <DrawerNavigation.Screen
-      
-      name='HomeScreen'
-      component={HomeScreen}
-     
-      />
+        name="CustomerDashboard"
+        component={CustomerDashboard}
+      /> */}
       <DrawerNavigation.Screen
-      name='settings'
-      component={Settings}
+        name={
+         'HomeScreen'
+          }
+        component={
+         HomeScreen
+            }
       />
+        {/* <DrawerNavigation.Screen
+        name={
+         'Setting'
+          }
+        component={
+         Setting
+            }
+      /> */}
+      {/* <DrawerNavigation.Screen name="Profile" component={Profile} />
+      <DrawerNavigation.Screen name="MyAccounts" component={MyAccounts} />
+
+      <DrawerNavigation.Screen name="Orders" component={Orders} />
+
+      <DrawerNavigation.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+      />
+      <DrawerNavigation.Screen name="Myorders" component={Myorders} /> */}
     </DrawerNavigation.Navigator>
   );
-
-}
+};
 
 // export const TabNavigation = () => {
 //   const Tabs = createBottomTabNavigator();

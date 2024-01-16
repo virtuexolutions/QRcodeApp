@@ -98,7 +98,7 @@ const Header = props => {
             name={'arrow-back'}
             as={Ionicons}
             size={moderateScale(25, 0.3)}
-            color={Color.black}
+            color={Color.white}
             onPress={() => {
               navigationN.goBack();
             }}
