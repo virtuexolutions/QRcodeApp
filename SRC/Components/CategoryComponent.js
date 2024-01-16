@@ -23,7 +23,7 @@ const CategoryComponent = ({item}) => {
         elevation: 3,
     }]}
     onPress={() => {
-      navigation.navigate('LinkUrlScreen')
+      navigation.navigate('LinkUrlScreen' ,{item:item})
       dispatch(setSelectedItem(item))
     }}
     >

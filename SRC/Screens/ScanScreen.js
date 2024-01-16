@@ -80,11 +80,12 @@ const ScanScreen = () => {
                 setPath(data) 
                 // setShowImage(true)
             } else {
-                console.log('here with no iamge' ,data)
-
-                Linking.openURL(data)
+                // console.log('here with no iamge' ,data)
+              navigation.navigate('ShowQR',{data : data})
+                // Linking.openURL(data)
             }
         })
+        // console.log(data)
     }
     flashMode={RNCamera.Constants.FlashMode.auto}
     reactivate={true}

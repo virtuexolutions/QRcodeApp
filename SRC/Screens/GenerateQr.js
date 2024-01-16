@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import QRCode from 'react-native-qrcode-svg';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale} from 'react-native-size-matters';
@@ -8,11 +8,25 @@ import {useNavigation} from '@react-navigation/native';
 import {Icon} from 'native-base';
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
+import ViewShot from 'react-native-view-shot';
+import RNFS from 'react-native-fs';
+import CustomImage from '../Components/CustomImage';
+
 
 const GenerateQr = props => {
   const navigation = useNavigation();
   const data = props?.route?.params?.data;
   console.log('🚀 ~ GenerateQr ~ data:', data);
+  const [Image, setImage] = useState('')
+
+  const onCapture =  useCallback  ( async (uri) => {
+    // console.log("do something with ", uri);
+    const base64Data = await RNFS.readFile(uri, 'base64');
+    console.log("🚀 ~ onCapture ~ base64Data:", base64Data)
+    setImage(base64Data)
+  }, []);
+
+  
   return (
     <View>
       {/* // <Text>GenerateQr</Text> */}
@@ -32,10 +46,12 @@ const GenerateQr = props => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
+  <ViewShot onCapture={onCapture} captureMode="mount">
         <QRCode
           value={data}
           size={230} 
         />
+        </ViewShot>
             <CustomButton
         // onPress={() => {
         //   navigation.navigate('GenerateQr' ,{data:data})
@@ -54,6 +70,17 @@ const GenerateQr = props => {
           borderColor={Color.white}
           isBold
         />
+{
+  Image != '' &&
+
+        <CustomImage 
+        source={{uri : `data:image/png;base64,${Image}`}}
+        style={{
+          width : 100 ,
+          height : 100,
+          backgroundColor : 'red'
+        }}
+        />}
       </View>
     </View>
   );

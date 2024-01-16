@@ -19,6 +19,7 @@ import ScanScreen from './Screens/ScanScreen';
 import GenerateQr from './Screens/GenerateQr';
 import SelectCategory from './Screens/SelectCategory';
 import LinkUrlScreen from './Screens/LinkUrlScreen';
+import ShowQR from './Screens/ShowQR';
 
 
 const AppNavigator = () => {
@@ -51,7 +52,7 @@ const AppNavigator = () => {
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
-          initialRouteName={firstScreen}
+          initialRouteName={'ShowQr'}
           screenOptions={{ headerShown: false }}>     
           <RootNav.Screen name="HomeScreen" component={HomeScreen} />
           <RootNav.Screen name="LoginScreen" component={LoginScreen} />
@@ -61,6 +62,8 @@ const AppNavigator = () => {
           <RootNav.Screen name="GenerateQr" component={GenerateQr} />
           <RootNav.Screen name="SelectCategory" component={SelectCategory} />
           <RootNav.Screen name="LinkUrlScreen" component={LinkUrlScreen} />
+          <RootNav.Screen name="ShowQr" component={ShowQR} />
+
 
 
          
