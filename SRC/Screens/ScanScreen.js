@@ -1,5 +1,5 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import {Alert, Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React,{useEffect ,useState} from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
@@ -9,9 +9,42 @@ import {windowHeight, windowWidth} from '../Utillity/utils';
 import {Icon} from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
+import CustomImage from '../Components/CustomImage';
 
 const ScanScreen = () => {
   const navigation = useNavigation();
+    // const [showImage , setShowImage] = useState(false)
+    const [path , setPath] = useState('')
+
+  const checkIfImageExists = async (imageUrl) => {
+    try {
+      const response = await fetch(imageUrl);
+  
+      // Check if the response status is OK
+      if (response.ok) {
+        // Check the content type to determine if it's an image
+        const contentType = response.headers.get('content-type');
+        return contentType.startsWith('image/');
+      } else {
+        return false;
+      }
+    } catch (error) {
+      // Handle errors, e.g., network issues
+      console.error('Error checking image:', error);
+      return false;
+    }
+  };
+  
+  // Example usage
+  
+//   useEffect(() => {
+//     //   const imageUrl = 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+//     // const image2 = 'https://unsplash.com/s/photos/image'
+    
+ 
+//   }, [])
+  
+ 
   return (
     <View
       style={{
@@ -37,16 +70,43 @@ const ScanScreen = () => {
           Qr Scan
         </CustomText>
       </View>
-      <QRCodeScanner
-          onRead={({data}) => console.log(data)}
-        flashMode={RNCamera.Constants.FlashMode.off}
-        reactivate={true}
-        reactivateTimeout={500}
-        showMarker={true}
-      />
+      {path == '' &&
+
+          <QRCodeScanner
+          onRead={({data}) => 
+          checkIfImageExists(data).then((result) => {
+            if (result) {
+                console.log('here with iamge')
+                setPath(data) 
+                // setShowImage(true)
+            } else {
+                console.log('here with no iamge' ,data)
+
+                Linking.openURL(data)
+            }
+        })
+    }
+    flashMode={RNCamera.Constants.FlashMode.auto}
+    reactivate={true}
+    reactivateTimeout={500}
+    showMarker={true}
+    />
+}
+      {path != '' && 
+        <CustomImage 
+        source ={{ uri : path}}
+        style={{
+            width : moderateScale(100 ,0.6),
+            height : moderateScale(100 ,0.6),
+
+        }}
+        />
+
+      }
     </View>
   );
 };
+
 
 export default ScanScreen;
 

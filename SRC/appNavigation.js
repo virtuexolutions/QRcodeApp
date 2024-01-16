@@ -16,6 +16,9 @@ import LoginScreen from './Screens/LoginScreen';
 import Signup from './Screens/Signup';
 import HomeScreen from './Screens/HomeScreen';
 import ScanScreen from './Screens/ScanScreen';
+import GenerateQr from './Screens/GenerateQr';
+import SelectCategory from './Screens/SelectCategory';
+import LinkUrlScreen from './Screens/LinkUrlScreen';
 
 
 const AppNavigator = () => {
@@ -55,6 +58,10 @@ const AppNavigator = () => {
           <RootNav.Screen name="Signup" component={Signup} />
           <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
           <RootNav.Screen name="ScanScreen" component={ScanScreen} />
+          <RootNav.Screen name="GenerateQr" component={GenerateQr} />
+          <RootNav.Screen name="SelectCategory" component={SelectCategory} />
+          <RootNav.Screen name="LinkUrlScreen" component={LinkUrlScreen} />
+
 
          
 

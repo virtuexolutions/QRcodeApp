@@ -23,20 +23,24 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import SearchbarComponent from '../Components/SearchbarComponent';
 import CardComponent from '../Components/CardComponent';
 import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/core';
 
 const HomeScreen = () => {
+  const navigation =useNavigation()
   const dataArray = [
     {
       id: 1,
       image: require('../Assets/Images/cardimage3.png'),
       title: 'QR SCAN',
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
+      onPress : () => navigation.navigate('ScanScreen') 
     },
     {
       id: 2,
       image: require('../Assets/Images/cardimage2.png'),
       title: 'Create QR',
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
+      onPress : () => navigation.navigate('SelectCategory') 
     },
     {
       id: 3,
@@ -50,12 +54,7 @@ const HomeScreen = () => {
       title: 'Generate QR',
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },
-    // {
-    //   id:5,
-    //   image:require('../Assets/Images/cardimage.png'),
-    //   title:'QR SCAN',
-    //   description:'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.'
-    // },
+   
   ];
 
   return (

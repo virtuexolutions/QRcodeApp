@@ -13,7 +13,8 @@ const initialState = {
   sellerProducts: [],
   sellerService: [],
   selectedRole: '',
-  category:[]
+  category:[],
+  selectedItem:{}
 };
 
 const CommonSlice = createSlice({
@@ -204,6 +205,11 @@ const CommonSlice = createSlice({
         item => item.serviceOwner.id != action.payload.serviceOwner.id,
       );
     },
+    setSelectedItem(state,action){
+      state.selectedItem = action.payload
+      // console.log("🚀 ~ setSelectedItem ~  action.payload:",  action.payload)
+
+    }
   },
 });
 
@@ -230,6 +236,7 @@ export const {
   deleteService,
   deleteProducts,
   Order,
+  setSelectedItem
 
 } = CommonSlice.actions;
 

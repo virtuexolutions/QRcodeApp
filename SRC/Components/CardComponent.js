@@ -9,13 +9,9 @@ import Color from '../Assets/Utilities/Color';
 import { useNavigation } from '@react-navigation/native';
 
 const CardComponent = ({item}) => {
-  const navigation =useNavigation()
   return (
     <TouchableOpacity 
-    onPress={() => {
-      navigation.navigate('ScanScreen')
-      console.log('hello')
-    }}
+    onPress={item?.onPress}
     activeOpacity={0.6}
     style={styles.container}>
       <View>

@@ -283,7 +283,7 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(12, 0.3),
   },
   modalCancelBtn: {
-    backgroundColor: Color.themeColor2,
+    backgroundColor: '#002F58',
     paddingVertical: windowHeight * 0.008,
     width: windowWidth * 0.2,
     alignItems: 'center',
