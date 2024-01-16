@@ -24,6 +24,11 @@ import Signup from './SRC/Screens/Signup';
 import LoginScreen from './SRC/Screens/LoginScreen';
 import WalkThroughScreen from './SRC/Screens/WalkthroughScreen';
 import HomeScreen from './SRC/Screens/HomeScreen';
+import Settings from './SRC/Screens/Settings';
+import Profile from './SRC/Screens/Profile';
+import PrivacyPolicy from './SRC/Screens/PrivacyPolicy';
+import TermsAndConditions from './SRC/Screens/TermsAndConditions';
+import Help from './SRC/Screens/Help';
 
 const App = () => {
   const [publishableKey, setPublishableKey] = useState('');
@@ -71,8 +76,10 @@ const MainContainer = () => {
   if (isloading == true) {
     return <SplashScreen />;
   }
-  return <HomeScreen />
-  
+  return( 
+  <AppNavigator />
+ ) 
+
 };
 
 const useloader = value => {

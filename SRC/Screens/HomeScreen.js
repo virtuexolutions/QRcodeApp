@@ -23,8 +23,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import SearchbarComponent from '../Components/SearchbarComponent';
 import CardComponent from '../Components/CardComponent';
 import LinearGradient from 'react-native-linear-gradient';
+import navigationService from '../navigationService';
+import { useNavigation } from '@react-navigation/native';
+import { useDrawerStatus } from '@react-navigation/drawer';
 
 const HomeScreen = () => {
+const navigation= useNavigation();
   const dataArray = [
     {
       id: 1,
@@ -105,18 +109,27 @@ const HomeScreen = () => {
               <CustomText style={styles.text1}>ryan francis</CustomText>
             </View>
           </View>
+          
+          <TouchableOpacity
+          onPress={()=>{
+          //  navigation.toggleDrawer()
+          }}
+          >
           <LinearGradient style={styles.icon}
           colors={["#001D56", "#012496"]}
           start={{ x: 0, y: 0 }} 
           end={{ x: 1, y: 1 }}
           >
             <Icon
+           
               name="tune-variant"
               as={MaterialCommunityIcons}
               size={moderateScale(20, 0.6)}
               color={Color.white}
               />
           </LinearGradient>
+              </TouchableOpacity>        
+       
         </View>
         <View
           style={{

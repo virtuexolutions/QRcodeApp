@@ -16,6 +16,13 @@ import LoginScreen from './Screens/LoginScreen';
 import Signup from './Screens/Signup';
 import HomeScreen from './Screens/HomeScreen';
 import ScanScreen from './Screens/ScanScreen';
+import PrivacyPolicy from './Screens/PrivacyPolicy';
+import TermsAndConditions from './Screens/TermsAndConditions';
+import About from './Screens/About';
+import Help from './Screens/Help';
+import Settings from './Screens/Settings';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import Drawer from './Drawer/Drawer';
 
 
 const AppNavigator = () => {
@@ -42,26 +49,25 @@ const AppNavigator = () => {
     ? 'WalkThroughScreen'
     : token == null
     ? 'LoginScreen'
-    : 'HomeScreen';
+    : 'drawer';
     
     console.log("🚀 ~ AppNavigatorContainer ~ firstScreen:", firstScreen)
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
           initialRouteName={firstScreen}
-          screenOptions={{ headerShown: false }}>     
+          screenOptions={{ headerShown: false }}> 
+          <RootNav.Screen name='drawer' component={DrawerNavigator}/>    
           <RootNav.Screen name="HomeScreen" component={HomeScreen} />
           <RootNav.Screen name="LoginScreen" component={LoginScreen} />
           <RootNav.Screen name="Signup" component={Signup} />
           <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
           <RootNav.Screen name="ScanScreen" component={ScanScreen} />
-
-         
-
-
-
-          
-          
+          {/* <RootNav.Screen name="Settings" component={Settings} /> */}
+          <RootNav.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+          <RootNav.Screen name="TermsAndConditions" component={TermsAndConditions}/>
+          <RootNav.Screen name="About" component={About}/>
+          <RootNav.Screen name={"Help"} component={Help}/>          
         </RootNav.Navigator>
       </NavigationContainer>
     );
@@ -70,6 +76,29 @@ const AppNavigator = () => {
   return <AppNavigatorContainer />;
 };
 
+export const DrawerNavigator =() =>{
+  const DrawerNavigation = createDrawerNavigator();
+  return (
+    <DrawerNavigation.Navigator
+    // drawerContent={props => <Drawer {...props}/>}
+    screenOptions={{
+      headerShown: false
+    }}
+    >
+      <DrawerNavigation.Screen
+      
+      name='HomeScreen'
+      component={HomeScreen}
+     
+      />
+      <DrawerNavigation.Screen
+      name='settings'
+      component={Settings}
+      />
+    </DrawerNavigation.Navigator>
+  );
+
+}
 
 export const TabNavigation = () => {
   const Tabs = createBottomTabNavigator();
@@ -186,8 +215,8 @@ export const TabNavigation = () => {
       <Tabs.Screen name={'Campaigns'} component={Campaigns} />
 
       {/* <Tabs.Screen name={'BibleCategories'} component={BibleCategories} /> */}
-      {/* <Tabs.Screen name={'StoreScreen'} component={StoreScreen} /> 
-      <Tabs.Screen name={'Settings'} component={Settings} /> */}
+      {/* <Tabs.Screen name={'StoreScreen'} component={StoreScreen} /> */}
+      {/* <Tabs.Screen name={'Settings'} component={Settings} />  */}
 
     </Tabs.Navigator>
   );

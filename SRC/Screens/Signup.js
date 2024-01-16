@@ -41,7 +41,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { useNavigation } from '@react-navigation/native';
 
 const Signup = () => {
-  // const navigation = useNavigation()
+  const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -418,8 +418,8 @@ const Signup = () => {
                 borderRadius={moderateScale(30, 0.3)}
                 width={windowWidth * 0.3}
                 height={windowHeight * 0.06}
-                marginTop={moderateScale(20, 0.3)}
-                borderColor={Color.white}
+                 marginTop={moderateScale(20, 0.3)}
+               borderColor={Color.white}
                 borderWidth={1}
                 // bgColor={Color.themeColor2}
                 isBold

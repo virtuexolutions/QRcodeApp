@@ -47,7 +47,7 @@ const LoginScreen = props => {
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
   const [confirmPass, setconfirmPass] = useState('');
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
