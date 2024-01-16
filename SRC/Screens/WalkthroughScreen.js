@@ -31,19 +31,19 @@ const WalkThroughScreen = props => {
   const slides = [
     {
       key: '1',
-      image: require('../Assets/Images/mobile_Qr_Code_illustration.png'),
+      image: require('../Assets/Images/walkthrough1.png'),
       title: 'Lorem Ipsum Dolor',
       text: `Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Pellentesque Eu Pulvinar Metus, Fringilla Semper Enim. Etiam Viverra Porttitor Nunc Laoreet Faucibus. Fusce Accumsan Mauris At Sem Finibus Gravida. Donec Cursus Tincidunt Eros In Efficitur. Maecenas Cursus Pretium Dui, In Tristique Turpis Finibus Nec. Class Aptent. `,
     },
     {
       key: '2',
-      image: require('../Assets/Images/scannings.png'),
+      image: require('../Assets/Images/walkthrough2.png'),
       title: 'Lorem Ipsum Dolor',
       text: `Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Pellentesque Eu Pulvinar Metus, Fringilla Semper Enim. Etiam Viverra Porttitor Nunc Laoreet Faucibus. Fusce Accumsan Mauris At Sem Finibus Gravida. Donec Cursus Tincidunt Eros In Efficitur. Maecenas Cursus Pretium Dui, In Tristique Turpis Finibus Nec. Class Aptent.`,
     },
     {
       key: '3',
-      image: require('../Assets/Images/holding-phone.png'),
+      image: require('../Assets/Images/walkthrough4.png'),
       title: 'Lorem Ipsum Dolor',
       text: `Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Pellentesque Eu Pulvinar Metus, Fringilla Semper Enim. Etiam Viverra Porttitor Nunc Laoreet Faucibus. Fusce Accumsan Mauris At Sem Finibus Gravida. Donec Cursus Tincidunt Eros In Efficitur. Maecenas Cursus Pretium Dui, In Tristique Turpis Finibus Nec. Class Aptent.`
     },
@@ -63,29 +63,8 @@ const WalkThroughScreen = props => {
             // height: windowHeight*0.8,
             alignItems: 'center',
           }}
-          source={require('../Assets/Images/bg.png')}>
-  { item.key !== '1'
-             ? <Image
-
-source={item.image}
-resizeMode={'contain'}
-style={{
-  position: 'absolute',
-  // left: moderateScale(1,0.1),
-  bottom: moderateScale(11,0.2),
-  // right: moderateScale(-79,0.7),
-
-  zIndex:1,
-  right: item.key==='2'? moderateScale(-77,0.9) : moderateScale(-9,0.7),
-  // top: moderateScale(-125, 0.4),
-  top: item.key=== '2' ?  moderateScale(-156, 0.4)  : moderateScale(85, 0.4),
-  height: item.key === '2' ? windowHeight : windowHeight *0.6 ,
-  // height:windowHeight*0.3,
-  width: item.key === '2' ? windowWidth * 2.15 :windowWidth * 0.8   
-
-}}
-/> : null}
-
+          source={item.image}>
+  
                   <View
             style={[{
               
@@ -107,7 +86,7 @@ style={{
             <CustomText
               style={{
                 // backgroundColor:Color.white,
-                color: Color.darkBlue,
+                color: "#001D56",
                 fontSize: moderateScale(30, 0.6),
                 width: windowWidth,
                 paddingHorizontal: moderateScale(25, 0.6),
@@ -131,22 +110,7 @@ style={{
               numberOfLines={15}>
               {item?.text}
             </CustomText>
-            { item.key == '1'
-             ? <Image
-
-source={item.image}
-resizeMode={'contain'}
-style={{
-  // position: 'absolute',
-  // left: item?.key == 2 ? 320 :0,
-  // top: 35,
-  height: windowHeight * 0.7,
-  // height:windowHeight*0.3,
-  // width:windowWidth*0.3,
-
-}}
-/> : null}
-
+            
           </View>
         </ImageBackground>
       </View>
@@ -155,21 +119,22 @@ style={{
 
   const RenderNextBtn = () => {
     return (
-      <View style={[styles.generalBtn, styles.btnRight]}>
-      {/* <RadialGradient
       
-      colors={[Color.lightBlue, Color.darkBlue]}
-      > */}
+     <View
+     style={[styles.generalBtn, styles.btnRight]}
+     >
+
 
       <Icon
       name='arrowright'
-      size={moderateScale(35, 0.6)}
+      size={moderateScale(24, 0.6)}
       color={Color.white}
       as={AntDesign}
       
       />
-      {/* </RadialGradient> */}
       </View>
+      
+     
     );
   };
   const RenderDoneBtn = () => {
@@ -184,7 +149,7 @@ style={{
           dispatch(setWalkThrough(true));
         }}
         isBold
-        style={{color:Color.white,overflow:'hidden' , fontSize:moderateScale(16, 0.9)}}
+        style={{color:Color.white,overflow:'hidden' , fontSize:moderateScale(12, 0.9)}}
         >
         Done
       </CustomText>
@@ -200,7 +165,7 @@ style={{
           dispatch(setWalkThrough(true));
         }}
         isBold
-        style={{color:Color.white,overflow:'hidden' ,fontSize:moderateScale(16, 0.9)}}
+        style={{color:Color.white,overflow:'hidden' ,fontSize:moderateScale(12, 0.9)}}
         >
         Skip
       </CustomText>
@@ -208,7 +173,7 @@ style={{
           </View>
     );
   };
-  const RenderBackBtn = () => {
+const RenderBackBtn = () => {
     return (
       <View style={[styles.generalBtn, styles.btnLeft]}>
       {/* <RadialGradient
@@ -218,7 +183,7 @@ style={{
 
       <Icon
       name='arrowleft'
-      size={moderateScale(35, 0.6)}
+      size={moderateScale(24, 0.6)}
       color={Color.white}
       as={AntDesign}
       
@@ -291,32 +256,37 @@ const styles = StyleSheet.create({
     marginTop: moderateScale(10, 0.3),
   },
   generalBtn: {
-    backgroundColor: "#49C3E9",
+    backgroundColor: "#001D56",
     borderColor: Color.white,
-    opacity:0.34,
-    borderWidth: moderateScale(3,0.1),
+    // opacity:0.34,
+    width: windowWidth * 0.14,
+    height:windowWidth * 0.14,
+    borderWidth: moderateScale(1.5,0.7),
+    alignItems:'center',
+    justifyContent:'center',
     borderRadius: moderateScale(100, 0.9),
-    paddingVertical: moderateScale(15, 0.5),
+    // paddingVertical: moderateScale(15, 0.5),
     textAlign: 'center',
     fontWeight: '400',
     // fontSize: moderateScale(15, 0.3),
   },
   doneBtn:{
-    width:windowWidth * 0.18,
-    height: windowHeight * 0.09,
+    width:windowWidth * 0.14,
+    height: windowHeight * 0.07,
     alignItems:'center',
     overflow:"hidden",
     justifyContent:'center',
     // marginTop: moderateScale(18, 0.3),
     borderRadius: moderateScale(100, 0.9),
     borderColor:Color.white,
-    backgroundColor: "#49C3E9",
-    opacity: 0.5,
+    backgroundColor: "#001D56",
+    // opacity: 0.5,
+    borderWidth: moderateScale(1.5,0.7),
 
-    borderWidth:  moderateScale(3,0.1),
+    // borderWidth:  moderateScale(3,0.1),
   },
   btnLeft: {
-    color: Color.white,
+    backgroundColor: "#001D56",
     position:'absolute',
     paddingHorizontal: moderateScale(7, 0.2),
     paddingVertical: moderateScale(7, 0.2),
@@ -332,20 +302,20 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     borderRadius: moderateScale(100, 0.9),
-    borderColor:Color.white,
-    backgroundColor: "#49C3E9",
-    opacity: 0.5,
-    borderWidth:  moderateScale(3,0.1),
+    // borderColor:Color.white,
+    backgroundColor: "#001D56",
+    // opacity: 0.5,
+    // borderWidth:  moderateScale(3,0.1),
     zIndex:1
   },
   btnRight: {
-    color: Color.white,
+    backgroundColor: "#001D56",
     paddingHorizontal: moderateScale(8, 0.4),
     paddingVertical: moderateScale(8, 0.4),
     position:'absolute',
-    opacity:0.34,
+    // opacity:0.34,
     top: moderateScale(-600, 0.7),
-    right: moderateScale(20,0.1),
+    right: moderateScale(11,0.1),
     zIndex:1,
   },
 });

@@ -27,7 +27,7 @@ const TextInputWithTitle = props => {
         <CustomText
           style={[
             {
-              color: Color.veryLightGray,
+              color: Color.white,
               fontSize: moderateScale(12, 0.3),
               marginBottom: moderateScale(5, 0.3),
               width: windowWidth * props.viewWidth,
@@ -154,6 +154,7 @@ const TextInputWithTitle = props => {
               value={props.value}
               secureTextEntry={!showPassword}
               placeholder={`${props.placeholder}`}
+              
               placeholderTextColor={
                 props.placeholderColor ? props.placeholderColor : Color.white
               }

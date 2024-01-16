@@ -68,7 +68,7 @@ import Color from '../Assets/Utilities/Color'
 
 
 const PrivacyPolicy = () => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   return (
     <ImageBackground
@@ -77,28 +77,26 @@ const PrivacyPolicy = () => {
             minHeight: windowHeight,
             paddingBottom: moderateScale(40, 0.6),
           }}
-          source={require('../Assets/Images/setting_Bg.png')}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => {
-              navigation.goBack();
-            }}
-            style={styles.back}>
-            <Icon
-              name="arrowleft"
-              as={AntDesign}
-              style={styles.icon2}
-              color={Color.white}
-              size={moderateScale(20, 0.3)}
-              onPress={() => {
-                navigation.goBack();
-              }}
+          source={require('../Assets/Images/bg.png')}>
+          <View style={styles.header}>
+            <TouchableOpacity
+            >
+
+        <View style={styles.backBtn}>
+          <Icon
+            name="arrowleft"
+            size={moderateScale(24, 0.6)}
+            color={Color.white}
+            as={AntDesign}
             />
-          </TouchableOpacity>
+          {/* </RadialGradient> */}
+        </View>
+            </TouchableOpacity>
+        </View>
           <ScrollView showsVerticalScrollIndicator={false}
-          style={{
-            marginTop : windowHeight * 0.1,
-          }}
+          // style={{
+          //   marginTop : windowHeight * 0.1,
+          // }}
           contentContainerStyle={{
             // padding : moderateScale(10,0.6),
 
@@ -124,7 +122,7 @@ const PrivacyPolicy = () => {
   )
 }
 
-export default PrivacyPolicy
+export default PrivacyPolicy;
 
 const styles = ScaledSheet.create({
     back: {
@@ -141,6 +139,7 @@ const styles = ScaledSheet.create({
                     alignItems: 'center',
                     justifyContent: 'center',
                   },
+                  
 })
 
 

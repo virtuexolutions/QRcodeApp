@@ -47,7 +47,7 @@ const LoginScreen = props => {
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
   const [confirmPass, setconfirmPass] = useState('');
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
@@ -90,9 +90,9 @@ const LoginScreen = props => {
       dispatch(SetUserRole(response?.data?.user_info?.role));
       dispatch(setUserToken({token: response?.data?.token}));
     }
-    // dispatch(setUserData(response?.data?.user_info));
-    // dispatch(setUserToken({token: 'dfhksdjlsk'}));
-    // dispatch(SetUserRole('customer'))
+    dispatch(setUserData(response?.data?.user_info));
+    dispatch(setUserToken({token: 'dfhksdjlsk'}));
+    dispatch(SetUserRole('customer'))
   };
 
   return (
@@ -110,7 +110,7 @@ const LoginScreen = props => {
             // height: windowHeight*0.8,
             alignItems: 'center',
           }}
-          source={require('../Assets/Images/bg.png')}>
+          source={require('../Assets/Images/signup_bg.png')}>
           <View
             style={{
               marginTop: 40,

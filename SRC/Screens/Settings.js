@@ -1,5 +1,12 @@
-import {View, Text, ImageBackground, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import React, { useEffect } from 'react';
 import CustomImage from '../Components/CustomImage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -7,74 +14,61 @@ import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import CustomText from '../Components/CustomText';
 import {Icon} from 'native-base';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import navigationService from '../navigationService';
 import {setUserLogOut} from '../Store/slices/common';
 import {useDispatch, useSelector} from 'react-redux';
 import {SetUserRole, setUserLogoutAuth} from '../Store/slices/auth';
-// import {setUserLogOut} from '../Store/slices/common';
+import Color from '../Assets/Utilities/Color';
+import {useNavigation} from '@react-navigation/native';
 
 const Settings = () => {
   const userData = useSelector(state => state.commonReducer.userData);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+useEffect(()=>{
+  navigation.setOptions({
+    headerShown: false
+  })
+
+},[])
+
   const options = [
     {
       id: 1,
-      name: 'Profile',
-      next: '>',
-      onPress: () => {
-        navigationService.navigate('Profile');
-      },
-    },
-    {
-      id: 2,
       name: 'Privacy Policy',
       next: '>',
-      onPress: () => {
-        navigationService.navigate('PrivacyPolicy');
-      },
+      onPress: () => navigationService.navigate('PrivacyPolicy'),
+      // navigation.navigate("Help")
     },
+
     {
-      id: 3,
-      name: 'Donation History',
-      next: '>',
-      onPress: () => {
-        navigationService.navigate('DonationHistory');
-      },
-    },
-    {
-      id: 4,
+      id: 2,
       name: 'Terms & Condition',
       next: '>',
       onPress: () => {
         navigationService.navigate('TermsAndConditions');
       },
     },
-    // {
-    //   id: 7,
-    //   name: 'Account',
-    //   next: '>',
-    //   onPress: () => {
-    //     navigationService.navigate('MyAccounts');
-    //   },
-    // },
     {
-      id: 8,
-      name: 'Help & support',
+      id: 3,
+      name: 'About',
       next: '>',
       onPress: () => {
-        navigationService.navigate('HelpAndSupport');
+        console.log('About');
+        navigationService.navigate('About');
       },
     },
     {
-      id: 9,
-      name: 'Change Password',
+      id: 4,
+      name: 'Help',
       next: '>',
       onPress: () => {
-        navigationService.navigate('ChangePasswordScreen');
+        navigationService.navigate('Help');
       },
     },
     {
-      id: 10,
+      id: 5,
       name: 'Logout',
       next: '>',
       onPress: () => {
@@ -82,53 +76,46 @@ const Settings = () => {
         dispatch(setUserLogoutAuth());
         // dispatch(setUserLogOut());
         dispatch(SetUserRole(''));
-        console.log('logout=======>')
+        console.log('logout=======>');
         // navigationService.navigate('LoginScreen')
       },
     },
   ];
   return (
     <ImageBackground
-      resizeMode="cover"
-      style={styles.mainScreen}
-      source={require('../Assets/Images/setting_Bg.png')}>
+      source={require('../Assets/Images/signup_bg.png')}
+      style={styles.mainScreen}>
       <View style={styles.header}>
-        <View style={styles.imageContainer}>
-          <CustomImage
-            resizeMode="contain"
-            source={require('../Assets/Images/dummyUser1.png')}
-            style={{
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'blue',
-            }}
+        <View style={styles.backBtn}>
+          <Icon
+            name="arrowleft"
+            size={moderateScale(24, 0.6)}
+            color={Color.white}
+            as={AntDesign}
           />
+          {/* </RadialGradient> */}
         </View>
         <View style={styles.userInfo}>
-          <CustomText style={styles.txt5}>DONNA W. WADE</CustomText>
-          <CustomText style={styles.txt6}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.Sed magna
-            dolor, efficitur pulvinar placerat sed, auctor vestibulum elit.
-          </CustomText>
+          <CustomText style={styles.txt5}>Settings</CustomText>
         </View>
       </View>
 
       <View style={styles.optionsContainer}>
         {options.map((item, index) => (
           <TouchableOpacity
-          onPress={item?.onPress}
+            onPress={item.onPress}
             key={index}
             style={[styles.option, item.name === 'Logout' && styles.logout]}>
-            <CustomText style={{color: '#FFFF'}}>{item.name}</CustomText>
+            <CustomText style={{color: Color.white}}>{item.name}</CustomText>
             {item.name === 'Logout' ? (
               <Icon
                 as={Ionicons}
                 name="exit-outline"
                 size={5}
-                color={'#FFFF'}
+                color={Color.white}
               />
             ) : (
-              <CustomText style={{color: '#FFFF'}}>{item.next}</CustomText>
+              <CustomText style={{color: Color.white}}>{item.next}</CustomText>
             )}
           </TouchableOpacity>
         ))}
@@ -151,6 +138,15 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     overflow: 'hidden',
   },
+  backBtn: {
+    width: windowWidth * 0.09,
+    height: windowWidth * 0.09,
+    borderRadius: (windowWidth * 0.09) / 2,
+    borderColor: Color.white,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   image: {
     // borderRadius:100,
     width: '100%',
@@ -160,6 +156,9 @@ const styles = StyleSheet.create({
     marginTop: 12,
     flexDirection: 'row',
     gap: 12,
+    paddingHorizontal: moderateScale(18, 0.5),
+    paddingVertical: moderateScale(20, 0.5),
+    alignItems: 'center',
   },
   userInfo: {
     marginRight: 24,
@@ -182,7 +181,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomColor: '#FFFF',
+    borderBottomColor: Color.white,
     borderBottomWidth: 1,
   },
   logout: {
@@ -192,14 +191,15 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 13,
     marginHorizontal: 14,
-    marginVertical: 15,
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
+    marginTop: moderateScale(46, 0.7),
 
-    borderBottomColor: '#0000003D',
-    borderColor: '#FFFF',
+    // borderBottomWidth: 1,
+    // borderTopWidth: 1,
+    // borderLeftWidth: 2,
+    // borderRightWidth: 2,
+
+    // borderBottomColor: '#0000003D',
+    // borderColor: Color.darkBlue,
     borderRadius: 12,
   },
 });

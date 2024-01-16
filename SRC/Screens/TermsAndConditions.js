@@ -16,7 +16,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Color from '../Assets/Utilities/Color';
 
 const TermsAndConditions = () => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   return (
     <ImageBackground
@@ -25,34 +25,25 @@ const TermsAndConditions = () => {
         minHeight: windowHeight,
         paddingBottom: moderateScale(40, 0.6),
       }}
-      source={require('../Assets/Images/setting_Bg.png')}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => {
-          navigation.goBack();
-        }}
-        style={styles.back}>
-        <Icon
-          name="arrowleft"
-          as={AntDesign}
-          style={styles.icon2}
-          color={Color.white}
-          size={moderateScale(20, 0.3)}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
-      </TouchableOpacity>
+      source={require('../Assets/Images/bg.png')}>
+        <View style={styles.header}>
+            <TouchableOpacity
+            >
+
+        <View style={styles.backBtn}>
+          <Icon
+            name="arrowleft"
+            size={moderateScale(24, 0.6)}
+            color={Color.white}
+            as={AntDesign}
+            />
+      
+        </View>
+            </TouchableOpacity>
+        </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{
-          marginTop: windowHeight * 0.1,
-        }}
-        contentContainerStyle={
-          {
-            // padding : moderateScale(10,0.6),
-          }
-        }>
+        >
         <CustomText
           isBold
           style={{
@@ -95,6 +86,23 @@ const styles = ScaledSheet.create({
     top: moderateScale(10, 0.6),
     zIndex: 1,
     margin: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    marginTop: 12,
+    flexDirection: 'row',
+    gap: 12,
+    paddingHorizontal: moderateScale(18, 0.5),
+    paddingVertical: moderateScale(20, 0.5),
+    alignItems: 'center',
+  },
+  backBtn: {
+    width: windowWidth * 0.09,
+    height: windowWidth * 0.09,
+    borderRadius: (windowWidth * 0.09) / 2,
+    borderColor: Color.white,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

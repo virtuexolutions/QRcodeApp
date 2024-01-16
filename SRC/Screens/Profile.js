@@ -29,7 +29,7 @@ import ImagePickerModal from '../Components/ImagePickerModal';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import { useNavigation } from '@react-navigation/native';
 const Profile = () => {
-  const navigation = useNavigation()
+  // const navigation = useNavigation()
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -90,7 +90,7 @@ const Profile = () => {
             // height: windowHeight*0.8,
             alignItems: 'center',
           }}
-          source={require('../Assets/Images/setting_Bg.png')}>
+          source={require('../Assets/Images/bg.png')}>
           
 
           <View
@@ -139,9 +139,17 @@ const Profile = () => {
               // justifyContent: 'center',
               marginTop: moderateScale(20, 0.3),
             }}>
-            <TextInputWithTitle
-              iconName={'user-circle-o'}
+             <TextInputWithTitle
+            style={{
+              borderWidth:moderateScale(1,.6),
+              backgroundColor:'red',
+              borderBottomWitdth:moderateScale(10,.6)
+            }}
+              iconName={'user'}
               iconType={FontAwesome}
+              iconStyle={{
+                backgroundColor:'red'
+              }}
               LeftIcon={true}
               titleText={'Username'}
               placeholder={'Username'}
@@ -150,16 +158,16 @@ const Profile = () => {
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              backgroundColor={Color.white}
-              borderColor={Color.black}
+              borderColor={Color.white}
+              borderBottomWidth={1}
+              marginBottom={moderateScale(10,.3)}
+              
               marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
+              color={Color.white}
+              placeholderColor={Color.white}
+              // elevation
             />
-
+            
             <TextInputWithTitle
               iconName={'email'}
               iconType={Fontisto}
@@ -171,14 +179,15 @@ const Profile = () => {
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              borderColor={Color.black}
-              backgroundColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
+              borderColor={Color.white}
+              borderBottomWidth={1}
+              marginBottom={moderateScale(10,.3)}
+              // borderColor={Color.white}
+               marginTop={moderateScale(10, 0.3)}
+              color={Color.white}
+              placeholderColor={Color.white}
+              elevationss
+              keyboardType={'email-address'}
             />
             <TouchableOpacity
               onPress={() => {

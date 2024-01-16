@@ -73,7 +73,7 @@ const Signup = () => {
   const [address, setAddress] = useState('');
   const UserRoleArray = ['seller', 'buyer'];
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const onSelect = country => {
     // console.log('dasdasdasdads =>', country);
     setCountryCode(country.cca2);
@@ -143,7 +143,7 @@ const Signup = () => {
             // height: windowHeight*0.8,
             alignItems: 'center',
           }}
-          source={require('../Assets/Images/bg.png')}>
+          source={require('../Assets/Images/login_bg.png')}>
           <View
             style={{
               // marginTop: 40,
@@ -418,8 +418,8 @@ const Signup = () => {
                 borderRadius={moderateScale(30, 0.3)}
                 width={windowWidth * 0.3}
                 height={windowHeight * 0.06}
-                marginTop={moderateScale(20, 0.3)}
-                borderColor={Color.white}
+                 marginTop={moderateScale(20, 0.3)}
+               borderColor={Color.white}
                 borderWidth={1}
                 // bgColor={Color.themeColor2}
                 isBold
@@ -430,7 +430,7 @@ const Signup = () => {
               Already Have an account ?{' '}
               <CustomText
                 onPress={() => {
-                  navigation.goBack();
+                  // navigation.goBack();
                 }}
                 isBold
                 style={{

@@ -30,7 +30,7 @@ const HomeScreen = () => {
   const dataArray = [
     {
       id: 1,
-      image: require('../Assets/Images/cardimage3.png'),
+      image: require('../Assets/Images/cardimage1.png'),
       title: 'QR SCAN',
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
       onPress : () => navigation.navigate('ScanScreen') 
@@ -44,7 +44,7 @@ const HomeScreen = () => {
     },
     {
       id: 3,
-      image: require('../Assets/Images/cardimage1.png'),
+      image: require('../Assets/Images/cardimage3.png'),
       title: 'Create Photo With QR',
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },
@@ -58,11 +58,13 @@ const HomeScreen = () => {
   ];
 
   return (
-    <LinearGradient
-      start={{x: 0, y: 1}}
-      end={{x: 1, y: 1}}
-      colors={['#49C3E9', '#0066FF']}
-      style={styles.mainContainer}>
+    // <LinearGradient
+    //   start={{x: 0, y: 1}}
+    //   end={{x: 1, y: 1}}
+    //   colors={['#49C3E9', '#0066FF']}
+    //   style={styles.mainContainer}>
+    <View style={styles.mainContainer}>
+
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -93,6 +95,8 @@ const HomeScreen = () => {
                   styles.text1,
                   {
                     fontSize: moderateScale(18, 0.6),
+                    color: Color.black,
+                    fontWeight: "bold"
                   },
                 ]}>
                 ryan francis
@@ -100,14 +104,27 @@ const HomeScreen = () => {
               <CustomText style={styles.text1}>ryan francis</CustomText>
             </View>
           </View>
-          <View style={styles.icon}>
+          
+          <TouchableOpacity
+          onPress={()=>{
+          //  navigation.toggleDrawer()
+          }}
+          >
+          <LinearGradient style={styles.icon}
+          colors={["#001D56", "#012496"]}
+          start={{ x: 0, y: 0 }} 
+          end={{ x: 1, y: 1 }}
+          >
             <Icon
+           
               name="tune-variant"
               as={MaterialCommunityIcons}
               size={moderateScale(20, 0.6)}
-              color={Color.black}
-            />
-          </View>
+              color={Color.white}
+              />
+          </LinearGradient>
+              </TouchableOpacity>        
+       
         </View>
         <View
           style={{
@@ -120,10 +137,14 @@ const HomeScreen = () => {
               width: windowWidth * 0.9,
               backgroundColor: Color.white,
             }}
-          />
+            />
         </View>
         <View>
-          <View style={styles.cardContainner}>
+          <LinearGradient 
+          colors={["#001D55", "#012497"]}
+          start={{ x: 0, y: 0.5 }}
+        end={{ x: 1, y: 0.5 }}
+          style={styles.cardContainner}>
             <View>
               <CustomText isBold style={styles.cardtitle}>
                 QR CODE GENERATOR
@@ -136,12 +157,12 @@ const HomeScreen = () => {
                 // onPres s={() => navigationService.navigate('LoginScreen')}
                 text={'Join Now'}
                 fontSize={moderateScale(9, 0.3)}
-                textColor={Color.white}
+                textColor={'#002F58'}
                 borderRadius={moderateScale(30, 0.3)}
                 width={windowWidth * 0.2}
                 height={windowHeight * 0.04}
                 marginTop={moderateScale(10, 0.3)}
-                bgColor={'#002F58'}
+                bgColor={Color.white}
                 alignSelf={'left'}
                 isBold
                 // isGradient
@@ -154,9 +175,9 @@ const HomeScreen = () => {
                   width: '100%',
                 }}
                 source={require('../Assets/Images/cardimage.png')}
-              />
+                />
             </View>
-          </View>
+          </LinearGradient>
         </View>
         <FlatList
           showsVerticalScrollIndicator={true}
@@ -175,15 +196,16 @@ const HomeScreen = () => {
           }}
         />
       </ScrollView>
-    </LinearGradient>
+      </View>
+   //</LinearGradient>
     // </ImageBackground>
-  );
-};
-
-export default HomeScreen;
-const styles = ScaledSheet.create({
-  text1: {
-    fontSize: moderateScale(10, 0.6),
+    );
+  };
+  
+  export default HomeScreen;
+  const styles = ScaledSheet.create({
+    text1: {
+      fontSize: moderateScale(10, 0.6),
     color: Color.white,
   },
   container: {
@@ -211,18 +233,20 @@ const styles = ScaledSheet.create({
   mainContainer: {
     height: windowHeight,
     width: windowWidth,
+    backgroundColor: Color.white
   },
   icon: {
     height: windowHeight * 0.042,
     width: windowHeight * 0.06,
     borderRadius: moderateScale(25.05),
-    backgroundColor: Color.white,
+    // backgroundColor: Color.white,
     alignItems: 'center',
     justifyContent: 'center',
   },
   cardtitle: {
     fontSize: moderateScale(22, 0.6),
-    color: '#1F1D2B',
+    // color: '#1F1D2B',
+    color:Color.white,
     width: windowWidth * 0.5,
     textTransform : 'uppercase'
   },
@@ -240,7 +264,7 @@ const styles = ScaledSheet.create({
   cardContainner: {
     backgroundColor: Color.white,
     flexDirection: 'row',
-    borderRadius: moderateScale(10, 0.6),
+    borderRadius: moderateScale(18, 0.6),
     // height: windowHeight * 0.23,
     width: windowWidth * 0.9,
     alignItems: 'center',
