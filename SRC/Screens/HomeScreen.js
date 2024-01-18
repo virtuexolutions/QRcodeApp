@@ -19,28 +19,28 @@ import CustomButton from '../Components/CustomButton';
 import {Icon} from 'native-base';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import {Text} from 'react-native-svg';
-import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SearchbarComponent from '../Components/SearchbarComponent';
 import CardComponent from '../Components/CardComponent';
 import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation } from '@react-navigation/core';
+import navigationService from '../navigationService';
+import { useNavigation } from '@react-navigation/native';
+import { useDrawerStatus } from '@react-navigation/drawer';
 
 const HomeScreen = () => {
-  const navigation =useNavigation()
+const navigation= useNavigation();
   const dataArray = [
     {
       id: 1,
       image: require('../Assets/Images/cardimage1.png'),
       title: 'QR SCAN',
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
-      onPress : () => navigation.navigate('ScanScreen') 
     },
     {
       id: 2,
       image: require('../Assets/Images/cardimage2.png'),
       title: 'Create QR',
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
-      onPress : () => navigation.navigate('SelectCategory') 
     },
     {
       id: 3,
@@ -54,7 +54,12 @@ const HomeScreen = () => {
       title: 'Generate QR',
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },
-   
+    // {
+    //   id:5,
+    //   image:require('../Assets/Images/cardimage.png'),
+    //   title:'QR SCAN',
+    //   description:'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.'
+    // },
   ];
 
   return (
@@ -117,8 +122,8 @@ const HomeScreen = () => {
           >
             <Icon
            
-              name="menu"
-              as={Entypo}
+              name="tune-variant"
+              as={MaterialCommunityIcons}
               size={moderateScale(20, 0.6)}
               color={Color.white}
               />
@@ -184,6 +189,7 @@ const HomeScreen = () => {
           nestedScrollEnabled={true}
           scrollEnabled={true}
           data={dataArray}
+          keyExtractor={item => item.id}
           numColumns={1}
           contentContainerStyle={{
             marginHorizontal: moderateScale(10, 0.3),
@@ -236,9 +242,9 @@ const HomeScreen = () => {
     backgroundColor: Color.white
   },
   icon: {
-    height: windowHeight * 0.047,
+    height: windowHeight * 0.042,
     width: windowHeight * 0.06,
-    borderRadius: moderateScale(10 ,0.6),
+    borderRadius: moderateScale(25.05),
     // backgroundColor: Color.white,
     alignItems: 'center',
     justifyContent: 'center',

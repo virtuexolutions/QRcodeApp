@@ -47,7 +47,7 @@ const LoginScreen = props => {
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
   const [confirmPass, setconfirmPass] = useState('');
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
@@ -196,7 +196,7 @@ const LoginScreen = props => {
               borderColor={Color.white}
               marginTop={moderateScale(10, 0.3)}
               marginBottom={moderateScale(10, 0.3)}
-              color={Color.white}
+              inputColor={Color.white}
               placeholderColor={Color.white}
               // elevation
             />

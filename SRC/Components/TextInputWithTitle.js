@@ -154,7 +154,6 @@ const TextInputWithTitle = props => {
               value={props.value}
               secureTextEntry={!showPassword}
               placeholder={`${props.placeholder}`}
-              
               placeholderTextColor={
                 props.placeholderColor ? props.placeholderColor : Color.white
               }
@@ -258,7 +257,7 @@ const styles = ScaledSheet.create({
 
     // fontFamily: 'PlusJakartaDisplay-Regular',
     textAlign: I18nManager.isRTL ? 'right' : 'left',
-    color: Color.themeLightGray,
+    color: Color.white,
   },
 });
 export default TextInputWithTitle;

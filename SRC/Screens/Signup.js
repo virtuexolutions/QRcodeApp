@@ -41,7 +41,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { useNavigation } from '@react-navigation/native';
 
 const Signup = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState('');
@@ -239,7 +239,7 @@ const Signup = () => {
               marginBottom={moderateScale(10,.3)}
               
               marginTop={moderateScale(10, 0.3)}
-              color={Color.white}
+              inputColor={Color.white}
               placeholderColor={Color.white}
               // elevation
             />
@@ -260,7 +260,7 @@ const Signup = () => {
               marginBottom={moderateScale(10,.3)}
               // borderColor={Color.white}
                marginTop={moderateScale(10, 0.3)}
-              color={Color.white}
+              inputColor={Color.white}
               placeholderColor={Color.white}
               elevationss
               keyboardType={'email-address'}

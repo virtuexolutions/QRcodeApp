@@ -80,8 +80,9 @@ const MainContainer = () => {
   }
   return( 
   <AppNavigator />
+  // <Signup/>
  ) 
-
+// return <SplashScreen/>
 };
 
 const useloader = value => {
