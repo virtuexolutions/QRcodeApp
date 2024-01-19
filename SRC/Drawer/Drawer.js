@@ -25,11 +25,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const Drawer = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const userData = useSelector(state => state.commonReducer.userData);
-  const token = useSelector(state => state.authReducer.token);
-  console.log('🚀 ~ Drawer ~ token:', token);
-  const data = [
+  const data= [
     {
       name: 'Home',
       iconName: 'home',
@@ -39,135 +35,83 @@ const Drawer = () => {
       },
     },
     {
-      name: 'Log out',
-      iconName: 'logout',
-      iconType: MaterialCommunityIcons,
+      name: 'Settings',
+      iconName: 'settings',
+      iconType: Entypo,
       onPress: () => {
-        dispatch(setUserLogoutAuth());
-        dispatch(setUserLogOut());
-        dispatch(SetUserRole(''));
+        navigation.navigate('settings');
       },
     },
-    // {
-    //   name: 'Settings',
-    //   iconName: 'settings',
-    //   iconType: Entypo,
-    //   onPress: () => {
-    //     navigation.navigate('settings');
-    //   },
-    // },
-  ];
 
-  return (
+  ];
+  
+    return (
     <ScreenBoiler
       statusBarBackgroundColor={'white'}
       statusBarContentStyle={'dark-content'}>
-      <LinearGradient
+  <LinearGradient
         style={{
           // width: windowWidth *0.6,
           height: windowHeight,
         }}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        colors={['#FFFFFF', '#FFFFFF']}>
-        <View
+        colors={['#ffffff', '#ffffff']}>
+
+ <View
           style={{
-            height: windowHeight * 0.2,
-            width: '100%',
-            backgroundColor: '#D2E4E4',
-          }}>
-          {token == null ? (
-            <LinearGradient
+              height: windowHeight * 0.2,
+              width: '100%',
+              backgroundColor: '#D2E4E4',
+            }}>
+             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                // backgroundColor: 'black',
-                height: windowHeight * 0.2,
-              }}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 1}}
-              colors={Color.themeBgColor}>
-              <View style={styles.Profile}>
-                <CustomImage
-                  resizeMode={'cover'}
-                  source={require('../Assets/Images/dummyman1.png')}
-                  style={{width: '100%', height: '100%'}}
-                />
-              </View>
-              <CustomText
-                style={{
-                  color: Color.black,
-                  fontSize: moderateScale(20, 0.6),
+                  flexDirection: 'row',
+                  marginTop: moderateScale(20, 0.3),
+                  alignItems: 'center',
                   marginLeft: moderateScale(10, 0.3),
-                  // backgroundColor: 'purple',
-                  // top: 50,
-                }}
-                isBold
-                onPress={() => {
-                  navigationService.navigate('LoginScreen');
                 }}>
-                {`Login/Signup`}
-              </CustomText>
-            </LinearGradient>
-          ) : (
-            <LinearGradient
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                // backgroundColor: 'black',
-                height: windowHeight * 0.2,
-                justifyContent :'center'
-              }}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 1}}
-              colors={Color.themeBgColor}>
               <View style={styles.Profile}>
                 <CustomImage
                   resizeMode={'cover'}
-                  source={
-                    userData?.photo
-                      ? {uri: userData?.photo}
-                      : require('../Assets/Images/dummyman1.png')
-                  }
+                  source={require('../Assets/Images/logout.png')}
                   style={{width: '100%', height: '100%'}}
-                />
+                  />
               </View>
 
-              <View style={{marginLeft: moderateScale(10, 0.3)}}>
+              {/* <View style={{marginLeft: moderateScale(10, 0.3)}}>
                 <CustomText
-                  style={{fontSize: moderateScale(16, 0.6), color: Color.white}}
-                  isBold>
-                  {userData?.name} User
+                style={{fontSize: moderateScale(16, 0.6), color: Color.black}}
+                isBold>
+                {userData?.name}
                 </CustomText>
-
+                
                 <CustomText
-                  style={{
+                style={{
                     width: windowWidth * 0.4,
                     fontSize: moderateScale(11, 0.6),
-                    color: Color.white,
-                  }}>
-                  {userData?.email} test@gmail.com
+                    color: Color.black,
+                }}>
+                  {userData?.email}
                 </CustomText>
-              </View>
-            </LinearGradient>
-          )}
-        </View>
-        <View
+            </View> */}
+            </View>
+            <View
           style={{
-            marginLeft: moderateScale(10, 0.3),
+              marginLeft: moderateScale(10, 0.3),
             marginTop: moderateScale(10, 0.3),
-          }}>
+        }}>
           {data.map((item, index) => (
-            <>
+              <>
               <TouchableOpacity
                 onPress={item?.onPress}
                 style={{
-                  width: windowWidth * 0.5,
-                  // borderBottomWidth: 0.5,
-                  borderColor: Color.black,
-                  margin: moderateScale(15, 0.3),
-                  flexDirection: 'row',
-                  alignItems: 'center',
+                    width: windowWidth * 0.5,
+                    // borderBottomWidth: 0.5,
+                    borderColor: Color.black,
+                    margin: moderateScale(15, 0.3),
+                    flexDirection: 'row',
+                    alignItems: 'center',
                 }}>
                 <Icon
                   name={item?.iconName}
@@ -175,57 +119,61 @@ const Drawer = () => {
                   size={moderateScale(20, 0.3)}
                   color={Color.black}
                   onPress={item?.onPress}
-                />
+                  />
                 <CustomText
                   style={{
-                    fontSize: moderateScale(14, 0.6),
-                    color: Color.black,
-                    marginLeft: moderateScale(10, 0.3),
-                  }}>
+                      fontSize: moderateScale(14, 0.6),
+                      color: Color.black,
+                      marginLeft: moderateScale(10, 0.3),
+                    }}>
                   {item.name}
                 </CustomText>
               </TouchableOpacity>
             </>
           ))}
         </View>
-
+        
         <View
           style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: windowWidth * 0.14,
-            height: windowWidth * 0.14,
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: windowWidth * 0.14,
+              height: windowWidth * 0.14,
             borderRadius: (windowWidth * 0.14) / 1,
             backgroundColor: Color.white,
             position: 'absolute',
             bottom: 40,
             left: 20,
             elevation: 10,
-          }}>
+        }}>
           <Icon
             onPress={() => {
-              navigation.goBack();
+                navigation.goBack();
             }}
             name="chevron-left"
             as={Feather}
-            size={moderateScale(25)}
+            size={moderateScale(25, 0.7)}
             color={Color.black}
-          />
+            />
         </View>
-      </LinearGradient>
-    </ScreenBoiler>
+          </View>
+</LinearGradient>
+     
+
+</ScreenBoiler> 
   );
-};
+}
 
 export default Drawer;
 
 const styles = StyleSheet.create({
-  Profile: {
-    width: windowWidth * 0.2,
-    height: windowWidth * 0.2,
-    borderRadius: (windowWidth * 0.2) / 1,
-    borderWidth: 1,
-    borderColor: Color.white,
-    overflow: 'hidden',
-  },
+    Profile: {
+        width: windowWidth * 0.2,
+        height: windowWidth * 0.2,
+        borderRadius: (windowWidth * 0.2) / 1,
+        borderWidth: 1,
+        borderColor: Color.white,
+        overflow: 'hidden',
+    },
 });
+  
