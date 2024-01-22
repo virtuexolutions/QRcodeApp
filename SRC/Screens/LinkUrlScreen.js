@@ -184,8 +184,8 @@ const LinkUrlScreen = props => {
               }
               else{
                 Platform.OS == 'android' ?
-                ToastAndroid.show('Images and pdf work can be done when backend is' , ToastAndroid.SHORT) :
-                alert('Images and pdf work can be done when backend is')
+                ToastAndroid.show('Images and pdf work can be done when backend is implement' , ToastAndroid.SHORT) :
+                alert('Images and pdf work can be done when backend is implement')
                 // navigation.navigate('GenerateQr', {data: qrimage});
                 // setQrimage({})
                 // setQrName('');

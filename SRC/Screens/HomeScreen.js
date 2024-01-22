@@ -34,12 +34,14 @@ const navigation= useNavigation();
       id: 1,
       image: require('../Assets/Images/cardimage1.png'),
       title: 'QR SCAN',
+      onPress :() => navigation.navigate('ScanScreen'),
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },
     {
       id: 2,
       image: require('../Assets/Images/cardimage2.png'),
       title: 'Create QR',
+      onPress:()=> navigation.navigate('SelectCategory'),
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },
     {
