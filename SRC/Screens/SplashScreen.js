@@ -73,7 +73,7 @@ const SplashScreen = () => {
     fontStyle : 'italic'
 
               // marginTop : moderateScale(10,0.3)
-            }}>Lorem ipsum text lorem </CustomText>
+            }}>Lorem ipsum text lorem Lorem ipsum text lorem  </CustomText>
 
             </View>
         </Animatable.View>

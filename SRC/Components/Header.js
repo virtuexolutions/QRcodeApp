@@ -29,11 +29,12 @@ const Header = props => {
   const dispatch = useDispatch();
   const notification = useSelector(state => state.commonReducer.notification);
   const cartData = useSelector(state => state.commonReducer.cart);
-  const navigationN = useNavigation();
+  // const navigationN = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
   const {
     title,
     showBack,
+    backBtnColor,
     showList,
     headerColor,
     titleColor,
@@ -98,7 +99,7 @@ const Header = props => {
             name={'arrow-back'}
             as={Ionicons}
             size={moderateScale(25, 0.3)}
-            color={Color.white}
+            color={titleColor?titleColor: Color.white}
             onPress={() => {
               navigationN.goBack();
             }}
@@ -180,7 +181,7 @@ const Header = props => {
         <View
           >
             {
-              headerRight ? <Icon
+              headerRight ?  <Icon
               name={rightIconName}
               as={iconType}
               size={moderateScale(25, 0.3)}
