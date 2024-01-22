@@ -14,7 +14,7 @@ import {
   Button,
 } from 'react-native';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
-import {Icon} from 'native-base';
+import {Icon, theme} from 'native-base';
 import Modal from 'react-native-modal';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -258,6 +258,7 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(15, 0.3),
     fontWeight: 'bold',
     marginBottom: moderateScale(7.5, 0.3),
+    color:Color.themeblue
   },
   modalContentContianer: {
     flexDirection: 'row',
@@ -265,13 +266,13 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     height: windowHeight * 0.21,
-    borderBottomColor: Color.themeColor,
+    borderBottomColor: Color.themeblue,
     borderBottomWidth: 2,
-    borderTopColor: Color.themeColor,
+    borderTopColor: Color.themebluer,
     borderTopWidth: 2,
   },
   modalContentBtn: {
-    backgroundColor: Color.themeColor,
+    backgroundColor: Color.themeblue,
     alignItems: 'center',
     paddingHorizontal: windowWidth * 0.08,
     paddingVertical: windowHeight * 0.02,

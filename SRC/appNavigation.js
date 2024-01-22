@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, {useEffect, useState} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import navigationService from './navigationService';
-import { useSelector } from 'react-redux';
-import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {useSelector} from 'react-redux';
+import {
+  BottomTabBar,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 import Color from './Assets/Utilities/Color';
-import { moderateScale } from 'react-native-size-matters';
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Icon } from 'native-base';
-import { View } from 'react-native';
-import { windowHeight } from './Utillity/utils';
+import {moderateScale} from 'react-native-size-matters';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {Icon} from 'native-base';
+import {View} from 'react-native';
+import {windowHeight} from './Utillity/utils';
 import WalkThroughScreen from './Screens/WalkthroughScreen';
 import LoginScreen from './Screens/LoginScreen';
 import Signup from './Screens/Signup';
@@ -25,15 +28,14 @@ import TermsAndConditions from './Screens/TermsAndConditions';
 import About from './Screens/About';
 import Help from './Screens/Help';
 import Settings from './Screens/Settings';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import Drawer from './Drawer/Drawer';
-
 
 const AppNavigator = () => {
   // const isLogin = false;
   const isGoalCreated = useSelector(state => state.authReducer.isGoalCreated);
   const walkThrough = useSelector(state => state.authReducer.userWalkThrough);
-  console.log("🚀 ~ AppNavigator ~ walkThrough:", walkThrough)
+  console.log('🚀 ~ AppNavigator ~ walkThrough:', walkThrough);
   const role = useSelector(state => state.authReducer.role);
   console.log('🚀 ~ file: appNavigation.js:31 ~ AppNavigator ~ role:', role);
 
@@ -48,32 +50,35 @@ const AppNavigator = () => {
   const RootNavLogged = createNativeStackNavigator();
 
   const AppNavigatorContainer = () => {
-    const firstScreen =
-    !walkThrough
-    ? 'WalkThroughScreen'
-    : token == null
-    ? 'LoginScreen'
-    : 'drawer';
-    
-    console.log("🚀 ~ AppNavigatorContainer ~ firstScreen:", firstScreen)
+    const firstScreen = !walkThrough
+      ? 'WalkThroughScreen'
+      : token == null
+      ? 'LoginScreen'
+      : 'drawer';
+
+    console.log('🚀 ~ AppNavigatorContainer ~ firstScreen:', firstScreen);
     return (
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
           initialRouteName={firstScreen}
-          screenOptions={{ headerShown: false }}> 
-          <RootNav.Screen name='drawer' component={MyDrawer}/>    
+          screenOptions={{headerShown: false}}>
+          <RootNav.Screen name="drawer" component={MyDrawer} />
           <RootNav.Screen name="LoginScreen" component={LoginScreen} />
           <RootNav.Screen name="Signup" component={Signup} />
-          <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen} />
+          <RootNav.Screen name="WalkThroughScreen" component={WalkThroughScreen}/>
           <RootNav.Screen name="ScanScreen" component={ScanScreen} />
           <RootNav.Screen name="GenerateQr" component={GenerateQr} />
           <RootNav.Screen name="SelectCategory" component={SelectCategory} />
           <RootNav.Screen name="LinkUrlScreen" component={LinkUrlScreen} />
           <RootNav.Screen name="ShowQR" component={ShowQR} />
           <RootNav.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-          <RootNav.Screen name="TermsAndConditions" component={TermsAndConditions}/>
-          <RootNav.Screen name="About" component={About}/>
-          <RootNav.Screen name={"Help"} component={Help}/>          
+          <RootNav.Screen
+            name="TermsAndConditions"
+            component={TermsAndConditions}
+          />
+          <RootNav.Screen name="About" component={About} />
+          <RootNav.Screen name={'Help'} component={Help} />
+
         </RootNav.Navigator>
       </NavigationContainer>
     );
@@ -86,8 +91,8 @@ export const MyDrawer = () => {
   const DrawerNavigation = createDrawerNavigator();
   const role = useSelector(state => state.authReducer.role);
   console.log('🚀 ~ file: appNavigation.js:123 ~ MyDrawer ~ role:', role);
-  const firstScreen = 'HomeScreen'
-     
+  const firstScreen = 'HomeScreen';
+
   return (
     <DrawerNavigation.Navigator
       drawerContent={props => <Drawer {...props} />}
@@ -100,15 +105,10 @@ export const MyDrawer = () => {
         name="CustomerDashboard"
         component={CustomerDashboard}
       /> */}
-      <DrawerNavigation.Screen
-        name={
-         'HomeScreen'
-          }
-        component={
-         HomeScreen
-            }
-      />
-        {/* <DrawerNavigation.Screen
+      <DrawerNavigation.Screen name={'HomeScreen'} component={HomeScreen} />
+
+
+      {/* <DrawerNavigation.Screen
         name={
          'Setting'
           }
@@ -138,7 +138,7 @@ export const MyDrawer = () => {
 //     //   return (
 //     //     <LinearGradient
 //     //       colors={['red', 'blue']}
-          
+
 //     //       start={[1, 0]}
 //     //       end={[0, 0]}
 //     //     >
@@ -190,7 +190,7 @@ export const MyDrawer = () => {
 //             color = focused ?
 //               Color.theme2 : Color.white
 //             size = focused ? moderateScale(30, 0.3) : moderateScale(20, 0.3);
-//           } 
+//           }
 //           else if (route?.name == 'Campaigns'){
 //             size = focused ? moderateScale(30, 0.3) : moderateScale(20, 0.3);
 //           }
@@ -235,8 +235,6 @@ export const MyDrawer = () => {
 //             />
 //           </View>
 //         ),
-       
-
 
 //       })}
 //     >
@@ -253,4 +251,6 @@ export const MyDrawer = () => {
 // };
 export default AppNavigator;
 
-{/* <></>\ */ }
+{
+  /* <></>\ */
+}

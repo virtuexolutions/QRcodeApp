@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setSelectedItem } from '../Store/slices/common';
 
 const CategoryComponent = ({item}) => {
+  console.log("🚀 ~ CategoryComponent ~ item:", item)
   const navigation = useNavigation()
   const dispatch = useDispatch()
 
@@ -23,13 +24,17 @@ const CategoryComponent = ({item}) => {
         elevation: 3,
     }]}
     onPress={() => {
-      navigation.navigate('LinkUrlScreen' ,{item:item})
-      dispatch(setSelectedItem(item))
+     item?.title != 'pdf' && (navigation.navigate('LinkUrlScreen' ,{item:item}),
+      dispatch(setSelectedItem(item)))
     }}
     >
         <View
         style={styles.imagecontainner}>
         <CustomImage
+        onPress={() => {
+          item?.title != 'pdf' && (navigation.navigate('LinkUrlScreen' ,{item:item}),
+           dispatch(setSelectedItem(item)))
+         }}
         resizeMode={'stretch'}
           style={{
             height: '100%',
@@ -39,7 +44,12 @@ const CategoryComponent = ({item}) => {
           source={item?.image}
         />
       </View>
-      <CustomText isBold style={styles.title}>
+      <CustomText 
+       onPress={() => {
+        item?.title != 'pdf' && (navigation.navigate('LinkUrlScreen' ,{item:item}),
+         dispatch(setSelectedItem(item)))
+       }}
+       isBold style={styles.title}>
         {item?.title}
         </CustomText>
     </TouchableOpacity>

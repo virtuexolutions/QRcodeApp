@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Icon} from 'native-base';
 import {moderateScale} from 'react-native-size-matters';
@@ -32,12 +32,12 @@ const LinkUrlScreen = props => {
 
   const data = link;
 
-  // function isURL(text) {
-  //   // Regular expression for a simple URL pattern
-  //   const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+  const isURL =(text)=> {
+    // Regular expression for a simple URL pattern
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
-  //   return urlRegex.test(text);
-  // }
+    return urlRegex.test(text);
+  }
 
   // // Example usage:
   // const text1 = 'https://www.example.com';
@@ -120,12 +120,12 @@ const LinkUrlScreen = props => {
           </TouchableOpacity>
         )}
 
-        {(selectedItem?.title == 'link url' ||
+        {(selectedItem?.title == 'url' ||
           selectedItem?.title == 'text') && (
           <TextInputWithTitle
             rightIcon={false}
             placeholder={
-              selectedItem?.title == 'link url'
+              selectedItem?.title == 'url'
                 ? 'put your link url'
                 : ' your text'
             }
@@ -163,10 +163,34 @@ const LinkUrlScreen = props => {
         {(!link == '' || Object.keys(qrimage).length > 0) && (
           <CustomButton
             onPress={() => {
-              navigation.navigate('GenerateQr', {data: data});
-              setLink('');
-              setQrimage({})
-              setQrName('');
+              if(link != ''){
+               console.log(isURL(link))
+                if(selectedItem?.title == 'url' && isURL(link)){
+                  navigation.navigate('GenerateQr', {data: data});
+                  setLink('');
+                  setQrName('');
+                  
+                }
+                else if(selectedItem?.title == 'url' && isURL(link) == false){
+                  Platform.OS == 'android' ?
+                   ToastAndroid.show('Invalid URL' , ToastAndroid.SHORT) :
+                   alert('Invalid URL')
+                }
+                else{
+                  navigation.navigate('GenerateQr', {data: data});
+                  setLink('');
+                  setQrName('');
+                }
+              }
+              else{
+                Platform.OS == 'android' ?
+                ToastAndroid.show('Images and pdf work can be done when backend is' , ToastAndroid.SHORT) :
+                alert('Images and pdf work can be done when backend is')
+                // navigation.navigate('GenerateQr', {data: qrimage});
+                // setQrimage({})
+                // setQrName('');
+              
+              }
             }}
             text={'generate  code'}
             fontSize={moderateScale(12, 0.3)}

@@ -1,6 +1,7 @@
 import {
   Linking,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -23,6 +24,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import Share from 'react-native-share';
 import navigationService from '../navigationService';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import QRCode from 'react-native-qrcode-svg';
 
 const ShowQR = props => {
   const focused = useIsFocused()
@@ -56,10 +58,13 @@ const ShowQR = props => {
 
   
   return (
-    <View>
+      <ScrollView contentContainerStyle={{
+        paddingBottom:moderateScale(20,.6)
+      }}>
+    {/* <View> */}
       <Header
       showBack
-        headerColor={[Color.blue, Color.blue]}
+        headerColor={['#002F58','#002F58']}
         title={'Scan'}
         // headerRight={true}
         rightIconName={'arrow-left'}
@@ -69,12 +74,13 @@ const ShowQR = props => {
       <View
         style={{
           flexDirection: 'row',
+          marginVertical:moderateScale(10,.3),
           paddingVertical: moderateScale(20, 0.6),
           paddingHorizontal: moderateScale(15.6),
           justifyContent: 'space-between',
-          backgroundColor: Color.themeblue,
+          // backgroundColor: Color.themeblue,
         }}>
-        <Icon name={'link'} as={Entypo} size={25} color={Color.white} />
+        <Icon name={'link'} as={Entypo} size={28} color={Color.themeblue} />
         <View
           style={{
             alignItems: 'left',
@@ -85,24 +91,26 @@ const ShowQR = props => {
             top: 20,
           }}>
           <CustomText
+          isBold
             style={{
-              fontSize: moderateScale(15, 0.6),
-              color: Color.white,
+              fontSize: moderateScale(17, 0.6),
+              color: Color.themeblue,
               paddingHorizontal: moderateScale(5, 0.6),
             }}>
             url
           </CustomText>
           <CustomText
             style={{
-              color: Color.white,
+              color: Color.themeblue,
               fontSize: moderateScale(11, 0.6),
               paddingHorizontal: moderateScale(5, 0.6),
             }}>
             17-jan-2024 8:31 pm Qrcode
           </CustomText>
         </View>
-        <Icon name={'star'} as={Entypo} size={18} color={Color.white} />
+        <Icon name={'star'} as={Entypo} size={22} color={Color.themeblue} />
       </View>
+
       <CustomText
         onPress={() => {}}
         style={{
@@ -125,8 +133,8 @@ const ShowQR = props => {
         }}>
           {isLink(data) &&
 
-          
-        <TouchableOpacity
+
+<TouchableOpacity
           onPress={() => {
             Linking.openURL(data);
           }}
@@ -139,7 +147,7 @@ const ShowQR = props => {
             onPress={() => {
               Linking.openURL(data);
             }}
-          />
+            />
           <CustomText
             style={{
               fontSize: moderateScale(13, 0.6),
@@ -161,7 +169,7 @@ const ShowQR = props => {
             onPress={() => {
               ShareLink();
             }}
-          />
+            />
           <CustomText
             style={{
               marginHorizontal: moderateScale(20, 0.6),
@@ -184,7 +192,7 @@ const ShowQR = props => {
             onPress={() => {
               copyToClipboard();
             }}
-          />
+            />
 
           <CustomText
             style={{
@@ -198,44 +206,51 @@ const ShowQR = props => {
       <View
         style={{
           width: windowWidth,
-
+          
           alignItems: 'center',
         }}>
         <CustomButton
           text={'Scan Again'}
-          bgColor={Color.blue}
+          bgColor={Color.themeblue}
           fontSize={moderateScale(12, 0.3)}
           textColor={Color.white}
           // borderRadius={moderateScale(30, 0.3)}
-          width={windowWidth}
+          width={windowWidth*0.7}
           height={windowHeight * 0.06}
+          marginBottom={moderateScale(10,.3)}
           marginTop={moderateScale(20, 0.3)}
-          borderColor={Color.blue}
+          borderColor={Color.white}
           borderWidth={1}
           onPress={()=> navigation.goBack()}
           isBold
           // isGradient
-        />
+          />
       </View>
       <View
         style={{
           overflow: 'hidden',
           width: windowWidth,
-          height: windowHeight * 0.3,
+          height: windowHeight * 0.35,
           //   flexDirection:"row",
           alignSelf: 'center',
           // marginLeft:moderateScale(19, 0.8),
           justifyContent: 'center',
           alignItems: 'center',
           // backgroundColor  : 'red'
+          
         }}>
-        <CustomImage
+           <QRCode
+          value={data}
+          size={230} 
+          />
+        {/* <CustomImage
           resizeMode={'contain'}
           style={{width: windowWidth * 0.5}}
           source={require('../Assets/Images/scan.png')}
-        />
+        /> */}
       </View>
-    </View>
+        </ScrollView>
+    // </View>
   );
 };
 

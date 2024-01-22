@@ -20,7 +20,7 @@ const SelectCategory = () => {
 
   const categoryArray = [
     {
-      title: 'link url',
+      title: 'url',
       // onPress: () => navigation.navigate('LinkUrlScreen'),
       
       image: require('../Assets/Images/link.png'),

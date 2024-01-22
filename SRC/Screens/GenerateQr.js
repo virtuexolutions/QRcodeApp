@@ -49,15 +49,16 @@ const GenerateQr = props => {
   <ViewShot onCapture={onCapture} captureMode="mount">
         <QRCode
           value={data}
+          // value="Just some string value"
+          // logo={require('../Assets/Images/cardimage.png')}
           size={230} 
         />
         </ViewShot>
             <CustomButton
-        // onPress={() => {
-        //   navigation.navigate('GenerateQr' ,{data:data})
-        //   setLink('')
-        //   setQrName('')
-        // }}
+
+        onPress={() => {
+          navigation.navigate('drawer')
+          }}
           text={'save'}
           fontSize={moderateScale(14, 0.3)}
           textColor={Color.white}
@@ -70,7 +71,7 @@ const GenerateQr = props => {
           borderColor={Color.white}
           isBold
         />
-{
+{/* {
   Image != '' &&
 
         <CustomImage 
@@ -80,7 +81,7 @@ const GenerateQr = props => {
           height : 100,
           backgroundColor : 'red'
         }}
-        />}
+        />} */}
       </View>
     </View>
   );
