@@ -32,7 +32,6 @@ import PrivacyPolicy from './SRC/Screens/PrivacyPolicy';
 import TermsAndConditions from './SRC/Screens/TermsAndConditions';
 import Help from './SRC/Screens/Help';
 
-
 const App = () => {
   const [publishableKey, setPublishableKey] = useState('');
 
@@ -80,8 +79,7 @@ const MainContainer = () => {
     return <SplashScreen />;
   }
   return( 
-  // <ChatsScreen/>
-    <AppNavigator />
+  <AppNavigator />
   // <Signup/>
  ) 
 // return <SplashScreen/>
