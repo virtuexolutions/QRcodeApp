@@ -156,7 +156,7 @@ const LinkUrlScreen = props => {
           borderColor={Color.themeblue}
           marginTop={moderateScale(10, 0.3)}
           marginBottom={moderateScale(10, 0.3)}
-          // color={Color.themeblue}
+          color={Color.themeblue}
           placeholderColor={Color.themeblue}
         />
 
@@ -166,7 +166,7 @@ const LinkUrlScreen = props => {
               if(link != ''){
                console.log(isURL(link))
                 if(selectedItem?.title == 'url' && isURL(link)){
-                  navigation.navigate('GenerateQr', {data: data});
+                  navigation.navigate('GenerateQr', {data :data, item :selectedItem?.title} );
                   setLink('');
                   setQrName('');
                   

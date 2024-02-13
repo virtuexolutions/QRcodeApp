@@ -4,6 +4,7 @@ import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import ScreenBoiler from '../Components/ScreenBoiler';
+import Entypo from 'react-native-vector-icons/Entypo'
 
 import {
   ActivityIndicator,
@@ -26,9 +27,14 @@ import LinearGradient from 'react-native-linear-gradient';
 import navigationService from '../navigationService';
 import { useNavigation } from '@react-navigation/native';
 import { useDrawerStatus } from '@react-navigation/drawer';
+import { useSelector } from 'react-redux';
 
 const HomeScreen = () => {
 const navigation= useNavigation();
+const userData = useSelector(state=> state.commonReducer.userData)
+const token = useSelector(state => state.authReducer.token)
+  // console.log("🚀 ~ HomeScreen ~ token:", token)
+  // console.log("🚀 ~ HomeScreen ~ userData:", userData)
   const dataArray = [
     {
       id: 1,
@@ -87,7 +93,7 @@ const navigation= useNavigation();
                   height: '100%',
                   width: '100%',
                 }}
-                source={require('../Assets/Images/dummyman1.png')}
+                source={userData?.user_info?.photo ? {uri :userData?.user_info?.photo} : require('../Assets/Images/user.png')}
               />
             </View>
 
@@ -103,10 +109,13 @@ const navigation= useNavigation();
                   {
                     fontSize: moderateScale(18, 0.6),
                     color: Color.black,
-                    fontWeight: "bold"
+                    fontWeight: "bold",
+                    // backgroundColor:'red',
+                    width:windowWidth*0.35
                   },
                 ]}>
-                ryan francis
+                 
+                {userData?.user_info?.first_name}
               </CustomText>
               <CustomText style={styles.text1}>ryan francis</CustomText>
             </View>
@@ -124,8 +133,8 @@ const navigation= useNavigation();
           >
             <Icon
            
-              name="tune-variant"
-              as={MaterialCommunityIcons}
+              name="menu"
+              as={Entypo}
               size={moderateScale(20, 0.6)}
               color={Color.white}
               />
@@ -233,9 +242,9 @@ const navigation= useNavigation();
     alignItems: 'center',
   },
   imagecontainer: {
-    width: windowHeight * 0.08,
-    height: windowHeight * 0.08,
-    borderRadius: (windowHeight * 0.08) / 2,
+    width: windowHeight * 0.065,
+    height: windowHeight * 0.065,
+    borderRadius: (windowHeight * 0.065) / 2,
     overflow: 'hidden',
   },
   mainContainer: {

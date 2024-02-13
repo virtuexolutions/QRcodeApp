@@ -24,10 +24,15 @@ import PrivacyPolicy from './Screens/PrivacyPolicy';
 import TermsAndConditions from './Screens/TermsAndConditions';
 import About from './Screens/About';
 import Help from './Screens/Help';
+import ChangePassword from './Screens/ChangePassword'
 import Settings from './Screens/Settings';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Drawer from './Drawer/Drawer';
-
+import VerifyNumber from './Screens/VerifyNumber'
+import GalleryView from './Screens/GalleryView'
+import ResetPassword from './Screens/ResetPassword';
+import EnterPhone from './Screens/EnterPhone';
+import Profile from './Screens/Profile';
 
 const AppNavigator = () => {
   // const isLogin = false;
@@ -73,7 +78,16 @@ const AppNavigator = () => {
           <RootNav.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
           <RootNav.Screen name="TermsAndConditions" component={TermsAndConditions}/>
           <RootNav.Screen name="About" component={About}/>
-          <RootNav.Screen name={"Help"} component={Help}/>          
+          <RootNav.Screen name={"Help"} component={Help}/>    
+          <RootNav.Screen name={"ChangePassword"} component={ChangePassword}/>  
+          <RootNav.Screen name={"VerifyNumber"} component={VerifyNumber}/>   
+          <RootNav.Screen name={"ResetPassword"} component={ResetPassword}/>   
+          <RootNav.Screen name={"GalleryView"} component={GalleryView}/>    
+          <RootNav.Screen name={"EnterPhone"} component={EnterPhone}/>    
+          <RootNav.Screen name={"Profile"} component={Profile}/>    
+
+
+        
         </RootNav.Navigator>
       </NavigationContainer>
     );

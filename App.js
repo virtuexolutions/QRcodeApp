@@ -31,6 +31,7 @@ import Profile from './SRC/Screens/Profile';
 import PrivacyPolicy from './SRC/Screens/PrivacyPolicy';
 import TermsAndConditions from './SRC/Screens/TermsAndConditions';
 import Help from './SRC/Screens/Help';
+import GalleryView from './SRC/Screens/GalleryView';
 
 const App = () => {
   const [publishableKey, setPublishableKey] = useState('');
@@ -80,6 +81,7 @@ const MainContainer = () => {
   }
   return( 
   <AppNavigator />
+  // <GalleryView/>
   // <Signup/>
  ) 
 // return <SplashScreen/>

@@ -25,180 +25,160 @@ import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomButton from '../Components/CustomButton';
 import {ActivityIndicator} from 'react-native';
 import {Post} from '../Axios/AxiosInterceptorFunction';
-import CardContainer from '../Components/CardContainer';
+// import CardContainer from '../Components/CardContainer';
 // import CustomHeader from '../Components/CustomHeader';
-import { Icon } from 'native-base';
-import { useNavigation } from '@react-navigation/native';
-import { setUserToken } from '../Store/slices/auth';
+import {Icon} from 'native-base';
+import {useNavigation} from '@react-navigation/native';
+import {setUserToken} from '../Store/slices/auth';
 import LinearGradient from 'react-native-linear-gradient';
+import CustomImage from '../Components/CustomImage';
+import {CodeField} from 'react-native-confirmation-code-field';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const ResetPassword = props => {
-
+  const email =props?.route?.params?.phoneNumber
+  console.log("🚀 ~ ResetPassword ~ email:", email)
   const dispatch = useDispatch();
   const navigationN = useNavigation();
   const phoneNumber = props?.route?.params?.phone;
-const [password, setPassword] = useState('')
-const [ConfirmPass, setConfirmPass] = useState('')
+  const [password, setPassword] = useState('');
+
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // const sendOTP = async () => {
-  //   const url = 'password/email';
-  //   if (['', null, undefined].includes(phone)) {
-  //     return Platform.OS == 'android'
-  //       ? ToastAndroid.show('Phone number is required', ToastAndroid.SHORT)
-  //       : alert('Phone number is required');
-  //   }
-  //   setIsLoading(true);
-  //   const response = await Post(url, {email: phone}, apiHeader());
-  //   setIsLoading(false);
-  //   if (response != undefined) {
-  //     console.log('response data =>', response?.data);
-  //     Platform.OS == 'android'
-  //       ? ToastAndroid.show(`OTP sent to ${phone}`, ToastAndroid.SHORT)
-  //       : alert(`OTP sent to ${phone}`);
-  //     fromForgot
-  //       ? navigationService.navigate('VerifyNumber', {
-  //           fromForgot: fromForgot,
-  //           phoneNumber: `${phone}`,
-  //         })
-  //       : navigationService.navigate('VerifyNumber', {
-  //           phoneNumber: `${phone}`,
-  //         });
-  //   }
-  // };
+  const reset = async () => {
+    const url = 'password/reset';
+    const body = {
+      email: email,
+      password: password,
+      confirm_password: confirmPassword,
+    };
+    for (let key in body) {
+      if (body[key] == '') {
+        return Platform.OS == 'android'
+          ? ToastAndroid.show('All Fields are required', ToastAndroid.SHORT)
+          : Alert.alert('All Fields are required');
+      }
+    }
+
+    if (password !== confirmPassword) {
+      return Platform.OS == 'android'
+        ? ToastAndroid.show('Password donot match', ToastAndroid.SHORT)
+        : Alert.alert('Password donot match');
+    }
+    setIsLoading(true);
+    const response = await Post(url, body, apiHeader());
+    setIsLoading(false);
+
+    if (response != undefined) {
+      console.log(
+        '🚀 ~ file: Signup.js:66 ~ register ~ response:',
+        response?.data,
+      );
+      Platform.OS == 'android'
+        ? ToastAndroid.show('Password reset successfully', ToastAndroid.SHORT)
+        : Alert.alert('Password reset successfully');
+
+      navigationService.navigate('LoginScreen');
+    }
+  };
 
   return (
     <>
-      <CustomStatusBar
-       backgroundColor={
-        Color.white
-      }
-        barStyle={'dark-content'}
-      />
-         <LinearGradient
+      <CustomStatusBar backgroundColor={'#FEFDFC'} barStyle={'dark-content'} />
+      <View
         style={{
-          width: windowWidth,
           height: windowHeight,
-        }}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y:1}}
-         colors={[Color.themeColor2,Color.themeColor2]}
-        // locations ={[0, 0.5, 0.6]}
-        >
-            <TouchableOpacity
-            activeOpacity={0.8}
+          width: windowWidth,
+          justifyContent: 'center',
+          alignItems: 'center',
+          //  height: windowHeight * 0.1,
+          backgroundColor: '#FEFDFC',
+        }}>
+        {/* <View
           style={{
-            position : 'absolute',
-            top : moderateScale(20,0.3),
-            left : moderateScale(20,0.3),
-            height: moderateScale(30, 0.3),
-            width: moderateScale(30, 0.3),
-            borderRadius: moderateScale(5, 0.3),
-            justifyContent: 'center',
+            width: windowWidth * 0.7,
+            height: windowHeight * 0.2,
             alignItems: 'center',
-            backgroundColor:'white',
-            zIndex : 1
           }}>
-         
-            <Icon
-              name={'arrowleft'}
-              as={AntDesign}
-              size={moderateScale(22, 0.3)}
-              color={Color.yellow}
-              onPress={()=>{
-                navigationN.goBack()
-              }}
-            />
-            </TouchableOpacity>
-        <KeyboardAwareScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingBottom: moderateScale(20, 0.3),
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            height: windowHeight,
-          }}>
-          <CardContainer
+          <CustomImage
+            source={require('../Assets/Images/user.png')}
+            resizeMode={'contain'}
             style={{
-              paddingVertical: moderateScale(30, 0.3),
-              alignItems: 'center',
-            }}>
-            <CustomText isBold style={styles.txt2}>
-              Forget Password
-            </CustomText>
-            <CustomText style={styles.txt3}>
-              Forgot your password ? don't worry, jsut take a simple step and
-              create your new password!
-            </CustomText>
+              height: '100%',
+            }}
+          />
+        </View> */}
 
-            <TextInputWithTitle
-              titleText={'Enter New Password'}
-              secureText={false}
-              placeholder={'Enter New Password'}
-              setText={setPassword}
-              value={password}
-              viewHeight={0.07}
-              viewWidth={0.75}
-              inputWidth={0.7}
-              // border={1}
-              borderColor={'#ffffff'}
-              backgroundColor={'#FFFFFF'}
-              marginTop={moderateScale(35, 0.3)}
-              color={Color.yellow}
-              placeholderColor={Color.themeLightGray}
-              // borderRadius={moderateScale(25, 0.3)}
-              elevation
-            />
-            <TextInputWithTitle
-              titleText={'Confirm your new password'}
-              secureText={false}
-              placeholder={'Confirm your new password'}
-              setText={setConfirmPass}
-              value={ConfirmPass}
-              viewHeight={0.07}
-              viewWidth={0.75}
-              inputWidth={0.7}
-              // border={1}
-              borderColor={'#ffffff'}
-              backgroundColor={'#FFFFFF'}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.yellow}
-              placeholderColor={Color.themeLightGray}
-              // borderRadius={moderateScale(25, 0.3)}
-              elevation
-            />
-            <CustomButton
-              text={
-                isLoading ? (
-                  <ActivityIndicator color={'#FFFFFF'} size={'small'} />
-                ) : (
-                  'Reset'
-                )
-              }
-              textColor={Color.white}
-              width={windowWidth * 0.4}
-              height={windowHeight * 0.06}
-              marginTop={moderateScale(20, 0.3)}
-              onPress={() => {
-              // dispatch(setUserToken({token : 'sadasdawdadas'}))
-              }}
-              bgColor={Color.yellow
-            }
-              // borderColor={Color.white}
-              // borderWidth={2}
-              // borderRadius={moderateScale(30, 0.3)}
-            />
+        <CustomText
+          style={{
+            fontSize: moderateScale(18, 0.6),
+          }}
+          isBold>
+          Reset Password
+        </CustomText>
 
-           
-             
-            
-          </CardContainer>
-        </KeyboardAwareScrollView>
-      </LinearGradient>
+        <TextInputWithTitle
+          secureText={true}
+          titleText={'Your new Password'}
+          placeholder={'Your new Password'}
+          setText={setPassword}
+          // marginTop={moderateScale(10,0.3)}
+          value={password}
+          viewHeight={0.06}
+          viewWidth={0.8}
+          inputWidth={0.7}
+          border={1}
+          borderColor={'#0F02022E'}
+          backgroundColor={'white'}
+          marginTop={moderateScale(30, 0.3)}
+          color={Color.darkGray}
+          placeholderColor={Color.darkGray}
+          borderRadius={moderateScale(20, 0.6)}
+        />
+        <TextInputWithTitle
+          secureText={true}
+          titleText={'Confirm Password'}
+          placeholder={'Confirm Password'}
+          setText={setConfirmPassword}
+          // marginTop={moderateScale(10,0.3)}
+          value={confirmPassword}
+          viewHeight={0.06}
+          viewWidth={0.8}
+          inputWidth={0.7}
+          border={1}
+          borderColor={'#0F02022E'}
+          backgroundColor={'white'}
+          marginTop={moderateScale(30, 0.3)}
+          color={Color.darkGray}
+          placeholderColor={Color.darkGray}
+          borderRadius={moderateScale(20, 0.6)}
+        />
+
+        <CustomButton
+          text={
+            isLoading ? (
+              <ActivityIndicator color={Color.white} size={'small'} />
+            ) : (
+              'Reset Password'
+            )
+          }
+          textColor={Color.white}
+          width={windowWidth * 0.8}
+          height={windowHeight * 0.07}
+          marginTop={moderateScale(30, 0.3)}
+          fontSize={moderateScale(16, 0.6)}
+          bgColor={Color.themeBgColor}
+          borderRadius={moderateScale(30, 0.3)}
+          onPress={() => {
+            reset();
+            // navigationService.navigate('ResetInstruction');
+          }}
+          isGradient
+        />
+      </View>
     </>
   );
 };

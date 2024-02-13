@@ -1,7 +1,14 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React, { useCallback, useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ToastAndroid,
+  Alert,
+} from 'react-native';
+import React, {useCallback, useState} from 'react';
 import QRCode from 'react-native-qrcode-svg';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale} from 'react-native-size-matters';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
@@ -11,22 +18,52 @@ import CustomButton from '../Components/CustomButton';
 import ViewShot from 'react-native-view-shot';
 import RNFS from 'react-native-fs';
 import CustomImage from '../Components/CustomImage';
-
+import {Post} from '../Axios/AxiosInterceptorFunction';
+import {useSelector} from 'react-redux';
+import {Platform} from 'react-native';
 
 const GenerateQr = props => {
   const navigation = useNavigation();
+  const Item = props?.route?.params?.item;
+  console.log('🚀 ~ GenerateQr ~ item:', Item);
   const data = props?.route?.params?.data;
   console.log('🚀 ~ GenerateQr ~ data:', data);
-  const [Image, setImage] = useState('')
+  const token = useSelector(state => state.authReducer.token);
+  console.log('🚀 ~ GenerateQr ~ token:', token);
+  const [Image, setImage] = useState({});
+  // console.log("🚀 ~ GenerateQr ~ Image:", Image)
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onCapture =  useCallback  ( async (uri) => {
+  const onCapture = useCallback(async uri => {
     // console.log("do something with ", uri);
     const base64Data = await RNFS.readFile(uri, 'base64');
-    console.log("🚀 ~ onCapture ~ base64Data:", base64Data)
-    setImage(base64Data)
+    console.log('🚀 ~ onCapture ~ base64Data:', base64Data);
+    setImage(base64Data);
   }, []);
 
-  
+  const saveQrImage = async () => {
+    const formData = new FormData();
+    const body = {
+      type: Item,
+    };
+    for (let key in body) {
+      formData?.append(key, body[key]);
+    }
+    {
+      if (Object.keys(Image)?.length > 0) {
+        formData.append('image', Image);
+      }
+      const url = 'auth/document';
+      setIsLoading(true);
+      const response = await Post(url, formData, apiHeader(token));
+      //  return  console.log("🚀 ~ saveQrImage ~ formData:", formData)
+      if (response != undefined) {
+     console.log('🚀 ~ saveQrImage ~ response:', response?.data);
+     navigation.navigate('HomeScreen')
+      }
+    }
+  };
+
   return (
     <View>
       {/* // <Text>GenerateQr</Text> */}
@@ -41,23 +78,23 @@ const GenerateQr = props => {
       </View>
       <View
         style={{
-          height: windowHeight*0.75,
+          height: windowHeight * 0.75,
           // backgroundColor:'red',
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-  <ViewShot onCapture={onCapture} captureMode="mount">
-        <QRCode
-          value={data}
-          // value="Just some string value"
-          // logo={require('../Assets/Images/cardimage.png')}
-          size={230} 
-        />
+        <ViewShot onCapture={onCapture} captureMode="mount">
+          <QRCode
+            value={data}
+            // value="Just some string value"
+            // logo={require('../Assets/Images/cardimage.png')}
+            size={230}
+          />
         </ViewShot>
-            <CustomButton
-
-        onPress={() => {
-          navigation.navigate('drawer')
+        <CustomButton
+          onPress={() => {
+            saveQrImage();
+            // navigation.navigate('drawer');
           }}
           text={'save'}
           fontSize={moderateScale(14, 0.3)}
@@ -71,7 +108,7 @@ const GenerateQr = props => {
           borderColor={Color.white}
           isBold
         />
-{/* {
+        {/* {
   Image != '' &&
 
         <CustomImage 
@@ -91,7 +128,7 @@ export default GenerateQr;
 
 const styles = StyleSheet.create({
   btn: {
-    backgroundColor:'#002F58',
+    backgroundColor: '#002F58',
     height: windowHeight * 0.05,
     width: windowHeight * 0.05,
     borderRadius: (windowHeight * 0.05) / 2,

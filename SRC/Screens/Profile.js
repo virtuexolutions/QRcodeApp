@@ -22,26 +22,36 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import navigationService from '../navigationService';
-import {useDispatch} from 'react-redux';
-
+import {useDispatch, useSelector} from 'react-redux';
+import Feather from 'react-native-vector-icons/Feather';
 import {Icon} from 'native-base';
 import ImagePickerModal from '../Components/ImagePickerModal';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {Post} from '../Axios/AxiosInterceptorFunction';
+import {setUserData} from '../Store/slices/common';
+
 const Profile = () => {
-  // const navigation = useNavigation()
+  const dispatch = useDispatch()
+  const navigation = useNavigation();
+  const userData = useSelector(state => state.commonReducer.userData);
+  // console.log('🚀 ~ Profile ~ userData:', userData);
+  const token = useSelector(state => state.authReducer.token);
+  // console.log("🚀 ~ Profile ~ token:", token)
   const [isLoading, setIsLoading] = useState(false);
-  const [username, setUserName] = useState('');
-  const [email, setEmail] = useState('');
+  const [username, setUserName] = useState(userData?.user_info?.first_name );
+  // console.log("🚀 ~ Profile ~ username:", username)
+  const [email, setEmail] = useState(userData?.user_info?.email);
   const [showNumberModal, setShowNumberModal] = useState(false);
-  console.log(
-    '🚀 ~ file: Signup.js:48 ~ Signup ~ showNumberModal:',
-    showNumberModal,
-  );
+  // console.log(
+  //   '🚀 ~ file: Signup.js:48 ~ Signup ~ showNumberModal:',
+  //   showNumberModal,
+  // );
   const [countryCode, setCountryCode] = useState('US');
   const [imagePicker, setImagePicker] = useState(false);
-  console.log('🚀 ~ file: Signup.js:50 ~ Signup ~ imagePicker:', imagePicker);
+  // console.log('🚀 ~ file: Signup.js:50 ~ Signup ~ imagePicker:', imagePicker);
   const [image, setImage] = useState({});
+  console.log("🚀 ~ Profile ~ image:", image)
 
   const [country, setCountry] = useState({
     callingCode: ['1'],
@@ -61,135 +71,142 @@ const Profile = () => {
     setCountry(country);
   };
 
+  const profileUpdate = async () => {
+    const formData = new FormData();
+    const body = {
+      first_name: username,
+      email: email,
+    };
+    for (let key in body) {
+      formData?.append(key, body[key]);
+    }
+    if (Object.keys(image).length > 0) formData.append('photo', image);
+    const url = 'auth/profile';
+    setIsLoading(true);
+    const response = await Post(url, formData, apiHeader(token));
+    setIsLoading(false);
+    if (response != undefined) {
+       console.log('🚀 ~ profileUpdate ~ response:', response?.data?.user_info);
+    }
+    dispatch(setUserData(response?.data?.user_info));
+  };
+
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={()=>{
-        navigation.goBack()
+    <ScrollView
+      contentContainerStyle={{
+        height: windowHeight,
+        alignItems: 'center',
+        justifyContent: 'center',
+        // backgroundColor:'red',
       }}
+      showsVerticalScrollIndicator={false}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => {
+          navigation.goBack();
+        }}
         style={styles.back}>
         <Icon
-          name="arrowleft"
-          as={AntDesign}
+          name="chevron-left"
+          as={Feather}
           style={styles.icon2}
           color={Color.white}
-          size={moderateScale(20, 0.3)}
-          onPress={()=>{
-            navigation.goBack()
+          size={moderateScale(23, 0.3)}
+          onPress={() => {
+            navigation.goBack();
           }}
         />
       </TouchableOpacity>
-      <ImageBackground
+      <View
+        style={{
+          height: windowHeight * 0.13,
+          width: windowHeight * 0.13,
+          borderRadius: moderateScale((windowHeight * 0.13) / 2),
+          // overflow : 'hidden'
+        }}>
+        <CustomImage
+          // resizeMode="contain"
+          source={
+            Object.keys(image).length > 0
+              ? {uri: image?.uri}
+              : userData?.user_info?.photo
+              ? {uri: userData?.user_info?.photo}
+              : require('../Assets/Images/user.png')
+          }
           style={{
-            width: windowWidth,
-            minHeight: windowHeight,
-            paddingBottom: moderateScale(40, 0.6),
-            justifyContent: 'center',
-            // backgroundColor:'red',
-            // height: windowHeight*0.8,
-            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+            // backgroundColor: 'blue',
+
+            borderRadius: moderateScale((windowHeight * 0.13) / 2),
           }}
-          source={require('../Assets/Images/bg.png')}>
-          
+        />
 
-          <View
-            style={{
-           
-              height: windowHeight * 0.13,
-              width: windowHeight * 0.13,
-              borderRadius: moderateScale((windowHeight * 0.13) / 2),
-              // overflow : 'hidden'
-            }}>
-            <CustomImage
-              resizeMode="contain"
-              source={require('../Assets/Images/dummyUser1.png')}
-              style={{
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'blue',
-
-                borderRadius: moderateScale((windowHeight * 0.13) / 2),
-              }}
-            />
-
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.edit}
-              onPress={() => {
-                setImagePicker(true);
-              }}>
-              <Icon
-                name="pencil"
-                as={FontAwesome}
-                style={styles.icon2}
-                color={Color.black}
-                size={moderateScale(13, 0.3)}
-                onPress={() => {
-                  setImagePicker(true);
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              gap: 18,
-              // paddingVertical: moderateScale(30, 0.3),
-              alignItems: 'center',
-              // justifyContent: 'center',
-              marginTop: moderateScale(20, 0.3),
-            }}>
-             <TextInputWithTitle
-            style={{
-              borderWidth:moderateScale(1,.6),
-              backgroundColor:'red',
-              borderBottomWitdth:moderateScale(10,.6)
+        <TouchableOpacity
+          activeOpacity={0.6}
+          style={styles.edit}
+          onPress={() => {
+            setImagePicker(true);
+          }}>
+          <Icon
+            name="pencil"
+            as={FontAwesome}
+            style={styles.icon2}
+            color={Color.black}
+            size={moderateScale(13, 0.3)}
+            onPress={() => {
+              setImagePicker(true);
             }}
-              iconName={'user'}
-              iconType={FontAwesome}
-              iconStyle={{
-                backgroundColor:'red'
-              }}
-              LeftIcon={true}
-              titleText={'Username'}
-              placeholder={'Username'}
-              setText={setUserName}
-              value={username}
-              viewHeight={0.06}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              borderColor={Color.white}
-              borderBottomWidth={1}
-              marginBottom={moderateScale(10,.3)}
-              
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.white}
-              placeholderColor={Color.white}
-              // elevation
-            />
-            
-            <TextInputWithTitle
-              iconName={'email'}
-              iconType={Fontisto}
-              LeftIcon={true}
-              titleText={'Email'}
-              placeholder={'Email'}
-              setText={setEmail}
-              value={email}
-              viewHeight={0.06}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              borderColor={Color.white}
-              borderBottomWidth={1}
-              marginBottom={moderateScale(10,.3)}
-              // borderColor={Color.white}
-               marginTop={moderateScale(10, 0.3)}
-              color={Color.white}
-              placeholderColor={Color.white}
-              elevationss
-              keyboardType={'email-address'}
-            />
-            <TouchableOpacity
+          />
+        </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          gap: 18,
+          alignItems: 'center',
+          marginTop: moderateScale(20, 0.3),
+        }}>
+        <TextInputWithTitle
+          iconName={'user'}
+          iconType={FontAwesome}
+          LeftIcon={true}
+          titleText={'Username'}
+          placeholder={'Username'}
+          setText={setUserName}
+          value={username}
+          viewHeight={0.06}
+          viewWidth={0.75}
+          inputWidth={0.55}
+          borderColor={Color.themeblue}
+          borderBottomWidth={1}
+          marginBottom={moderateScale(10, 0.3)}
+          marginTop={moderateScale(10, 0.3)}
+          color={Color.themeblue}
+          placeholderColor={Color.themeblue}
+        />
+
+        <TextInputWithTitle
+          iconName={'email'}
+          iconType={Fontisto}
+          LeftIcon={true}
+          titleText={'Email'}
+          placeholder={'Email'}
+          setText={setEmail}
+          value={email}
+          viewHeight={0.06}
+          viewWidth={0.75}
+          inputWidth={0.55}
+          borderColor={Color.themeblue}
+          borderBottomWidth={1}
+          marginBottom={moderateScale(10, 0.3)}
+          marginTop={moderateScale(10, 0.3)}
+          color={Color.themeblue}
+          placeholderColor={Color.themeblue}
+          elevationss
+          keyboardType={'email-address'}
+          disable={true}
+        />
+        {/* <TouchableOpacity
               onPress={() => {
                 setShowNumberModal(true);
                 console.log('first');
@@ -257,35 +274,32 @@ const Profile = () => {
               color={Color.black}
               placeholderColor={Color.veryLightGray}
               elevation
-            />
-           
-          
-              <CustomButton
-                onPress={() => navigationService.navigate('LoginScreen')}
-                text={
-                  isLoading ? (
-                    <ActivityIndicator color={Color.white} size={'small'} />
-                  ) : (
-                    'SUBMIT'
-                  )
-                }
-                fontSize={moderateScale(12, 0.3)}
-                textColor={Color.white}
-                borderRadius={moderateScale(30, 0.3)}
-                width={windowWidth * 0.75}
-                height={windowHeight * 0.06}
-                marginTop={moderateScale(20, 0.3)}
-                bgColor={Color.themeColor2}
-                isBold
-                // isGradient
-              />
-          </View>
-        </ImageBackground>
-        <ImagePickerModal
-          show={imagePicker}
-          setShow={setImagePicker}
-          setFileObject={setImage}
+            /> */}
+
+        <CustomButton
+          onPress={() => profileUpdate()}
+          text={
+            isLoading ? (
+              <ActivityIndicator color={Color.white} size={'small'} />
+            ) : (
+              'SUBMIT'
+            )
+          }
+          fontSize={moderateScale(12, 0.3)}
+          textColor={Color.white}
+          borderRadius={moderateScale(30, 0.3)}
+          width={windowWidth * 0.75}
+          height={windowHeight * 0.06}
+          marginTop={moderateScale(20, 0.3)}
+          bgColor={Color.themeblue}
+          isBold
         />
+      </View>
+      <ImagePickerModal
+        show={imagePicker}
+        setShow={setImagePicker}
+        setFileObject={setImage}
+      />
     </ScrollView>
   );
 };
@@ -319,7 +333,6 @@ const styles = ScaledSheet.create({
     width: moderateScale(20, 0.3),
     height: moderateScale(20, 0.3),
     position: 'absolute',
-    // top: 110,
     bottom: -2,
     right: 5,
     borderRadius: moderateScale(10, 0.3),
@@ -328,18 +341,20 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     zIndex: 1,
   },
- back : {
-    width: moderateScale(35, 0.6),
-    height: moderateScale(35, 0.6),
-    borderRadius: moderateScale(5, 0.6),
+  back: {
+    width: windowHeight * 0.05,
+    height: windowHeight * 0.05,
+    borderRadius: (windowHeight * 0.05) / 2,
     borderWidth: 0.5,
     borderColor: '#FFFFFF',
     position: 'absolute',
     left: moderateScale(10, 0.6),
     top: moderateScale(10, 0.6),
     zIndex: 1,
-    margin :5 ,
-    alignItems : 'center',
-    justifyContent : 'center'
-  }
+    margin: 5,
+    backgroundColor: Color.themeblue,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: moderateScale(10, 0.6),
+  },
 });
