@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
   ToastAndroid,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import QRCode from 'react-native-qrcode-svg';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale} from 'react-native-size-matters';
@@ -17,10 +18,11 @@ import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
 import ViewShot from 'react-native-view-shot';
 import RNFS from 'react-native-fs';
-import CustomImage from '../Components/CustomImage';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import {useSelector} from 'react-redux';
 import {Platform} from 'react-native';
+import Color from '../Assets/Utilities/Color';
+import Feather from 'react-native-vector-icons/Feather'
 
 const GenerateQr = props => {
   const navigation = useNavigation();
@@ -41,6 +43,9 @@ const GenerateQr = props => {
     setImage(base64Data);
   }, []);
 
+
+
+ 
   const saveQrImage = async () => {
     const formData = new FormData();
     const body = {
@@ -57,72 +62,85 @@ const GenerateQr = props => {
       setIsLoading(true);
       const response = await Post(url, formData, apiHeader(token));
       //  return  console.log("🚀 ~ saveQrImage ~ formData:", formData)
-      if (response != undefined) {
-     console.log('🚀 ~ saveQrImage ~ response:', response?.data);
-     navigation.navigate('HomeScreen')
+     
+      Platform.OS == 'android'
+      ? ToastAndroid.show('Succesfully generated!', ToastAndroid.SHORT)
+      : alert('Invalid URL');
+    // return   console.log('🚀 ~ saveQrImage ~ response:', response?.data);
+     navigation.navigate('HomeScreen');
       }
     }
-  };
-
-  return (
-    <View>
-      {/* // <Text>GenerateQr</Text> */}
-      <View style={styles.row}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.goBack();
-          }}
-          style={styles.btn}>
-          <Icon name="arrowleft" as={AntDesign} color={Color.white} size={25} />
-        </TouchableOpacity>
-      </View>
-      <View
-        style={{
-          height: windowHeight * 0.75,
-          // backgroundColor:'red',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <ViewShot onCapture={onCapture} captureMode="mount">
-          <QRCode
-            value={data}
-            // value="Just some string value"
-            // logo={require('../Assets/Images/cardimage.png')}
-            size={230}
-          />
-        </ViewShot>
+    return (
+      <View>
+      
+        <View style={styles.row}>
         <CustomButton
-          onPress={() => {
-            saveQrImage();
-            // navigation.navigate('drawer');
-          }}
-          text={'save'}
-          fontSize={moderateScale(14, 0.3)}
-          textColor={Color.white}
-          borderRadius={moderateScale(30, 0.3)}
-          width={windowWidth * 0.4}
-          height={windowHeight * 0.06}
-          marginTop={moderateScale(40, 0.3)}
-          borderWidth={1}
-          bgColor={'#002F58'}
-          borderColor={Color.white}
-          isBold
-        />
-        {/* {
-  Image != '' &&
-
-        <CustomImage 
-        source={{uri : `data:image/png;base64,${Image}`}}
-        style={{
-          width : 100 ,
-          height : 100,
-          backgroundColor : 'red'
-        }}
-        />} */}
+            iconStyle={{
+              width: windowWidth * 0.09,
+              height: windowHeight * 0.05,
+              textAlign: 'center',
+              paddingTop: moderateScale(15, 0.6),
+              fontSize: moderateScale(24, 0.6),
+              color: Color.white,
+            }}
+            iconName="chevron-left"
+            iconType={Feather}
+            iconSize={18}
+            color={Color.white}
+            marginTop={moderateScale(5, 0.3)}
+            // text={'Use'}
+            isGradient={true}
+            onPress={() => {
+              navigation.goBack();
+            }}
+            bgColor={Color.themeBgColor}
+            width={windowHeight * 0.06}
+            height={windowHeight * 0.06}
+          />
+        </View>
+        <View
+          style={{
+            height: windowHeight * 0.75,
+            // backgroundColor:'red',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <ViewShot onCapture={onCapture} captureMode="mount">
+            <QRCode
+              value={(Item == 'url' || Item == 'text') ? data : data?.path}
+              // value="Just some string value"
+              logo={require('../Assets/Images/cardimage.png')}
+              size={230}
+            />
+          </ViewShot>
+          <CustomButton
+            onPress={() => {
+              saveQrImage();
+              // navigation.navigate('drawer');
+            }}
+            
+            text={'save'}
+            fontSize={moderateScale(14, 0.3)}
+            textColor={Color.white}
+            borderRadius={moderateScale(30, 0.3)}
+            width={windowWidth * 0.4}
+            height={windowHeight * 0.06}
+            marginTop={moderateScale(40, 0.3)}
+            borderWidth={1}
+            isGradient={true}
+            bgColor={Color.themeBgColor}
+            borderColor={Color.white}
+            isBold
+          />
+        
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  };
+  
+
+ 
+
 
 export default GenerateQr;
 

@@ -12,6 +12,8 @@ import {
   TouchableOpacity,
   ImageBackground,
   StyleSheet,
+  Platform,
+  ToastAndroid,
 } from 'react-native';
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
@@ -32,16 +34,16 @@ import {Post} from '../Axios/AxiosInterceptorFunction';
 import {setUserData} from '../Store/slices/common';
 
 const Profile = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const userData = useSelector(state => state.commonReducer.userData);
   // console.log('🚀 ~ Profile ~ userData:', userData);
   const token = useSelector(state => state.authReducer.token);
   // console.log("🚀 ~ Profile ~ token:", token)
   const [isLoading, setIsLoading] = useState(false);
-  const [username, setUserName] = useState(userData?.user_info?.first_name );
+  const [username, setUserName] = useState(userData?.first_name);
   // console.log("🚀 ~ Profile ~ username:", username)
-  const [email, setEmail] = useState(userData?.user_info?.email);
+  const [email, setEmail] = useState(userData?.email);
   const [showNumberModal, setShowNumberModal] = useState(false);
   // console.log(
   //   '🚀 ~ file: Signup.js:48 ~ Signup ~ showNumberModal:',
@@ -51,7 +53,7 @@ const Profile = () => {
   const [imagePicker, setImagePicker] = useState(false);
   // console.log('🚀 ~ file: Signup.js:50 ~ Signup ~ imagePicker:', imagePicker);
   const [image, setImage] = useState({});
-  console.log("🚀 ~ Profile ~ image:", image)
+  console.log('🚀 ~ Profile ~ image:', image);
 
   const [country, setCountry] = useState({
     callingCode: ['1'],
@@ -86,7 +88,11 @@ const Profile = () => {
     const response = await Post(url, formData, apiHeader(token));
     setIsLoading(false);
     if (response != undefined) {
-       console.log('🚀 ~ profileUpdate ~ response:', response?.data?.user_info);
+      Platform.OS == 'android'
+        ? ToastAndroid.show('profile updated Successfully', ToastAndroid.SHORT)
+        : alert.alert('profile updated Successfully');
+      console.log('🚀 ~ profileUpdate ~ response:', response?.data?.user_info);
+      navigation.navigate('HomeScreen');
     }
     dispatch(setUserData(response?.data?.user_info));
   };
@@ -95,77 +101,90 @@ const Profile = () => {
     <ScrollView
       contentContainerStyle={{
         height: windowHeight,
-        alignItems: 'center',
-        justifyContent: 'center',
-        // backgroundColor:'red',
       }}
       showsVerticalScrollIndicator={false}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => {
-          navigation.goBack();
-        }}
-        style={styles.back}>
-        <Icon
-          name="chevron-left"
-          as={Feather}
-          style={styles.icon2}
+      <View
+        style={{
+          paddingVertical:moderateScale(15,.6),
+          width: windowWidth * 0.2,
+        }}>
+        <CustomButton
+          iconStyle={{
+            width: windowWidth * 0.09,
+            height: windowHeight * 0.05,
+            textAlign: 'center',
+            paddingTop: moderateScale(15, 0.6),
+            fontSize: moderateScale(24, 0.6),
+            color: Color.white,
+          }}
+          iconName="chevron-left"
+          iconType={Feather}
+          iconSize={18}
           color={Color.white}
-          size={moderateScale(23, 0.3)}
+          marginTop={moderateScale(5, 0.3)}
+          // text={'Use'}
+          isGradient={true}
           onPress={() => {
             navigation.goBack();
           }}
+          bgColor={Color.themeBgColor}
+          width={windowHeight * 0.06}
+          height={windowHeight * 0.06}
         />
-      </TouchableOpacity>
-      <View
-        style={{
-          height: windowHeight * 0.13,
-          width: windowHeight * 0.13,
-          borderRadius: moderateScale((windowHeight * 0.13) / 2),
-          // overflow : 'hidden'
-        }}>
-        <CustomImage
-          // resizeMode="contain"
-          source={
-            Object.keys(image).length > 0
-              ? {uri: image?.uri}
-              : userData?.user_info?.photo
-              ? {uri: userData?.user_info?.photo}
-              : require('../Assets/Images/user.png')
-          }
-          style={{
-            width: '100%',
-            height: '100%',
-            // backgroundColor: 'blue',
-
-            borderRadius: moderateScale((windowHeight * 0.13) / 2),
-          }}
-        />
-
-        <TouchableOpacity
-          activeOpacity={0.6}
-          style={styles.edit}
-          onPress={() => {
-            setImagePicker(true);
-          }}>
-          <Icon
-            name="pencil"
-            as={FontAwesome}
-            style={styles.icon2}
-            color={Color.black}
-            size={moderateScale(13, 0.3)}
-            onPress={() => {
-              setImagePicker(true);
-            }}
-          />
-        </TouchableOpacity>
       </View>
+      
       <View
         style={{
-          gap: 18,
+          // gap: 18,
+          height:windowHeight*0.65,
+          justifyContent:'center',
+          // backgroundColor: 'red',
           alignItems: 'center',
           marginTop: moderateScale(20, 0.3),
         }}>
+        <View
+          style={{
+            height: windowHeight * 0.13,
+            width: windowHeight * 0.13,
+            borderRadius: moderateScale((windowHeight * 0.13) / 2),
+            // overflow : 'hidden'
+          }}>
+          <CustomImage
+            // resizeMode="contain"
+            source={
+              Object.keys(image).length > 0
+                ? {uri: image?.uri}
+                : userData?.photo
+                ? {uri: userData?.photo}
+                : require('../Assets/Images/user.png')
+            }
+            style={{
+              width: '100%',
+              height: '100%',
+              // backgroundColor: 'blue',
+
+              borderRadius: moderateScale((windowHeight * 0.13) / 2),
+            }}
+          />
+
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={styles.edit}
+            onPress={() => {
+              setImagePicker(true);
+            }}>
+            <Icon
+              name="pencil"
+              as={FontAwesome}
+              style={styles.icon2}
+              color={Color.black}
+              size={moderateScale(13, 0.3)}
+              onPress={() => {
+                setImagePicker(true);
+              }}
+            />
+          </TouchableOpacity>
+        </View>
         <TextInputWithTitle
           iconName={'user'}
           iconType={FontAwesome}
@@ -291,7 +310,8 @@ const Profile = () => {
           width={windowWidth * 0.75}
           height={windowHeight * 0.06}
           marginTop={moderateScale(20, 0.3)}
-          bgColor={Color.themeblue}
+          bgColor={Color.themeBgColor}
+          isGradient={true}
           isBold
         />
       </View>

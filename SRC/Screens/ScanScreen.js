@@ -10,6 +10,8 @@ import {Icon} from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
 import CustomImage from '../Components/CustomImage';
+import CustomButton from '../Components/CustomButton';
+import Feather from 'react-native-vector-icons/Feather'
 
 const ScanScreen = () => {
   const navigation = useNavigation();
@@ -55,17 +57,33 @@ const ScanScreen = () => {
         style={{
           flexDirection: 'row',
           alignItems:'center',
-        //   backgroundColor:Color.red,
+          // backgroundColor:Color.red,
           paddingVertical: moderateScale(15, 0.3),
           paddingHorizontal: moderateScale(10, 0.3),
         }}>
-        <TouchableOpacity
-          onPress={() => {
-              navigation.goBack();
+          <CustomButton
+            iconStyle={{
+              width: windowWidth * 0.09,
+              height: windowHeight * 0.05,
+              textAlign: 'center',
+              paddingTop: moderateScale(15, 0.6),
+              fontSize: moderateScale(24, 0.6),
+              color: Color.white,
             }}
-            style={styles.btn}>
-          <Icon name="arrowleft" as={AntDesign} color={Color.white} size={25} />
-        </TouchableOpacity>
+              iconName="chevron-left"
+              iconType={Feather}
+              iconSize={18}
+              color={Color.white}
+              marginTop={moderateScale(5, 0.3)}
+              // text={'Use'}
+              isGradient={true}
+              onPress={() => {
+                navigation.goBack();
+              }}
+              bgColor={Color.themeBgColor}
+              width={windowHeight * 0.06}
+              height={windowHeight * 0.06}
+            />
         <CustomText isBold style={styles.text1}>
           Qr Scan
         </CustomText>
@@ -120,7 +138,8 @@ const styles = ScaledSheet.create({
     textAlign:'center'
   },
   btn: {
-    backgroundColor: '#002F58',
+    // backgroundColor:'red',
+    // backgroundColor: '#002F58',
     height: windowHeight * 0.05,
     width: windowHeight * 0.05,
     borderRadius: (windowHeight * 0.05) / 2,

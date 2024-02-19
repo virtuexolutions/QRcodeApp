@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Touchable,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ScreenBoiler from '../Components/ScreenBoiler';
@@ -24,12 +25,14 @@ import {Get} from '../Axios/AxiosInterceptorFunction';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {useFocus} from 'native-base/lib/typescript/components/primitives';
+import CustomImage from '../Components/CustomImage';
+import {baseUrl} from '../Config';
 
 const GalleryView = () => {
-  const isFoucsed = useIsFocused();
   const navigation = useNavigation();
   const token = useSelector(state => state.authReducer.token);
-  const [selectedItem, setSelectedItem] = useState('Images');
+
+  const [selectedItem, setSelectedItem] = useState('image');
   console.log('🚀 ~ GalleryView ~ selectedItem:', selectedItem);
 
   const [visible, setIsVisible] = useState(false);
@@ -38,90 +41,38 @@ const GalleryView = () => {
   console.log('🚀 ~ GalleryView ~ galleryImages:', galleryImages);
   const [isLoading, setIsLoading] = useState(false);
   const [currentImageIndex, setImageIndex] = useState(0);
-  const [currentYesterdayImageIndex, setYesterdayImageIndex] = useState(0);
+  const [imageUrls, setImageUrls] = useState([]);
+  console.log("🚀 ~ GalleryView ~ imageUrls:", imageUrls)
   const onSelect = index => {
     setIsVisible(true);
     setImageIndex(index);
-    // setYesterdayImageIndex(index);
   };
-  
-  var imageUrls = [
-   
-  ];
-  const secondImagesArray = [
-    // {
-    //   uri: 'https://images.pexels.com/photos/6404058/pexels-photo-6404058.jpeg',
-    // },
-    // {
-    //   uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
-    // },
-    // {
-    //   uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
-    // },
-    // {
-    //   uri: 'https://images.pexels.com/photos/4947151/pexels-photo-4947151.jpeg',
-    // },
-    // {
-    //   uri: 'https://images.pexels.com/photos/6404058/pexels-photo-6404058.jpeg',
-    // },
-    // {
-    //   uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
-    // },
-    // {
-    //   uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
-    // },
-    // {
-    //   uri: 'https://images.pexels.com/photos/4947151/pexels-photo-4947151.jpeg',
-    // },
-  ];
 
-  const saveImages = async () => {
-    const url = 'auth/document';
+
+  const GetQrcodes = async () => {
+    const url = `auth/document?type=${selectedItem}`;
     setIsLoading(true);
     const response = await Get(url, token);
     setIsLoading(false);
-    if (response !== undefined) {
-      // console.log(galleryImages[0])
-      //  return console.log("🚀 ~ saveImages ~ response:", response?.data?.info)
+    console.log("User tooken ==>", token);
+    if (response != undefined) {
+      console.log("QR===>",response?.data);
       setGalleryImages(response?.data?.info);
+      setImageUrls(response?.data?.info?.map((item , index)=>
+        {
+          return  {uri : `${baseUrl}${item.image}`}
+        }
+      ))
     }
   };
   useEffect(() => {
-    saveImages();
-  }, [isFoucsed]);
+    if(selectedItem != ''){
 
-  function ImageBuilder({galleryImages, onPress, index}) {
-    console.log("🚀 ~ ImageBuilder ~ galleryImages:", galleryImages)
-    // console.log("🚀 ~ ImageBuilder ~ galleryImages:", galleryImages[0])
-    // console.log('Image ==> ', imageUrl);s
-    if (!Array.isArray(galleryImages) || index < 0 || index >= galleryImages.length) {
-      console.error('Invalid galleryImages array or index');
-      return null; // or render a placeholder or handle the error appropriately
+      GetQrcodes();
     }
-  
-    const imageItem = galleryImages[index];
-  
-    // Check if the image item and its 'image' property are defined
-    if (!imageItem || !imageItem.image) {
-      console.error(`Invalid image data at index ${index}`);
-      return null; // or render a placeholder or handle the error appropriately
-    }
-    imageUrls.push({uri:`https://ce84-139-190-235-11.ngrok-free.app${imageItem.image}`});
-    return (
-      <TouchableOpacity onPress={() => onPress(index)}>
-        <View style={styles.imageContainer}>
-           <Image
-            source={{uri:`https://ce84-139-190-235-11.ngrok-free.app${imageItem.image}`}}
-            width={'100%'}
-            height={'100%'}
-            resizeMode="cover"
-            style={styles.galleryImg}
-          />
-        </View>
-      </TouchableOpacity>
-    );
-  }
-  // const arra{{uri: ""}}
+  }, [selectedItem]);
+
+
 
   return (
     <ScrollView
@@ -130,52 +81,53 @@ const GalleryView = () => {
         paddingBottom: moderateScale(50, 0.6),
       }}
       style={styles.mainScreen}>
-      <View style={{
-        paddingVertical:moderateScale(10,.6),
-        flexDirection:"row",
-        justifyContent:'space-between',
-        alignItems:'center',
-        // backgroundColor:"green"
-      }}>
-        <TouchableOpacity
-          activeOpacity={0.8}
+      <View style={styles.row}>
+        <CustomButton
+          iconStyle={{
+            width: windowWidth * 0.09,
+            height: windowHeight * 0.05,
+            textAlign: 'center',
+            paddingTop: moderateScale(15, 0.6),
+            fontSize: moderateScale(24, 0.6),
+            color: Color.white,
+          }}
+          iconName="chevron-left"
+          iconType={Feather}
+          iconSize={18}
+          color={Color.white}
+          marginTop={moderateScale(5, 0.3)}
+          // text={'Use'}
+          isGradient={true}
           onPress={() => {
             navigation.goBack();
           }}
-          style={styles.back}>
-          <Icon
-            name="chevron-left"
-            as={Feather}
-            style={styles.icon2}
-            color={Color.white}
-            size={moderateScale(23, 0.3)}
-            onPress={() => {
-              navigation.goBack();
-            }}
-          />
-        </TouchableOpacity>
-        <CustomText isBold style={{
-          fontSize:moderateScale(22,.6),
-          width:windowWidth*0.6,
-          color:Color.themeblue
-          // backgroundColor:'red',
-          
-        }}>
+          bgColor={Color.themeBgColor}
+          width={windowHeight * 0.06}
+          height={windowHeight * 0.06}
+        />
+
+        <CustomText
+          isBold
+          style={{
+            fontSize: moderateScale(22, 0.6),
+            width: windowWidth * 0.53,
+            color: Color.themeblue,
+            // backgroundColor:'red',
+          }}>
           gallery
         </CustomText>
       </View>
       <View>
-        <View
-          style={styles.container}>
+        <View style={styles.container}>
           <TouchableOpacity
             style={{
-              borderBottomWidth: selectedItem == 'Images' ? 1 : 0,
+              borderBottomWidth: selectedItem == 'image' ? 1 : 0,
               borderColor:
-                selectedItem == 'Images' ? Color.themeblue : '#9B9B9B',
-              color: selectedItem == 'Images' ? Color.themeblue : Color.black,
+                selectedItem == 'image' ? Color.themeblue : '#9B9B9B',
+              color: selectedItem == 'image' ? Color.themeblue : Color.black,
             }}
             onPress={() => {
-              setSelectedItem('Images');
+              setSelectedItem('image');
             }}>
             <View style={styles.tabBarButton}>
               <CustomText isBold>Images</CustomText>
@@ -184,12 +136,12 @@ const GalleryView = () => {
           <TouchableOpacity
             onPress={() => {
               console.log('i m Text here');
-              setSelectedItem('Text');
+              setSelectedItem('text');
             }}
             style={{
-              borderBottomWidth: selectedItem == 'Text' ? 1 : 0,
-              borderColor: selectedItem == 'Text' ? Color.themeblue : '#9B9B9B',
-              color: selectedItem == 'Text' ? Color.themeblue : 'black',
+              borderBottomWidth: selectedItem == 'text' ? 1 : 0,
+              borderColor: selectedItem == 'text' ? Color.themeblue : '#9B9B9B',
+              color: selectedItem == 'text' ? Color.themeblue : 'black',
             }}>
             <View style={styles.tabBarButton}>
               <CustomText isBold>Text</CustomText>
@@ -197,88 +149,110 @@ const GalleryView = () => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setSelectedItem('Links');
+              setSelectedItem('url');
             }}
             style={{
-              borderBottomWidth: selectedItem == 'Links' ? 1 : 0,
-              borderColor: selectedItem == 'Links' && Color.themeblue,
-              color: selectedItem == 'Text' ? Color.themeblue : 'black',
+              borderBottomWidth: selectedItem == 'url' ? 1 : 0,
+              borderColor: selectedItem == 'url' && Color.themeblue,
+              color: selectedItem == 'url' ? Color.themeblue : 'black',
             }}>
             <View style={styles.tabBarButton}>
-              <CustomText isBold>Links</CustomText>
+              <CustomText isBold>url</CustomText>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setSelectedItem('PDF');
+              setSelectedItem('pdf');
             }}
             style={{
-              borderBottomWidth: selectedItem == 'PDF' ? 1 : 0,
-              borderColor: selectedItem == 'PDF' && Color.themeblue,
-              color: selectedItem == 'PDF' ? Color.themeblue : 'black',
+              borderBottomWidth: selectedItem == 'pdf' ? 1 : 0,
+              borderColor: selectedItem == 'pdf' && Color.themeblue,
+              color: selectedItem == 'pdf' ? Color.themeblue : 'black',
             }}>
             <View style={styles.tabBarButton}>
-              <CustomText isBold>PDF</CustomText>
+              <CustomText isBold>pdf</CustomText>
             </View>
           </TouchableOpacity>
         </View>
 
         <View style={styles.todaySection}>
-          <CustomText style={{fontSize: moderateScale(18, 0.4)}} isBold>
-            Today
-          </CustomText>
-          <View
-            style={{
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-            }}>
-             {galleryImages.length > 0 ? (
-            galleryImages.map((item, index) => (
-              <ImageBuilder
-                key={index}
-                galleryImages={galleryImages}
-                index={index}
-                onPress={onSelect}
-              />
-            ))
+        
+
+          {isLoading ? (
+            <ActivityIndicator
+              style={{alignItems: 'center', height: windowHeight * 0.65}}
+              size={'large'}
+              color={Color.themeblue}
+            />
           ) : (
-            <Text>Loading images...</Text>
+            <FlatList
+              showsVerticalScrollIndicator={true}
+              nestedScrollEnabled={true}
+              numColumns={3}
+           
+              data={galleryImages}
+              keyExtractor={item => item.id}
+              contentContainerStyle={{
+                paddingBottom: moderateScale(50, 0.6),
+                // alignItems : 'center'
+              }}
+              style={{
+                width : windowWidth * 0.95,
+                alignSelf : 'center'
+              }}
+              renderItem={({item, index}) => {
+                console.log("🚀 ~ GalleryView ~ item:", `${baseUrl}${item?.image}`)
+                return (
+                
+                  <View style={styles.imageContainer}>
+                    <CustomImage
+                    onPress={() => onSelect(index)}
+                      source={{uri: `${baseUrl}${item?.image}`}}
+                      style={styles.galleryImg}
+                      // resizeMode="cover"
+                    />
+                  </View>
+                )
+               
+              }}
+              ListEmptyComponent={() => {
+                return (
+                <View style={{
+                  width : '100%',
+                  height : windowHeight * 0.7,
+                  justifyContent : 'center',
+                  alignItems : 'center'
+                }}>
+                    <View
+                      style={{
+                        width: windowWidth * 0.25,
+                        height: windowHeight * 0.15,
+                        // backgroundColor:'red',
+                      }}>
+                      <CustomImage
+                        style={{
+                          height: '100%',
+                          width: '100%',
+                        }}
+                        source={require('../Assets/Images/emptybox.png')}
+                      />
+                    </View>
+                    </View>
+                );
+              }}
+            />
           )}
-            {/* {galleryImages?.map((item, index) => (
-              <ImageBuilder
-                imageUrl={item?.image}
-                index={index}
-                onPress={onSelect}
-              />
-            ))} */}
-          </View>
+
+         
           <ImageView
+            backgroundColor={'black'}
             images={imageUrls}
             imageIndex={currentImageIndex}
             visible={visible}
             onRequestClose={() => setIsVisible(false)}
           />
         </View>
-        <View style={styles.todaySection}>
-          <CustomText style={{fontSize: moderateScale(18, 0.4)}} isBold>
-            Yesterday
-          </CustomText>
-          <View
-            style={{
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-            }}>
-            {secondImagesArray?.map((item, index) => (
-              <ImageBuilder imageUrl={item?.image} index={index} onPress={onSelect} />
-            ))}
-          </View>
-          <ImageView
-            images={secondImagesArray}
-            imageIndex={currentYesterdayImageIndex}
-            visible={yestImageIsVisible}
-            onRequestClose={() => setYestImageVisible(false)}
-          />
-        </View>
+       
       </View>
     </ScrollView>
   );
@@ -292,8 +266,8 @@ const styles = StyleSheet.create({
     height: windowHeight,
   },
   todaySection: {
+    // alignItems:'center',
     width: windowWidth,
-
     paddingHorizontal: moderateScale(15, 0.2),
   },
   galleryImg: {
@@ -301,11 +275,11 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   imageContainer: {
-    width: 105,
-    height: 105,
-    margin: moderateScale(5, 0.6),
-    borderRadius: 9,
-    overflow: 'hidden',
+    width: windowWidth * 0.28,
+    height: windowHeight * 0.12,
+    margin: moderateScale(6, 0.6),
+    // borderRadius: 9,
+    // overflow: 'hidden',
   },
   tabBarButton: {
     // borderBottomWidth: 1,
@@ -313,7 +287,7 @@ const styles = StyleSheet.create({
     // borderBottomColor: Color.darkGray,
     alignItems: 'center',
   },
-  container:{
+  container: {
     width: windowWidth,
     height: windowHeight * 0.07,
     paddingVertical: moderateScale(12, 0.5),
@@ -321,24 +295,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: moderateScale(25, 0.6),
-    overflow: 'hidden',
-    gap: 0,
+    // overflow: 'hidden',
+    // gap: 0,
   },
-
-  back: {
-    width: windowHeight * 0.05,
-    height: windowHeight * 0.05,
-    borderRadius: (windowHeight * 0.05) / 2,
-    borderWidth: 0.5,
-    borderColor: '#FFFFFF',
-    // position: 'absolute',
-    // left: moderateScale(10, 0.6),
-    // top: moderateScale(10, 0.6),
-    zIndex: 1,
-    margin: 5,
-    backgroundColor: Color.themeblue,
+  row: {
+    paddingHorizontal: moderateScale(10, 0.6),
+    paddingVertical: moderateScale(10, 0.6),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: moderateScale(10, 0.6),
   },
 });

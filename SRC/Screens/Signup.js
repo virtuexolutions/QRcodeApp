@@ -107,23 +107,16 @@ const Signup = () => {
     for (let key in body) {
       formData?.append(key, body[key]);
     }
-    if(Object.keys(image).length>0) formData.append('photo', image) 
-    
+    if (Object.keys(image).length > 0) formData.append('photo', image);
+
     const url = 'register';
 
     setIsLoading(true);
     const response = await Post(url, formData, apiHeader());
-    console.log(
-      '🚀 ~ file: Signup.js:93 ~ registerUser ~ response:',
-      response?.data,
-    );
     setIsLoading(false);
-
     if (response != undefined) {
-      console.log('response data==========>>>>>>>>', response?.data);
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({token: response?.data?.token}));
-      // dispatch(SetUserRole(response?.data?.user_info?.role));
     }
   };
 
@@ -313,7 +306,8 @@ const Signup = () => {
                 paddingHorizontal: moderateScale(15, 0.3),
               }}>
               <CustomButton
-                onPress={ () => registerUser()
+                onPress={
+                  () => registerUser()
                   // dispatch(setUserToken({token: 'meerab'}))
                 }
                 text={

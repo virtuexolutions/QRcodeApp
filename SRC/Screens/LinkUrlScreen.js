@@ -1,70 +1,145 @@
-import {Platform, StyleSheet, Text, ToastAndroid, TouchableOpacity, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Icon} from 'native-base';
 import {moderateScale} from 'react-native-size-matters';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {Post} from '../Axios/AxiosInterceptorFunction';
 import CustomText from '../Components/CustomText';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
-import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import CustomButton from '../Components/CustomButton';
 import Color from '../Assets/Utilities/Color';
+import DocumentPicker from 'react-native-document-picker';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {setSelectedItem} from '../Store/slices/common';
-// import {style} from 'deprecated-react-native-prop-types/DeprecatedViewPropTypes';
 import Feather from 'react-native-vector-icons/Feather';
+import {apiHeader} from '../Utillity/utils';
 import ImagePickerModal from '../Components/ImagePickerModal';
 
 const LinkUrlScreen = props => {
-  const selectedItem = props?.route?.params?.item;
-  console.log('🚀 ~ LinkUrlScreen ~ selectedItem:', selectedItem);
-  // const selectedItem = useSelector(state => state.commonReducer.selectedItem);
-  // console.log('🚀 ~ SelectCategory ~ selectedItem:', selectedItem);
   const navigation = useNavigation();
+  const token = useSelector(state => state.authReducer.token);
+  const selectedItem = props?.route?.params?.item;
+  console.log("🚀 ~ LinkUrlScreen ~ selectedItem:", selectedItem)
   const [imagePicker, setImagePicker] = useState();
-
+  const [image, setImage] = useState({});
+  console.log("🚀 ~ LinkUrlScreen ~ image:", image)
   const [link, setLink] = useState('');
   const [qrName, setQrName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  console.log('🚀 ~ LinkUrlScreen ~ qrName:', qrName);
   const [qrimage, setQrimage] = useState({});
-  console.log('🚀 ~ LinkUrlScreen ~ qrimage:', qrimage);
+  // const data = link;
 
-  const data = link;
-
-  const isURL =(text)=> {
+  const isURL = text => {
     // Regular expression for a simple URL pattern
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
     return urlRegex.test(text);
-  }
+  };
 
-  // // Example usage:
-  // const text1 = 'https://www.example.com';
-  // const text2 = 'This is not a URL';
+  const sendDocument = async response => {
+    const formData = new FormData();
+    console.log('hertere');
+    console.log( 'beraa           ',response);
 
-  // console.log(isURL(text1)); // Output: true
-  // console.log(isURL(text2)); // Output: false
+    const url = 'auth/pdf';
+    const body = {
+      file: {
+        name: selectedItem?.title == 'image' ? response?.name : response[0].name,
+        type: selectedItem?.title == 'image' ? response?.type : response[0].type,
+        uri: selectedItem?.title == 'image' ? response?.uri : response[0].uri,
+      },
+      name: selectedItem?.title == 'image' ? response?.name : response[0].name,
+    };
+    console.log("🚀 ~ sendDocument ~ body:", body)
+    for (let key in body) {
+      formData.append(key, body[key]);
+    }
+    setIsLoading(true);
+    const resposne = await Post(url, formData, apiHeader(token));
+    setIsLoading(false);
+
+    if (resposne != undefined) {
+      console.log('🚀 ~ sendDocument ~ resposne:', resposne?.data);
+      setQrimage(resposne?.data?.pdf_info);
+
+      // console.log('sending document', resposne?.data);
+    }
+  };
+  const handleDocumentSelection = useCallback(async () => {
+    // dispatch(setInTheApp(true))
+    try {
+      const response = await DocumentPicker.pick({
+        presentationStyle: 'fullScreen',
+        type: [DocumentPicker.types.pdf, DocumentPicker.types.docx],
+      });
+      console.log('🚀 ~ handleDocumentSelection ~ response:', response);
+      // console.log('This is document Response==========================>>>>>>>>',response)
+
+      sendDocument(response);
+    } catch (err) {
+      console.warn(err);
+    }
+  }, []);
+
+
+  useEffect(() => {
+    if(Object.keys(image).length > 0){
+      sendDocument(image)
+    }
+      }, [image])
+  
 
   return (
     <View style={styles.mainContainer}>
       {/* <View style={styles.rowContainer}> */}
-        <TouchableOpacity
+      <View
+        style={{
+          paddingVertical: moderateScale(10, 0.6),
+          // backgroundColor:'red',
+          width: windowWidth * 0.2,
+        }}>
+        <CustomButton
+          iconStyle={{
+            width: windowWidth * 0.09,
+            height: windowHeight * 0.05,
+            textAlign: 'center',
+            paddingTop: moderateScale(15, 0.6),
+            fontSize: moderateScale(24, 0.6),
+            color: Color.white,
+          }}
+          iconName="chevron-left"
+          iconType={Feather}
+          iconSize={18}
+          color={Color.white}
+          marginTop={moderateScale(5, 0.3)}
+          // text={'Use'}
+          isGradient={true}
           onPress={() => {
             navigation.goBack();
           }}
-          style={styles.btn}>
-          <Icon name="arrowleft" as={AntDesign} color={'white'} size={25} />
-        </TouchableOpacity>
+          bgColor={Color.themeBgColor}
+          width={windowHeight * 0.06}
+          height={windowHeight * 0.06}
+        />
+      </View>
       {/* </View> */}
 
       <View style={styles.inputContainer}>
         {(selectedItem?.title == 'pdf' || selectedItem?.title == 'image') && (
           <TouchableOpacity
             onPress={() => {
-              selectedItem?.title == 'image'
-                ? setImagePicker(true)
-                : console.log('doc picker will open here');
+              selectedItem?.title !== 'image'
+                ? handleDocumentSelection()
+                : setImagePicker(true);
             }}
             style={styles.input2}>
             {Object.keys(qrimage).length > 0 ? (
@@ -77,7 +152,8 @@ const LinkUrlScreen = props => {
                     color: Color.themeblue,
                     fontSize: moderateScale(12, 0.6),
                   }}>
-                  {qrimage?.name}
+                  {qrimage?.filename}
+                  {selectedItem?.title === 'image' && qrimage?.name}
                 </CustomText>
                 <Icon
                   name="close"
@@ -89,7 +165,7 @@ const LinkUrlScreen = props => {
                     // setImagePicker(true);
                     setQrimage({});
                   }}
-                  style={{marginLeft : moderateScale(10,0.3)}}
+                  style={{marginLeft: moderateScale(10, 0.3)}}
                 />
               </>
             ) : (
@@ -101,33 +177,33 @@ const LinkUrlScreen = props => {
                   color={Color.themeblue}
                   size={moderateScale(20, 0.3)}
                   onPress={() => {
-                    setImagePicker(true);
+                    selectedItem?.title !== 'image'
+                      ? handleDocumentSelection()
+                      : setImagePicker(true);
                   }}
                 />
                 {/* </TouchableOpacity> */}
                 <CustomText
                   onPress={() => {
-                    qrimage.Obect;
-                    setImagePicker(true);
+                    selectedItem?.title !== 'image'
+                      ? handleDocumentSelection()
+                      : setImagePicker(true);
                   }}
                   style={styles.text2}>
                   {selectedItem?.title == 'image'
                     ? 'upload your image'
-                    : 'upload your file'}
+                    : 'upload your pdf file'}
                 </CustomText>
               </>
             )}
           </TouchableOpacity>
         )}
 
-        {(selectedItem?.title == 'url' ||
-          selectedItem?.title == 'text') && (
+        {(selectedItem?.title == 'url' || selectedItem?.title == 'text') && (
           <TextInputWithTitle
             rightIcon={false}
             placeholder={
-              selectedItem?.title == 'url'
-                ? 'put your link url'
-                : ' your text'
+              selectedItem?.title == 'url' ? 'put your link url' : ' your text'
             }
             // border={1}
             setText={setLink}
@@ -163,33 +239,34 @@ const LinkUrlScreen = props => {
         {(!link == '' || Object.keys(qrimage).length > 0) && (
           <CustomButton
             onPress={() => {
-              if(link != ''){
-               console.log(isURL(link))
-                if(selectedItem?.title == 'url' && isURL(link)){
-                  navigation.navigate('GenerateQr', {data :data, item :selectedItem?.title} );
+              if (link != '') {
+                if (selectedItem?.title == 'url' && isURL(link)) {
+                  navigation.navigate('GenerateQr', {
+                    data: link,
+                    item: selectedItem?.title,
+                  });
                   setLink('');
                   setQrName('');
-                  
-                }
-                else if(selectedItem?.title == 'url' && isURL(link) == false){
-                  Platform.OS == 'android' ?
-                   ToastAndroid.show('Invalid URL' , ToastAndroid.SHORT) :
-                   alert('Invalid URL')
-                }
-                else{
-                  navigation.navigate('GenerateQr', {data: data});
+                } else if (
+                  selectedItem?.title == 'url' &&
+                  isURL(link) == false
+                ) {
+                  Platform.OS == 'android'
+                    ? ToastAndroid.show('Invalid URL', ToastAndroid.SHORT)
+                    : alert('Invalid URL');
+                } else {
+                  navigation.navigate('GenerateQr', {
+                    data: link,
+                    item: selectedItem?.title,
+                  });
                   setLink('');
                   setQrName('');
                 }
-              }
-              else{
-                Platform.OS == 'android' ?
-                ToastAndroid.show('Images and pdf work can be done when backend is implement' , ToastAndroid.SHORT) :
-                alert('Images and pdf work can be done when backend is implement')
-                // navigation.navigate('GenerateQr', {data: qrimage});
-                // setQrimage({})
-                // setQrName('');
-              
+              } else {
+                navigation.navigate('GenerateQr', {
+                  data: qrimage,
+                  item: selectedItem?.title,
+                });
               }
             }}
             text={'generate  code'}
@@ -202,14 +279,15 @@ const LinkUrlScreen = props => {
             // borderWidth={1}
             // borderColor={Color.themeblue}
             isBold
-            bgColor={Color.themeblue}
+            isGradient={true}
+            bgColor={Color.themeBgColor}
           />
         )}
       </View>
       <ImagePickerModal
         show={imagePicker}
         setShow={setImagePicker}
-        setFileObject={setQrimage}
+        setFileObject={setImage}
       />
     </View>
   );

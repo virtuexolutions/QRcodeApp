@@ -19,7 +19,7 @@ import CustomButton from '../Components/CustomButton';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import CountryPicker, {DARK_THEME} from 'react-native-country-picker-modal';
-import Fontisto from 'react-native-vector-icons/Fontisto';
+import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import navigationService from '../navigationService';
@@ -80,31 +80,43 @@ const Profile = () => {
       style={{
         height: windowHeight,
         width: windowWidth,
-        alignItems: 'center',
         paddingTop: moderateScale(20, 0.3),
       }}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => {
-          navigation.goBack();
-        }}
-        style={styles.back}>
-        <Icon
-          name="arrowleft"
-          as={AntDesign}
-          style={styles.icon2}
-          color={Color.white}
-          size={moderateScale(20, 0.3)}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
-      </TouchableOpacity>
+        <View style={{
+          width:windowWidth*0.2,
+        }}>
+
+             <CustomButton
+               iconStyle={{
+                width: windowWidth * 0.09,
+                height: windowHeight * 0.05,
+                textAlign: 'center',
+                paddingTop: moderateScale(15, 0.6),
+                fontSize: moderateScale(24, 0.6),
+                color: Color.white,
+              }}
+              iconName="chevron-left"
+              iconType={Feather}
+              iconSize={18}
+              color={Color.white}
+              marginTop={moderateScale(5, 0.3)}
+              // text={'Use'}
+              isGradient={true}
+              onPress={() => {
+                navigation.goBack();
+              }}
+              bgColor={Color.themeBgColor}
+              width={windowHeight * 0.06}
+              height={windowHeight * 0.06}
+            />
+        </View>
+
 
       <CustomText style={styles.txt5}>Change Password</CustomText>
       <View
         style={{
           gap: 15,
+          // backgroundColor:'red',
           height: windowHeight * 0.45,
           alignItems: 'center',
           justifyContent: 'center',
@@ -191,7 +203,8 @@ const Profile = () => {
           width={windowWidth * 0.75}
           height={windowHeight * 0.06}
           marginTop={moderateScale(20, 0.3)}
-          bgColor={Color.themeblue}
+          bgColor={Color.themeBgColor}
+          isGradient={true}
           isBold
         />
       </View>

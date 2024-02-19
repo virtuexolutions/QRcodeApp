@@ -8,28 +8,29 @@ import {windowHeight, windowWidth} from '../Utillity/utils';
 import CategoryComponent from '../Components/CategoryComponent';
 import {useNavigation} from '@react-navigation/core';
 import Color from '../Assets/Utilities/Color';
-import { useDispatch } from 'react-redux';
-import { setSelectedItem } from '../Store/slices/common';
+import {useDispatch} from 'react-redux';
+import {setSelectedItem} from '../Store/slices/common';
+import CustomButton from '../Components/CustomButton';
+import Feather from 'react-native-vector-icons/Feather';
+import LinearGradient from 'react-native-linear-gradient';
 
 const SelectCategory = () => {
-  
   const dispatch = useDispatch();
   // const [selectedItem ,setSelectedItem] = useState()
- 
+
   const navigation = useNavigation();
 
   const categoryArray = [
     {
       title: 'url',
       // onPress: () => navigation.navigate('LinkUrlScreen'),
-      
+
       image: require('../Assets/Images/link.png'),
     },
     {
       title: 'image',
       image: require('../Assets/Images/photo.png'),
       // onPress: () => navigation.navigate('LinkUrlScreen'),
-
     },
     {
       title: 'pdf',
@@ -42,22 +43,41 @@ const SelectCategory = () => {
     },
   ];
 
-
-
-
   return (
-    <View
+    <LinearGradient
       style={{
-        backgroundColor: '#002F58',
-      }}>
+        height: windowHeight,
+      }}
+      start={{x: 0, y: 0}}
+      end={{x: 1, y: 1}}
+      colors={['#001D55', '#012497']}>
       <View style={styles.row}>
-        <TouchableOpacity
+        <CustomButton
+          iconStyle={{
+            width: windowWidth * 0.09,
+            height: windowHeight * 0.05,
+            textAlign: 'center',
+            paddingTop: moderateScale(15, 0.6),
+            fontSize: moderateScale(24, 0.6),
+            color: Color.themeblue,
+          }}
+          iconName="chevron-left"
+          iconType={Feather}
+          iconSize={moderateScale(23, 0.6)}
+          // color={Color.red}
+          // color={Color.red}
+          marginTop={moderateScale(5, 0.3)}
+          // textColor={Color.red}
+          // text={'Use'}
+          // isGradient={true}
           onPress={() => {
             navigation.goBack();
           }}
-          style={styles.btn}>
-          <Icon name="arrowleft" as={AntDesign} color={'#002F58'} size={25} />
-        </TouchableOpacity>
+          bgColor={'white'}
+          width={windowHeight * 0.06}
+          height={windowHeight * 0.06}
+          borderRadius={(windowHeight * 0.06) / 2}
+        />
         <CustomText isBold style={styles.text1}>
           Generate Qr
         </CustomText>
@@ -84,7 +104,7 @@ const SelectCategory = () => {
           return <CategoryComponent item={item} />;
         }}
       />
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -98,18 +118,11 @@ const styles = StyleSheet.create({
     // backgroundColor:'red',
     textAlign: 'center',
   },
-  btn: {
-    backgroundColor: Color.white,
-    height: windowHeight * 0.05,
-    width: windowHeight * 0.05,
-    borderRadius: (windowHeight * 0.05) / 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    //   backgroundColor:Color.red,
+    // backgroundColor:Color.red,
     paddingVertical: moderateScale(20, 0.3),
     paddingHorizontal: moderateScale(15, 0.3),
   },

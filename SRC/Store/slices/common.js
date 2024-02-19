@@ -207,7 +207,7 @@ const CommonSlice = createSlice({
     },
     setSelectedItem(state,action){
       state.selectedItem = action.payload
-      // console.log("🚀 ~ setSelectedItem ~  action.payload:",  action.payload)
+      console.log("🚀 ~ setSelectedItem ~  action.payload:",  action.payload)
 
     }
   },
