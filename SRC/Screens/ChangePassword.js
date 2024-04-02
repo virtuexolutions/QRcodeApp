@@ -82,35 +82,34 @@ const Profile = () => {
         width: windowWidth,
         paddingTop: moderateScale(20, 0.3),
       }}>
-        <View style={{
-          width:windowWidth*0.2,
+      <View
+        style={{
+          width: windowWidth * 0.2,
         }}>
-
-             <CustomButton
-               iconStyle={{
-                width: windowWidth * 0.09,
-                height: windowHeight * 0.05,
-                textAlign: 'center',
-                paddingTop: moderateScale(15, 0.6),
-                fontSize: moderateScale(24, 0.6),
-                color: Color.white,
-              }}
-              iconName="chevron-left"
-              iconType={Feather}
-              iconSize={18}
-              color={Color.white}
-              marginTop={moderateScale(5, 0.3)}
-              // text={'Use'}
-              isGradient={true}
-              onPress={() => {
-                navigation.goBack();
-              }}
-              bgColor={Color.themeBgColor}
-              width={windowHeight * 0.06}
-              height={windowHeight * 0.06}
-            />
-        </View>
-
+        <CustomButton
+          iconStyle={{
+            width: windowWidth * 0.09,
+            height: windowHeight * 0.05,
+            textAlign: 'center',
+            paddingTop: moderateScale(15, 0.6),
+            fontSize: moderateScale(24, 0.6),
+            color: Color.white,
+          }}
+          iconName="chevron-left"
+          iconType={Feather}
+          iconSize={18}
+          color={Color.white}
+          marginTop={moderateScale(5, 0.3)}
+          // text={'Use'}
+          isGradient={true}
+          onPress={() => {
+            navigation.goBack();
+          }}
+          bgColor={Color.themeBgColor}
+          width={windowHeight * 0.06}
+          height={windowHeight * 0.06}
+        />
+      </View>
 
       <CustomText style={styles.txt5}>Change Password</CustomText>
       <View
@@ -138,7 +137,8 @@ const Profile = () => {
           borderColor={Color.themeblue}
           backgroundColor={Color.white}
           color={Color.themeblue}
-          placeholderColor={Color.veryLightGray}
+          textColor={Color.themeblue}
+          placeholderColor={Color.themeblue}
           elevation
         />
         <TextInputWithTitle
@@ -159,7 +159,8 @@ const Profile = () => {
           backgroundColor={Color.white}
           marginTop={moderateScale(10, 0.3)}
           color={Color.themeblue}
-          placeholderColor={Color.veryLightGray}
+          textColor={Color.themeblue}
+          placeholderColor={Color.themeblue}
           elevation
         />
 
@@ -181,7 +182,9 @@ const Profile = () => {
           backgroundColor={Color.white}
           marginTop={moderateScale(10, 0.3)}
           color={Color.themeblue}
-          placeholderColor={Color.veryLightGray}
+          textColor={Color.themeblue}
+          // placeholderTextColor={Color.themeblue}
+          placeholderColor={Color.themeblue}
           elevation
         />
 

@@ -47,7 +47,7 @@ const TextInputWithTitle = props => {
           {
             width: windowWidth * props.viewWidth,
             borderWidth: props.border,
-            borderColor : props?.borderColor,
+            borderColor: props?.borderColor,
             // borderColor: Color.veryLightGray,
             backgroundColor: props.backgroundColor,
           },
@@ -131,6 +131,10 @@ const TextInputWithTitle = props => {
               style={[
                 {
                   width: windowWidth * props.inputWidth,
+                  // backgroundColor:'red',
+                  color:props.textColor 
+                  ? props.textColor
+                  : Color.white, 
                 },
                 Platform.OS === 'android'
                   ? [
@@ -179,7 +183,7 @@ const TextInputWithTitle = props => {
               <Icon
                 name={showPassword ? 'eye' : 'eye-slash'}
                 as={FontAwesome}
-                color={Color.white}
+                color={props.color ? props.color : Color.white}
                 size={moderateScale(18, 0.3)}
               />
             </TouchableOpacity>
@@ -220,7 +224,9 @@ const TextInputWithTitle = props => {
               value={props.value}
               placeholder={`${props.placeholder}`}
               placeholderTextColor={
-                props.placeholderColor ? props.placeholderColor : Color.white
+                props.placeholderColor
+                  ? props.placeholderColor
+                  : Color.themeblue
               }
               keyboardType={props.keyboardType}
               multiline={props.multiline || false}
@@ -257,7 +263,7 @@ const styles = ScaledSheet.create({
 
     // fontFamily: 'PlusJakartaDisplay-Regular',
     textAlign: I18nManager.isRTL ? 'right' : 'left',
-    color: Color.white,
+    // color: Color.white,
   },
 });
 export default TextInputWithTitle;

@@ -115,6 +115,7 @@ const Signup = () => {
     const response = await Post(url, formData, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
+    //  return  console.log("🚀 ~ registerUser ~ response:", response?.data)
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({token: response?.data?.token}));
     }

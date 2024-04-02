@@ -29,16 +29,14 @@ import navigationService from '../navigationService';
 import {useNavigation} from '@react-navigation/native';
 import {useDrawerStatus} from '@react-navigation/drawer';
 import {useSelector} from 'react-redux';
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const userData = useSelector(state => state.commonReducer.userData);
   console.log('🚀 ~ HomeScreen ~ userData:', userData);
   const token = useSelector(state => state.authReducer.token);
-  // console.log("🚀 ~ HomeScreen ~ token:", token)
-  // console.log("🚀 ~ HomeScreen ~ userData:", userData)
-  const dataArray = [
+    const dataArray = [
     {
       id: 1,
       image: require('../Assets/Images/cardimage1.png'),
@@ -56,13 +54,16 @@ const HomeScreen = () => {
     {
       id: 3,
       image: require('../Assets/Images/cardimage3.png'),
-      title: 'Create Photo With QR',
+      title: 'my gallery',
+      onPress: () => navigation.navigate('GalleryView'),
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },
     {
       id: 4,
       image: require('../Assets/Images/cardimage4.png'),
-      title: 'Generate QR',
+      title: 'Generate image QR',
+      onPress: () => navigation.navigate('LinkUrlScreen' ,{fromGenerateimage :true}),
+      // onpress:()=> navigation.navigate('LinkUrlScreen', {item: item}),
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },
     // {
@@ -74,8 +75,10 @@ const HomeScreen = () => {
   ];
 
   useEffect(() => {
-    LogBox.ignoreLogs(['In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.']);
-  }, []); 
+    LogBox.ignoreLogs([
+      'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
+    ]);
+  }, []);
   return (
     // <LinearGradient
     //   start={{x: 0, y: 1}}
@@ -117,8 +120,6 @@ const HomeScreen = () => {
               style={{
                 paddingHorizontal: moderateScale(10, 0.6),
               }}>
-              <CustomText style={styles.text1}>ryan francis</CustomText>
-
               <CustomText
                 style={[
                   styles.text1,
@@ -132,7 +133,6 @@ const HomeScreen = () => {
                 ]}>
                 {userData?.first_name}
               </CustomText>
-              <CustomText style={styles.text1}>ryan francis</CustomText>
             </View>
           </View>
 

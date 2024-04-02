@@ -42,37 +42,33 @@ const GalleryView = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentImageIndex, setImageIndex] = useState(0);
   const [imageUrls, setImageUrls] = useState([]);
-  console.log("🚀 ~ GalleryView ~ imageUrls:", imageUrls)
+  console.log('🚀 ~ GalleryView ~ imageUrls:', imageUrls);
   const onSelect = index => {
     setIsVisible(true);
     setImageIndex(index);
   };
-
 
   const GetQrcodes = async () => {
     const url = `auth/document?type=${selectedItem}`;
     setIsLoading(true);
     const response = await Get(url, token);
     setIsLoading(false);
-    console.log("User tooken ==>", token);
+    console.log('User tooken ==>', token);
     if (response != undefined) {
-      console.log("QR===>",response?.data);
+      console.log('QR===>', response?.data);
       setGalleryImages(response?.data?.info);
-      setImageUrls(response?.data?.info?.map((item , index)=>
-        {
-          return  {uri : `${baseUrl}${item.image}`}
-        }
-      ))
+      setImageUrls(
+        response?.data?.info?.map((item, index) => {
+          return {uri: `${baseUrl}${item.image}`};
+        }),
+      );
     }
   };
   useEffect(() => {
-    if(selectedItem != ''){
-
+    if (selectedItem != '') {
       GetQrcodes();
     }
   }, [selectedItem]);
-
-
 
   return (
     <ScrollView
@@ -176,8 +172,6 @@ const GalleryView = () => {
         </View>
 
         <View style={styles.todaySection}>
-        
-
           {isLoading ? (
             <ActivityIndicator
               style={{alignItems: 'center', height: windowHeight * 0.65}}
@@ -189,40 +183,42 @@ const GalleryView = () => {
               showsVerticalScrollIndicator={true}
               nestedScrollEnabled={true}
               numColumns={3}
-           
               data={galleryImages}
               keyExtractor={item => item.id}
               contentContainerStyle={{
+                // paddingTop:moderateScale(10,.6),
                 paddingBottom: moderateScale(50, 0.6),
                 // alignItems : 'center'
               }}
               style={{
-                width : windowWidth * 0.95,
-                alignSelf : 'center'
+                width: windowWidth * 0.95,
+                alignSelf: 'center',
               }}
               renderItem={({item, index}) => {
-                console.log("🚀 ~ GalleryView ~ item:", `${baseUrl}${item?.image}`)
+                console.log(
+                  '🚀 ~ GalleryView ~ item:',
+                  `${baseUrl}${item?.image}`,
+                );
                 return (
-                
                   <View style={styles.imageContainer}>
                     <CustomImage
-                    onPress={() => onSelect(index)}
+                      onPress={() => onSelect(index)}
                       source={{uri: `${baseUrl}${item?.image}`}}
                       style={styles.galleryImg}
                       // resizeMode="cover"
                     />
                   </View>
-                )
-               
+                );
               }}
               ListEmptyComponent={() => {
                 return (
-                <View style={{
-                  width : '100%',
-                  height : windowHeight * 0.7,
-                  justifyContent : 'center',
-                  alignItems : 'center'
-                }}>
+                  <View
+                    style={{
+                      width: '100%',
+                      height: windowHeight * 0.7,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
                     <View
                       style={{
                         width: windowWidth * 0.25,
@@ -237,13 +233,12 @@ const GalleryView = () => {
                         source={require('../Assets/Images/emptybox.png')}
                       />
                     </View>
-                    </View>
+                  </View>
                 );
               }}
             />
           )}
 
-         
           <ImageView
             backgroundColor={'black'}
             images={imageUrls}
@@ -252,7 +247,6 @@ const GalleryView = () => {
             onRequestClose={() => setIsVisible(false)}
           />
         </View>
-       
       </View>
     </ScrollView>
   );
@@ -295,6 +289,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: moderateScale(25, 0.6),
+    // paddingBottom:moderateScale(30,.6),
+    // backgroundColor:'red'
     // overflow: 'hidden',
     // gap: 0,
   },

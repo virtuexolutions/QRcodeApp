@@ -1,4 +1,10 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import React, {useState, useRef} from 'react';
 import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
@@ -12,7 +18,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -24,6 +30,7 @@ import {setUserLogOut} from '../Store/slices/common';
 import navigationService from '../navigationService';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CustomButton from '../Components/CustomButton';
+import {color} from 'native-base/lib/typescript/theme/styled-system';
 
 const Drawer = () => {
   const userData = useSelector(state => state.commonReducer.userData);
@@ -64,6 +71,22 @@ const Drawer = () => {
         navigation.navigate('ChangePassword');
       },
     },
+    {
+      name: 'privacy policy',
+      iconName: 'privacy-tip',
+      iconType: MaterialIcons,
+      onPress: () => {
+        navigation.navigate('PrivacyPolicy');
+      },
+    },
+    {
+      name: 'Terms & Conditions',
+      iconName: 'file-text',
+      iconType: Feather,
+      onPress: () => {
+        navigation.navigate('TermsAndConditions');
+      },
+    },
 
     // {
     //   name: 'Settings',
@@ -76,42 +99,16 @@ const Drawer = () => {
   ];
 
   return (
-    <ScreenBoiler
-      statusBarBackgroundColor={'white'}
-      statusBarContentStyle={'dark-content'}>
-      <LinearGradient
-        style={{
-          height: windowHeight,
-        }}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}}
-        colors={['#ffffff', '#ffffff']}>
-        <View style={styles.row}>
-          <View style={styles.back}>
-            <CustomButton
-              iconStyle={{
-                width: windowWidth * 0.09,
-                height: windowHeight * 0.05,
-                textAlign: 'center',
-                paddingTop: moderateScale(15, 0.6),
-                fontSize: moderateScale(24, 0.6),
-                color: Color.white,
-              }}
-              iconName="chevron-left"
-              iconType={Feather}
-              iconSize={18}
-              color={Color.white}
-              marginTop={moderateScale(5, 0.3)}
-              // text={'Use'}
-              isGradient={true}
-              onPress={() => {
-                navigation.goBack();
-              }}
-              bgColor={Color.themeBgColor}
-              width={windowHeight * 0.06}
-              height={windowHeight * 0.06}
-            />
-          </View>
+    <>
+      <ScreenBoiler
+        statusBarBackgroundColor={'white'}
+        statusBarContentStyle={'dark-content'}>
+        <ImageBackground
+          style={{
+            height: windowHeight * 0.25,
+            justifyContent: 'center',
+          }}
+          source={require('../Assets/Images/bg1.jpg')}>
           <View style={styles.imageContainer}>
             <View style={styles.Profile}>
               <CustomImage
@@ -135,24 +132,25 @@ const Drawer = () => {
               </CustomText>
             </View>
           </View>
-          <View style={styles.btn2View}>
-            {data?.map((item, index) => (
-              <>
-                <TouchableOpacity onPress={item?.onPress} style={styles.btn2}>
-                  <Icon
-                    name={item?.iconName}
-                    as={item?.iconType}
-                    size={moderateScale(20, 0.3)}
-                    color={'#1F1D2B'}
-                    onPress={item?.onPress}
-                  />
-                  <CustomText isBold style={styles.text}>
-                    {item.name}
-                  </CustomText>
-                </TouchableOpacity>
-              </>
-            ))}
-          </View>
+        </ImageBackground>
+
+        <View style={styles.btn2View}>
+          {data?.map((item, index) => (
+            <>
+              <TouchableOpacity onPress={item?.onPress} style={styles.btn2}>
+                <Icon
+                  name={item?.iconName}
+                  as={item?.iconType}
+                  size={moderateScale(20, 0.3)}
+                  color={'#1F1D2B'}
+                  onPress={item?.onPress}
+                />
+                <CustomText isBold style={styles.text}>
+                  {item.name}
+                </CustomText>
+              </TouchableOpacity>
+            </>
+          ))}
         </View>
         <View style={styles.btnView}>
           <TouchableOpacity
@@ -174,8 +172,8 @@ const Drawer = () => {
             </CustomText>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
-    </ScreenBoiler>
+      </ScreenBoiler>
+    </>
   );
 };
 
@@ -205,7 +203,7 @@ const styles = StyleSheet.create({
   },
   text1: {
     fontSize: moderateScale(16, 0.6),
-    color: '#1F1D2B',
+    color: Color.white,
   },
   text: {
     fontSize: moderateScale(14, 0.6),
@@ -213,6 +211,8 @@ const styles = StyleSheet.create({
     marginLeft: moderateScale(10, 0.3),
   },
   imageContainer: {
+    alignItems: 'center',
+    // backgroundColor:'red',
     flexDirection: 'row',
     marginTop: moderateScale(20, 0.3),
     alignItems: 'center',
@@ -226,13 +226,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btn2View: {
-    marginTop: moderateScale(60, 0.3),
+    paddingTop: moderateScale(10, 0.6),
+    // marginTop: moderateScale(60, 0.3),
     height: windowHeight * 0.85,
   },
   text3: {
     width: windowWidth * 0.4,
     fontSize: moderateScale(12, 0.6),
-    color: '#1F1D2B',
+    color: Color.white,
   },
   back: {
     // backgroundColor: 'red',

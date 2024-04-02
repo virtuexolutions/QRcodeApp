@@ -46,7 +46,6 @@ const LoginScreen = props => {
   const [password, setPassword] = useState('');
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
-  const [confirmPass, setconfirmPass] = useState('');
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
@@ -68,11 +67,7 @@ const LoginScreen = props => {
         ? ToastAndroid.show('password is required', ToastAndroid.SHORT)
         : alert('password is required');
     }
-    //  else if (userRole == '') {
-    //   return Platform.OS == 'android'
-    //     ? ToastAndroid.show('user role is required', ToastAndroid.SHORT)
-    //     : alert('user role is required');
-    // }
+
 
     const url = 'login';
     const body = {email: email.trim(), password: password};
@@ -163,26 +158,7 @@ const LoginScreen = props => {
               placeholderColor={Color.white}
               // elevation
             />
-            <TextInputWithTitle
-              iconName={'check'}
-              iconType={FontAwesome}
-              LeftIcon={true}
-              titleText={'confirm password'}
-              placeholder={'confirm password'}
-              setText={setconfirmPass}
-              value={confirmPass}
-              secureText={true}
-              viewHeight={0.06}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              borderBottomWidth={1}
-              marginBottom={moderateScale(10, 0.3)}
-              borderColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.white}
-              placeholderColor={Color.white}
-              // elevation
-            />
+          
             <CustomText
               onPress={() => {
                 console.log('====================> verify number screen');

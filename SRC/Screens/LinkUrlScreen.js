@@ -24,18 +24,20 @@ import {apiHeader} from '../Utillity/utils';
 import ImagePickerModal from '../Components/ImagePickerModal';
 
 const LinkUrlScreen = props => {
+  const fromImage = props?.route?.params?.fromGenerateimage;
   const navigation = useNavigation();
   const token = useSelector(state => state.authReducer.token);
   const selectedItem = props?.route?.params?.item;
-  console.log("🚀 ~ LinkUrlScreen ~ selectedItem:", selectedItem)
+  console.log('🚀 ~ LinkUrlScreen ~ selectedItem:', selectedItem);
   const [imagePicker, setImagePicker] = useState();
   const [image, setImage] = useState({});
-  console.log("🚀 ~ LinkUrlScreen ~ image:", image)
+  // console.log("🚀 ~ LinkUrlScreen ~ image:", image)
   const [link, setLink] = useState('');
   const [qrName, setQrName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   console.log('🚀 ~ LinkUrlScreen ~ qrName:', qrName);
   const [qrimage, setQrimage] = useState({});
+  console.log('🚀 ~ LinkUrlScreen ~ qrimage=======================>:', qrimage);
   // const data = link;
 
   const isURL = text => {
@@ -47,19 +49,21 @@ const LinkUrlScreen = props => {
 
   const sendDocument = async response => {
     const formData = new FormData();
-    console.log('hertere');
-    console.log( 'beraa           ',response);
+    // console.log('hertere');
+    // console.log( 'beraa',response);
 
     const url = 'auth/pdf';
     const body = {
       file: {
-        name: selectedItem?.title == 'image' ? response?.name : response[0].name,
-        type: selectedItem?.title == 'image' ? response?.type : response[0].type,
+        name:
+          selectedItem?.title == 'image' ? response?.name : response[0].name,
+        type:
+          selectedItem?.title == 'image' ? response?.type : response[0].type,
         uri: selectedItem?.title == 'image' ? response?.uri : response[0].uri,
       },
       name: selectedItem?.title == 'image' ? response?.name : response[0].name,
     };
-    console.log("🚀 ~ sendDocument ~ body:", body)
+    console.log('🚀 ~ sendDocument ~ body:', body);
     for (let key in body) {
       formData.append(key, body[key]);
     }
@@ -90,13 +94,11 @@ const LinkUrlScreen = props => {
     }
   }, []);
 
-
   useEffect(() => {
-    if(Object.keys(image).length > 0){
-      sendDocument(image)
+    if (Object.keys(image).length > 0) {
+      sendDocument(image);
     }
-      }, [image])
-  
+  }, [image]);
 
   return (
     <View style={styles.mainContainer}>
@@ -134,10 +136,12 @@ const LinkUrlScreen = props => {
       {/* </View> */}
 
       <View style={styles.inputContainer}>
-        {(selectedItem?.title == 'pdf' || selectedItem?.title == 'image') && (
+        {(selectedItem?.title == 'pdf' ||
+          selectedItem?.title == 'image' ||
+          fromImage == true) && (
           <TouchableOpacity
             onPress={() => {
-              selectedItem?.title !== 'image'
+              selectedItem?.title == 'pdf'
                 ? handleDocumentSelection()
                 : setImagePicker(true);
             }}
@@ -152,8 +156,10 @@ const LinkUrlScreen = props => {
                     color: Color.themeblue,
                     fontSize: moderateScale(12, 0.6),
                   }}>
-                  {qrimage?.filename}
-                  {selectedItem?.title === 'image' && qrimage?.name}
+                  {selectedItem?.title == 'pdf'
+                    ? qrimage?.filename
+                    : fromImage == true &&
+                      selectedItem?.title == 'image' && image?.name}
                 </CustomText>
                 <Icon
                   name="close"
@@ -185,14 +191,14 @@ const LinkUrlScreen = props => {
                 {/* </TouchableOpacity> */}
                 <CustomText
                   onPress={() => {
-                    selectedItem?.title !== 'image'
+                    fromImage != true && selectedItem?.title != 'image'
                       ? handleDocumentSelection()
                       : setImagePicker(true);
                   }}
                   style={styles.text2}>
-                  {selectedItem?.title == 'image'
-                    ? 'upload your image'
-                    : 'upload your pdf file'}
+                  {fromImage != true && selectedItem?.title != 'image'
+                    ? 'upload your  pdf file'
+                    : 'upload your image'}
                 </CustomText>
               </>
             )}

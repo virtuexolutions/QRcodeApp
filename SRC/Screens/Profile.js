@@ -32,26 +32,20 @@ import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import {useNavigation} from '@react-navigation/native';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import {setUserData} from '../Store/slices/common';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const userData = useSelector(state => state.commonReducer.userData);
-  // console.log('🚀 ~ Profile ~ userData:', userData);
+  console.log('🚀 ~ Profile ~ userData:', userData);
   const token = useSelector(state => state.authReducer.token);
-  // console.log("🚀 ~ Profile ~ token:", token)
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState(userData?.first_name);
-  // console.log("🚀 ~ Profile ~ username:", username)
   const [email, setEmail] = useState(userData?.email);
   const [showNumberModal, setShowNumberModal] = useState(false);
-  // console.log(
-  //   '🚀 ~ file: Signup.js:48 ~ Signup ~ showNumberModal:',
-  //   showNumberModal,
-  // );
   const [countryCode, setCountryCode] = useState('US');
   const [imagePicker, setImagePicker] = useState(false);
-  // console.log('🚀 ~ file: Signup.js:50 ~ Signup ~ imagePicker:', imagePicker);
   const [image, setImage] = useState({});
   console.log('🚀 ~ Profile ~ image:', image);
 
@@ -103,54 +97,52 @@ const Profile = () => {
         height: windowHeight,
       }}
       showsVerticalScrollIndicator={false}>
-      <View
+      <ImageBackground
         style={{
-          paddingVertical:moderateScale(15,.6),
-          width: windowWidth * 0.2,
-        }}>
-        <CustomButton
-          iconStyle={{
-            width: windowWidth * 0.09,
-            height: windowHeight * 0.05,
-            textAlign: 'center',
-            paddingTop: moderateScale(15, 0.6),
-            fontSize: moderateScale(24, 0.6),
-            color: Color.white,
-          }}
-          iconName="chevron-left"
-          iconType={Feather}
-          iconSize={18}
-          color={Color.white}
-          marginTop={moderateScale(5, 0.3)}
-          // text={'Use'}
-          isGradient={true}
-          onPress={() => {
-            navigation.goBack();
-          }}
-          bgColor={Color.themeBgColor}
-          width={windowHeight * 0.06}
-          height={windowHeight * 0.06}
-        />
-      </View>
-      
-      <View
-        style={{
-          // gap: 18,
-          height:windowHeight*0.65,
-          justifyContent:'center',
-          // backgroundColor: 'red',
+          width: windowWidth,
+          justifyContent: 'center',
           alignItems: 'center',
-          marginTop: moderateScale(20, 0.3),
-        }}>
+          height: windowHeight * 0.3,
+        }}
+        source={require('../Assets/Images/bg1.jpg')}>
+        <View
+          style={{
+            width: windowWidth * 0.2,
+            position: 'absolute',
+            left: 0,
+            top: 10,
+          }}>
+          <CustomButton
+            iconStyle={{
+              width: windowWidth * 0.09,
+              height: windowHeight * 0.05,
+              textAlign: 'center',
+              paddingTop: moderateScale(15, 0.6),
+              fontSize: moderateScale(24, 0.6),
+              color: Color.themeblue,
+            }}
+            iconName="chevron-left"
+            iconType={Feather}
+            iconSize={19}
+            color={Color.white}
+            marginTop={moderateScale(5, 0.3)}
+            onPress={() => {
+              navigation.goBack();
+            }}
+            borderRadius={(windowHeight * 0.06) / 2}
+            bgColor={Color.white}
+            width={windowHeight * 0.06}
+            height={windowHeight * 0.06}
+          />
+        </View>
+
         <View
           style={{
             height: windowHeight * 0.13,
             width: windowHeight * 0.13,
             borderRadius: moderateScale((windowHeight * 0.13) / 2),
-            // overflow : 'hidden'
           }}>
           <CustomImage
-            // resizeMode="contain"
             source={
               Object.keys(image).length > 0
                 ? {uri: image?.uri}
@@ -185,6 +177,12 @@ const Profile = () => {
             />
           </TouchableOpacity>
         </View>
+      </ImageBackground>
+      <View
+        style={{
+          marginTop: moderateScale(10, 0.3),
+          alignItems: 'center',
+        }}>
         <TextInputWithTitle
           iconName={'user'}
           iconType={FontAwesome}
@@ -294,6 +292,171 @@ const Profile = () => {
               placeholderColor={Color.veryLightGray}
               elevation
             /> */}
+        <View
+          style={{
+            width: windowWidth * 0.78,
+            justifyContent: 'center',
+            flexDirection: 'row',
+            marginTop: moderateScale(20, 0.6),
+            // paddingHorizontal:moderateScale(15.6)
+          }}>
+          <LinearGradient
+            colors={['#001D55', '#012497']}
+            start={{x: 0, y: 0.5}}
+            end={{x: 1, y: 0.5}}
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: windowWidth * 0.35,
+              height: windowHeight * 0.08,
+              borderRadius: moderateScale(10, 0.6),
+              // backgroundColor:'red'
+            }}>
+            <CustomText
+              isBold
+              style={{
+                textAlign: 'center',
+                fontSize: moderateScale(13, 0.6),
+                color: Color.white,
+                // backgroundColor: 'red',
+              }}>
+              total qr codes
+            </CustomText>
+            <CustomText
+              isBold
+              style={{
+                textAlign: 'center',
+                color: Color.white,
+                fontSize: moderateScale(15, 0.6),
+              }}>
+              {userData?.total_document_count}
+            </CustomText>
+          </LinearGradient>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            // width:windowWidth*0.6,
+            paddingVertical: moderateScale(10, 0.6),
+          }}>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: windowWidth * 0.18,
+              backgroundColor: Color.themeBgColor,
+              height: windowHeight * 0.08,
+              borderRadius: moderateScale(10, 0.6),
+              borderColor: Color.themeColor,
+              borderWidth: 1,
+            }}>
+            <CustomText
+              isBold
+              style={{
+                textAlign: 'center',
+                color: '#012497',
+                fontSize: moderateScale(14, 0.6),
+              }}>
+              images
+            </CustomText>
+            <CustomText
+              isBold
+              style={{
+                textAlign: 'center',
+                color: '#012497',
+                fontSize: moderateScale(13, 0.6),
+              }}>
+              {userData?.document_image_count}
+            </CustomText>
+          </View>
+          <LinearGradient
+            colors={['#001D55', '#012497']}
+            start={{x: 0, y: 0.5}}
+            end={{x: 1, y: 0.5}}
+            style={styles.cardContainner}>
+            <View>
+              <CustomText
+                isBold
+                style={{
+                  textAlign: 'center',
+                  color: Color.white,
+                  fontSize: moderateScale(14, 0.6),
+                }}>
+                link
+              </CustomText>
+              <CustomText
+                isBold
+                style={{
+                  textAlign: 'center',
+                  color: Color.white,
+                  fontSize: moderateScale(13, 0.6),
+                }}>
+                {userData?.document_url_count}
+              </CustomText>
+            </View>
+          </LinearGradient>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: windowWidth * 0.18,
+              backgroundColor: Color.themeBgColor,
+              height: windowHeight * 0.08,
+              borderRadius: moderateScale(10, 0.6),
+              borderColor: Color.themeColor,
+              borderWidth: 1,
+              marginHorizontal: moderateScale(10, 0.6),
+            }}>
+            <CustomText
+              isBold
+              style={{
+                textAlign: 'center',
+                color: '#012497',
+                fontSize: moderateScale(15, 0.6),
+              }}>
+              pdf
+            </CustomText>
+            <CustomText
+              isBold
+              style={{
+                textAlign: 'center',
+                color: '#012497',
+                fontSize: moderateScale(13, 0.6),
+                // backgroundColor: 'red',
+              }}>
+              {userData?.document_pdf_count}
+            </CustomText>
+          </View>
+
+          <LinearGradient
+            colors={['#001D55', '#012497']}
+            start={{x: 0, y: 0.5}}
+            end={{x: 1, y: 0.5}}
+            style={styles.cardContainner}>
+            <View>
+              <CustomText
+                isBold
+                style={{
+                  textAlign: 'center',
+                  color: Color.white,
+                  fontSize: moderateScale(14, 0.6),
+                  // backgroundColor: 'red',
+                }}>
+                text
+              </CustomText>
+              <CustomText
+                isBold
+                style={{
+                  textAlign: 'center',
+                  color: Color.white,
+                  fontSize: moderateScale(13, 0.6),
+                  // backgroundColor: 'red',
+                }}>
+                {userData?.document_text_count  }
+              </CustomText>
+            </View>
+          </LinearGradient>
+        </View>
 
         <CustomButton
           onPress={() => profileUpdate()}
@@ -346,6 +509,26 @@ const styles = ScaledSheet.create({
     shadowOpacity: 0.32,
     shadowRadius: 5.46,
     elevation: 9,
+  },
+  cardContainner: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: windowWidth * 0.18,
+    // backgroundColor:Color.themeBgColor,
+    height: windowHeight * 0.08,
+    borderRadius: moderateScale(10, 0.6),
+    borderColor: Color.themeblue,
+    borderWidth: 1,
+    marginHorizontal: moderateScale(10, 0.6),
+
+    // backgroundColor: Color.white,
+    // flexDirection: 'row',
+    // borderRadius: moderateScale(18, 0.6),
+    // // height: windowHeight * 0.23,
+    // width: windowWidth * 0.9,
+    // alignItems: 'center',
+    // paddingVertical: moderateScale(20, 0.6),
+    // paddingHorizontal: moderateScale(10, 0.6),
   },
 
   edit: {

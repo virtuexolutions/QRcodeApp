@@ -84,7 +84,8 @@ const AppNavigator = () => {
           <RootNav.Screen name={"ResetPassword"} component={ResetPassword}/>   
           <RootNav.Screen name={"GalleryView"} component={GalleryView}/>    
           <RootNav.Screen name={"EnterPhone"} component={EnterPhone}/>    
-          <RootNav.Screen name={"Profile"} component={Profile}/>    
+          <RootNav.Screen name={"Profile"} component={Profile}/>  
+           
 
 
         
