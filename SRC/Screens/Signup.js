@@ -37,11 +37,13 @@ import {Platform} from 'react-native';
 import {validateEmail} from '../Config';
 import {Icon} from 'native-base';
 import ImagePickerModal from '../Components/ImagePickerModal';
-import Entypo from 'react-native-vector-icons/Entypo'
-import { useNavigation } from '@react-navigation/native';
+import Entypo from 'react-native-vector-icons/Entypo';
+import {useNavigation} from '@react-navigation/native';
+import {source} from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const Signup = () => {
-  // const navigation = useNavigation()
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -54,8 +56,9 @@ const Signup = () => {
   );
   const [countryCode, setCountryCode] = useState('US');
   const [imagePicker, setImagePicker] = useState(false);
-  console.log('🚀 ~ file: Signup.js:50 ~ Signup ~ imagePicker:', imagePicker);
+  // console.log('🚀 ~ file: Signup.js:50 ~ Signup ~ imagePicker:', imagePicker);
   const [image, setImage] = useState({});
+  // console.log('🚀 ~ Signup ~ image:', image);
 
   const [country, setCountry] = useState({
     callingCode: ['1'],
@@ -80,47 +83,43 @@ const Signup = () => {
     setCountry(country);
   };
 
-  // const registerUser = async () => {
-  //   const body = {
-  //     name: username,
-  //     email: email,
-  //     phone: phone,
-  //     // countryCode: country,
-  //     address: 'askdhaksd',
-  //     password: password,
-  //     c_password: confirmPass,
-  //     role: userRole == 'seller' ? 'vendor' : 'customer',
-  //   };
-  //   if (!validateEmail(email)) {
-  //     return Platform.OS == 'android'
-  //       ? ToastAndroid.show('Email is invalid', ToastAndroid.SHORT)
-  //       : Alert.alert('Email is invalid');
-  //   } else if (phone.length != 10) {
-  //     return Platform.OS == 'android'
-  //       ? ToastAndroid.show(
-  //           'Please Enter a valid phone number',
-  //           ToastAndroid.SHORT,
-  //         )
-  //       : Alert.alert('Please Enter a valid phone number');
-  //   } else if (password != confirmPass) {
-  //     return Platform.OS == 'android'
-  //       ? ToastAndroid.show('passwords donot match', ToastAndroid.SHORT)
-  //       : alert('passwords donot match');
-  //   }
-  //   const url = 'register';
+  const registerUser = async () => {
+    const formData = new FormData();
+    console.log('🚀 ~ registerUser ~ formData:', formData);
+    const body = {
+      first_name: username,
+      email: email,
+      // photo: image,
+      password: password,
+      confirm_password: confirmPass,
+    };
 
-  //   setIsLoading(true);
-  //   const response = await Post(url, body, apiHeader());
-  //   console.log('🚀 ~ file: Signup.js:93 ~ registerUser ~ response:', response);
-  //   setIsLoading(false);
+    if (!validateEmail(email)) {
+      return Platform.OS == 'android'
+        ? ToastAndroid.show('Email is invalid', ToastAndroid.SHORT)
+        : Alert.alert('Email is invalid');
+    } else if (password != confirmPass) {
+      return Platform.OS == 'android'
+        ? ToastAndroid.show('passwords donot match', ToastAndroid.SHORT)
+        : alert('passwords donot match');
+    }
+    // const formData = new FormData();
+    for (let key in body) {
+      formData?.append(key, body[key]);
+    }
+    if (Object.keys(image).length > 0) formData.append('photo', image);
 
-  //   if (response != undefined) {
-  //     // console.log('response data==========>>>>>>>>', response?.data);
-  //     dispatch(setUserData(response?.data?.user_info));
-  //     dispatch(setUserToken({token: response?.data?.token}));
-  //     dispatch(SetUserRole(response?.data?.user_info?.role));
-  //   }
-  // };
+    const url = 'register';
+
+    setIsLoading(true);
+    const response = await Post(url, formData, apiHeader());
+    setIsLoading(false);
+    if (response != undefined) {
+    //  return  console.log("🚀 ~ registerUser ~ response:", response?.data)
+      dispatch(setUserData(response?.data?.user_info));
+      dispatch(setUserToken({token: response?.data?.token}));
+    }
+  };
 
   return (
     <ScreenBoiler
@@ -139,36 +138,28 @@ const Signup = () => {
             minHeight: windowHeight,
             paddingBottom: moderateScale(40, 0.6),
             justifyContent: 'center',
-            // backgroundColor:'red',
-            // height: windowHeight*0.8,
             alignItems: 'center',
           }}
           source={require('../Assets/Images/login_bg.png')}>
           <View
             style={{
-              // marginTop: 40,
-              // alignItems:'center',
-              // backgroundColor: 'red',
               height: windowHeight * 0.13,
-              width: windowHeight * 0.5,
+              width: windowHeight * 0.13,
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: moderateScale((windowHeight * 0.13) / 2),
-              // overflow : 'hidden'
+              // overflow: 'hidden',
             }}>
-            {/* <CustomImage
-              resizeMode="contain"
-              source={require('../Assets/Images/dummyUser1.png')}
-              style={{
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'blue',
+            {Object.keys(image).length > 0 ? (
+              <CustomImage source={{uri: image?.uri}} style={styles.image} />
+            ) : (
+              <CustomImage
+                style={styles.image}
+                source={require('../Assets/Images/user.png')}
+              />
+            )}
 
-                borderRadius: moderateScale((windowHeight * 0.13) / 2),
-              }}
-            /> */}
-
-            {/* <TouchableOpacity
+            <TouchableOpacity
               activeOpacity={0.6}
               style={styles.edit}
               onPress={() => {
@@ -184,8 +175,9 @@ const Signup = () => {
                   setImagePicker(true);
                 }}
               />
-            </TouchableOpacity> */}
-
+            </TouchableOpacity>
+          </View>
+          {/* 
             <CustomText
             numberOfLine={3}
               isBold
@@ -195,18 +187,20 @@ const Signup = () => {
                 textAlign:'center',
               }}>
               logo here
-            </CustomText>
-            <CustomText
+            </CustomText> */}
+          <CustomText
             // isBold
             style={{
               fontSize: moderateScale(11, 0.6),
               color: Color.white,
-              width:windowWidth*0.6,
-              // backgroundColor:'red', 
-              paddingVertical:moderateScale(10,.4),
-
-              }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</CustomText>
-          </View>
+              width: windowWidth * 0.6,
+              // backgroundColor:'red',
+              paddingTop: moderateScale(10, 0.4),
+              // paddingBottom:moderateScale(10,.6),
+            }}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry.
+          </CustomText>
           <View
             style={{
               // paddingVertical: moderateScale(30, 0.3),
@@ -215,15 +209,15 @@ const Signup = () => {
               marginTop: moderateScale(20, 0.3),
             }}>
             <TextInputWithTitle
-            style={{
-              borderWidth:moderateScale(1,.6),
-              backgroundColor:'red',
-              borderBottomWitdth:moderateScale(10,.6)
-            }}
+              style={{
+                borderWidth: moderateScale(1, 0.6),
+                backgroundColor: 'red',
+                borderBottomWitdth: moderateScale(10, 0.6),
+              }}
               iconName={'user'}
               iconType={FontAwesome}
               iconStyle={{
-                backgroundColor:'red'
+                backgroundColor: 'red',
               }}
               LeftIcon={true}
               titleText={'Username'}
@@ -235,14 +229,13 @@ const Signup = () => {
               inputWidth={0.55}
               borderColor={Color.white}
               borderBottomWidth={1}
-              marginBottom={moderateScale(10,.3)}
-              
+              marginBottom={moderateScale(0, 0.3)}
               marginTop={moderateScale(10, 0.3)}
-              color={Color.white}
+              inputColor={Color.white}
               placeholderColor={Color.white}
               // elevation
             />
-            
+
             <TextInputWithTitle
               iconName={'email'}
               iconType={Fontisto}
@@ -256,105 +249,14 @@ const Signup = () => {
               inputWidth={0.55}
               borderColor={Color.white}
               borderBottomWidth={1}
-              marginBottom={moderateScale(10,.3)}
+              marginBottom={moderateScale(10, 0.3)}
               // borderColor={Color.white}
-               marginTop={moderateScale(10, 0.3)}
-              color={Color.white}
+              marginTop={moderateScale(10, 0.3)}
+              inputColor={Color.white}
               placeholderColor={Color.white}
               elevationss
               keyboardType={'email-address'}
             />
-            {/* <TouchableOpacity
-              onPress={() => {
-                setShowNumberModal(true);
-                console.log('first');
-              }}
-              activeOpacity={0.9}
-              style={[
-                styles.birthday,
-                {
-                  justifyContent: 'flex-start',
-                  // backgroundColor: 'red',
-                  borderRadius: moderateScale(25, 0.6),
-                },
-              ]}>
-              <CountryPicker
-                {...{
-                  countryCode,
-                  withCallingCode,
-                  onSelect,
-                  withFilter,
-                }}
-                visible={showNumberModal}
-                onClose={() => {
-                  setShowNumberModal(false);
-                }}
-              />
-
-              {country && (
-                <CustomText
-                  style={{
-                    fontSize: moderateScale(15, 0.6),
-                    color: '#5E5E5E',
-                  }}>{`${countryCode}(+${country?.callingCode})`}</CustomText>
-              )}
-
-              <Icon
-                name={'angle-down'}
-                as={FontAwesome}
-                size={moderateScale(20, 0.6)}
-                color={Color.themeDarkGray}
-                onPress={() => {
-                  setShowNumberModal(true);
-                }}
-                style={{
-                  position: 'absolute',
-                  right: moderateScale(5, 0.3),
-                }}
-              />
-            </TouchableOpacity> */}
-
-            {/* <TextInputWithTitle
-                iconName={'cellphone-sound'}
-                iconType={MaterialCommunityIcons}
-                LeftIcon={true}
-                titleText={'Contact'}
-                placeholder={'Contact'}
-                setText={setPhone}
-                value={phone}
-                viewHeight={0.07}
-              viewWidth={0.75}
-              inputWidth={0.55}
-                border={1}
-                borderColor={Color.black}
-                backgroundColor={Color.white}
-                marginTop={moderateScale(10, 0.3)}
-                color={Color.black}
-                placeholderColor={Color.veryLightGray}
-                elevation
-              /> */}
-
-            {/* <TextInputWithTitle
-              iconName={'phone'}
-              iconType={AntDesign}
-              LeftIcon={true}
-              titleText={'Phone'}
-              placeholder={'Phone'}
-              setText={setPhone}
-              value={phone}
-              viewHeight={0.06}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              borderColor={'#000'}
-              backgroundColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
-              keyboardType={'numeric'}
-            /> */}
             <TextInputWithTitle
               iconName={'key'}
               iconType={Entypo}
@@ -368,9 +270,9 @@ const Signup = () => {
               viewWidth={0.75}
               inputWidth={0.55}
               borderBottomWidth={1}
-              marginBottom={moderateScale(10,.3)}
+              marginBottom={moderateScale(10, 0.3)}
               borderColor={Color.white}
-                marginTop={moderateScale(10, 0.3)}
+              marginTop={moderateScale(10, 0.3)}
               color={Color.white}
               placeholderColor={Color.white}
               // elevation
@@ -390,7 +292,7 @@ const Signup = () => {
               viewWidth={0.75}
               inputWidth={0.55}
               borderBottomWidth={1}
-              marginBottom={moderateScale(10,.3)}
+              marginBottom={moderateScale(10, 0.3)}
               borderColor={Color.white}
               marginTop={moderateScale(10, 0.3)}
               color={Color.white}
@@ -405,12 +307,15 @@ const Signup = () => {
                 paddingHorizontal: moderateScale(15, 0.3),
               }}>
               <CustomButton
-                onPress={() => navigationService.navigate('LoginScreen')}
+                onPress={
+                  () => registerUser()
+                  // dispatch(setUserToken({token: 'meerab'}))
+                }
                 text={
                   isLoading ? (
                     <ActivityIndicator color={Color.white} size={'small'} />
                   ) : (
-                    'SIGN in'
+                    'Register'
                   )
                 }
                 fontSize={moderateScale(12, 0.3)}
@@ -430,7 +335,7 @@ const Signup = () => {
               Already Have an account ?{' '}
               <CustomText
                 onPress={() => {
-                  // navigation.goBack();
+                  navigation.goBack();
                 }}
                 isBold
                 style={{
@@ -440,17 +345,20 @@ const Signup = () => {
                 Login
               </CustomText>{' '}
             </CustomText>
-      
           </View>
-            <CustomText
-              onPress={() => navigationService.navigate('LoginScreen')}
-              style={[styles.txt6 ,{
-                width:windowWidth*0.7,
-                position:'absolute',
-              bottom:50,
-              }]}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-            </CustomText>
+          <CustomText
+            onPress={() => navigationService.navigate('LoginScreen')}
+            style={[
+              styles.txt6,
+              {
+                width: windowWidth * 0.7,
+                position: 'absolute',
+                bottom: 50,
+              },
+            ]}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry.
+          </CustomText>
         </ImageBackground>
         <ImagePickerModal
           show={imagePicker}
@@ -502,19 +410,26 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(10, 0.6),
     color: Color.white,
   },
+  image: {
+    width: moderateScale(100, 0.3),
+    height: moderateScale(100, 0.3),
+    borderRadius: moderateScale(50, 0.3),
+  },
+
   edit: {
     backgroundColor: Color.white,
     width: moderateScale(20, 0.3),
     height: moderateScale(20, 0.3),
     position: 'absolute',
     // top: 110,
-    bottom: -2,
-    right: 5,
+    bottom: 2,
+    right: 15,
     borderRadius: moderateScale(10, 0.3),
     elevation: 8,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1,
+    // overflow:'hidden  '
   },
 });
 

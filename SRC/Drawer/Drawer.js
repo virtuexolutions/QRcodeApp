@@ -1,4 +1,10 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import React, {useState, useRef} from 'react';
 import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
@@ -11,25 +17,28 @@ import {Icon} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {SetUserRole, setUserLogoutAuth} from '../Store/slices/auth';
+import {
+  SetUserRole,
+  setIsVerifed,
+  setUserLogoutAuth,
+} from '../Store/slices/auth';
 import {setUserLogOut} from '../Store/slices/common';
 import navigationService from '../navigationService';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import CustomButton from '../Components/CustomButton';
+import {color} from 'native-base/lib/typescript/theme/styled-system';
 
 const Drawer = () => {
+  const userData = useSelector(state => state.commonReducer.userData);
+
+  // console.log('🚀 ~ Drawer ~ userData:', userData);
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const userData = useSelector(state => state.commonReducer.userData);
-  const token = useSelector(state => state.authReducer.token);
-  // console.log('🚀 ~ file: Drawer.js:19 ~ Drawer ~ token:', token);
-
-  const role = useSelector(state => state.authReducer.role);
-  // console.log('🚀 ~ file: Drawer.js:29 ~ Drawer ~ role:', role);
-
-  const adminData = [
+  const data = [
     {
       name: 'Home',
       iconName: 'home',
@@ -39,283 +48,132 @@ const Drawer = () => {
       },
     },
     {
-      name: 'change password',
-      iconName: 'lock',
+      name: 'my gallery',
+      iconName: 'images',
       iconType: Entypo,
       onPress: () => {
-        navigation.navigate('ChangePassword');
-      },
-    },
-
-    {
-      name: 'Log out',
-      iconName: 'logout',
-      iconType: MaterialCommunityIcons,
-      onPress: () => {
-        dispatch(setUserLogoutAuth());
-        dispatch(setUserLogOut());
-        dispatch(SetUserRole(''));
-      },
-    },
-  ];
-
-  const customerData = [
-    {
-      name: 'Home',
-      iconName: 'home',
-      iconType: Entypo,
-      onPress: () => {
-        navigation.navigate('CustomerDashboard');
+        navigation.navigate('GalleryView');
       },
     },
     {
-      name: 'My Orders',
-      iconName: 'shopping-outline',
-      iconType: MaterialCommunityIcons,
-      onPress: () => {
-        navigation.navigate('Myorders');
-      },
-    },
-    {
-      name: 'Profile',
-      iconName: 'account',
-      iconType: MaterialCommunityIcons,
+      name: 'profile',
+      iconName: 'user',
+      iconType: FontAwesome,
       onPress: () => {
         navigation.navigate('Profile');
       },
     },
-    // {
-    //   name: 'Change Password',
-    //   iconName: 'lock',
-    //   iconType: Entypo,
-    //   onPress: () => {
-    //     navigation.navigate('ChangePassword');
-    //   },
-    // },
-    
-
-    {
-      name: 'Log out',
-      iconName: 'logout',
-      iconType: MaterialCommunityIcons,
-      onPress: () => {
-        dispatch(setUserLogoutAuth());
-        dispatch(setUserLogOut());
-        dispatch(SetUserRole(''));
-      },
-    },
-  ];
-
-  const sellerData = [
-    {
-      name: 'Home',
-      iconName: 'home',
-      iconType: Entypo,
-      onPress: () => {
-        navigation.navigate('SellerProduct');
-      },
-    },
-    {
-      name: 'Orders',
-      iconName: 'box',
-      iconType: Feather,
-      onPress: () => {
-        navigation.navigate('Orders');
-      },
-    },
-    {
-      name: 'My Account',
-      iconName: 'account',
-      iconType: MaterialCommunityIcons,
-      onPress: () => {
-        navigation.navigate('MyAccounts');
-      },
-    },
-    
     {
       name: 'Change Password',
-      iconName: 'lock',
+      iconName: 'key',
       iconType: Entypo,
       onPress: () => {
         navigation.navigate('ChangePassword');
       },
     },
     {
-      name: 'Log out',
-      iconName: 'logout',
-      iconType: MaterialCommunityIcons,
+      name: 'privacy policy',
+      iconName: 'privacy-tip',
+      iconType: MaterialIcons,
       onPress: () => {
-        dispatch(setUserLogoutAuth());
-        dispatch(setUserLogOut());
-        dispatch(SetUserRole(''));
+        navigation.navigate('PrivacyPolicy');
       },
     },
-  ];
-  const otherData = [
     {
-      name: 'Home',
-      iconName: 'home',
-      iconType: Entypo,
+      name: 'Terms & Conditions',
+      iconName: 'file-text',
+      iconType: Feather,
       onPress: () => {
-        navigation.navigate('CustomerDashboard');
+        navigation.navigate('TermsAndConditions');
       },
     },
-  ];
 
-  const data =
-    role == 'admin'
-      ? adminData
-      : role == 'vendor'
-      ? sellerData
-      : role == 'customer'
-      ? customerData
-      : otherData;
+    // {
+    //   name: 'Settings',
+    //   iconName: 'settings',
+    //   iconType: Feather,
+    //   onPress: () => {
+    //     navigation.navigate('settings');
+    //   },
+    // },
+  ];
 
   return (
-    <ScreenBoiler
-      statusBarBackgroundColor={'white'}
-      statusBarContentStyle={'dark-content'}>
-      <LinearGradient
-        style={{
-          // width: windowWidth *0.6,
-          height: windowHeight,
-        }}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}}
-        colors={['#ffffff', '#ffffff']}>
-        <View
+    <>
+      <ScreenBoiler
+        statusBarBackgroundColor={'white'}
+        statusBarContentStyle={'dark-content'}>
+        <ImageBackground
           style={{
-            height: windowHeight * 0.2,
-            width: '100%',
-            backgroundColor: '#D2E4E4',
-          }}>
-          {token == null ? (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                // backgroundColor: 'black',
-                height: windowHeight * 0.2,
-              }}>
-              <View style={styles.Profile}>
-                <CustomImage
-                  resizeMode={'cover'}
-                  source={require('../Assets/Images/no-profile.jpeg')}
-                  style={{width: '100%', height: '100%'}}
-                />
-              </View>
-              <CustomText
-                style={{
-                  color: Color.black,
-                  fontSize: moderateScale(20, 0.6),
-                  marginLeft: moderateScale(10, 0.3),
-                  // backgroundColor: 'purple',
-                  // top: 50,
-                }}
-                isBold
-                onPress={() => {
-                  navigationService.navigate('LoginScreen');
-                }}>
-                {`Login/Signup`}
+            height: windowHeight * 0.25,
+            justifyContent: 'center',
+          }}
+          source={require('../Assets/Images/bg1.jpg')}>
+          <View style={styles.imageContainer}>
+            <View style={styles.Profile}>
+              <CustomImage
+                resizeMode={'cover'}
+                source={
+                  userData?.photo
+                    ? {uri: userData?.photo}
+                    : require('../Assets/Images/user.png')
+                }
+                style={{width: '100%', height: '100%'}}
+              />
+            </View>
+
+            <View style={{marginLeft: moderateScale(10, 0.3)}}>
+              <CustomText style={styles.text1} isBold>
+                {userData?.first_name}
+              </CustomText>
+
+              <CustomText isBold style={styles.text3}>
+                {userData?.email}
               </CustomText>
             </View>
-          ) : (
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: moderateScale(20, 0.3),
-                alignItems: 'center',
-                marginLeft: moderateScale(10, 0.3),
-              }}>
-              <View style={styles.Profile}>
-                <CustomImage
-                  resizeMode={'cover'}
-                  source={require('../Assets/Images/logo.png')}
-                  style={{width: '100%', height: '100%'}}
-                />
-              </View>
+          </View>
+        </ImageBackground>
 
-              <View style={{marginLeft: moderateScale(10, 0.3)}}>
-                <CustomText
-                  style={{fontSize: moderateScale(16, 0.6), color: Color.black}}
-                  isBold>
-                  {userData?.name}
-                </CustomText>
-
-                <CustomText
-                  style={{
-                    width: windowWidth * 0.4,
-                    fontSize: moderateScale(11, 0.6),
-                    color: Color.black,
-                  }}>
-                  {userData?.email}
-                </CustomText>
-              </View>
-            </View>
-          )}
-        </View>
-        <View
-          style={{
-            marginLeft: moderateScale(10, 0.3),
-            marginTop: moderateScale(10, 0.3),
-          }}>
-          {data.map((item, index) => (
+        <View style={styles.btn2View}>
+          {data?.map((item, index) => (
             <>
-              <TouchableOpacity
-                onPress={item?.onPress}
-                style={{
-                  width: windowWidth * 0.5,
-                  // borderBottomWidth: 0.5,
-                  borderColor: Color.black,
-                  margin: moderateScale(15, 0.3),
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
+              <TouchableOpacity onPress={item?.onPress} style={styles.btn2}>
                 <Icon
                   name={item?.iconName}
                   as={item?.iconType}
                   size={moderateScale(20, 0.3)}
-                  color={Color.black}
+                  color={'#1F1D2B'}
                   onPress={item?.onPress}
                 />
-                <CustomText
-                  style={{
-                    fontSize: moderateScale(14, 0.6),
-                    color: Color.black,
-                    marginLeft: moderateScale(10, 0.3),
-                  }}>
+                <CustomText isBold style={styles.text}>
                   {item.name}
                 </CustomText>
               </TouchableOpacity>
             </>
           ))}
         </View>
-
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: windowWidth * 0.14,
-            height: windowWidth * 0.14,
-            borderRadius: (windowWidth * 0.14) / 1,
-            backgroundColor: Color.white,
-            position: 'absolute',
-            bottom: 40,
-            left: 20,
-            elevation: 10,
-          }}>
-          <Icon
+        <View style={styles.btnView}>
+          <TouchableOpacity
             onPress={() => {
-              navigation.goBack();
+              dispatch(setUserLogoutAuth());
+              dispatch(setUserLogOut());
             }}
-            name="chevron-left"
-            as={Feather}
-            size={moderateScale(25)}
-            color={Color.black}
-          />
+            style={styles.btn}>
+            <Icon
+              name={'logout'}
+              as={AntDesign}
+              style={styles.icon2}
+              color={'#1F1D2B'}
+              size={moderateScale(20, 0.3)}
+            />
+
+            <CustomText isBold style={styles.text}>
+              Log out
+            </CustomText>
+          </TouchableOpacity>
         </View>
-      </LinearGradient>
-    </ScreenBoiler>
+      </ScreenBoiler>
+    </>
   );
 };
 
@@ -329,5 +187,63 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Color.white,
     overflow: 'hidden',
+  },
+  btnView: {
+    marginLeft: moderateScale(10, 0.3),
+    marginTop: moderateScale(40, 0.3),
+    position: 'absolute',
+    bottom: 40,
+  },
+  btn: {
+    height: windowHeight * 0.05,
+    width: windowWidth * 0.5,
+    margin: moderateScale(15, 0.3),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text1: {
+    fontSize: moderateScale(16, 0.6),
+    color: Color.white,
+  },
+  text: {
+    fontSize: moderateScale(14, 0.6),
+    color: '#1F1D2B',
+    marginLeft: moderateScale(10, 0.3),
+  },
+  imageContainer: {
+    alignItems: 'center',
+    // backgroundColor:'red',
+    flexDirection: 'row',
+    marginTop: moderateScale(20, 0.3),
+    alignItems: 'center',
+    marginLeft: moderateScale(10, 0.3),
+  },
+  btn2: {
+    width: windowWidth * 0.5,
+    borderColor: Color.black,
+    margin: moderateScale(15, 0.3),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  btn2View: {
+    paddingTop: moderateScale(10, 0.6),
+    // marginTop: moderateScale(60, 0.3),
+    height: windowHeight * 0.85,
+  },
+  text3: {
+    width: windowWidth * 0.4,
+    fontSize: moderateScale(12, 0.6),
+    color: Color.white,
+  },
+  back: {
+    // backgroundColor: 'red',
+    width: windowWidth * 0.1,
+    marginVertical: moderateScale(10, 0.3),
+    marginHorizontal: moderateScale(10, 0.3),
+    elevation: 10,
+  },
+  row: {
+    height: windowHeight * 0.25,
+    width: '100%',
   },
 });

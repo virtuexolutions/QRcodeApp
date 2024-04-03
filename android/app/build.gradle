@@ -76,6 +76,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
+    lintOptions { 
+    checkReleaseBuilds false
+}
     namespace "com.qrcodeapp"
     defaultConfig {
         applicationId "com.qrcodeapp"

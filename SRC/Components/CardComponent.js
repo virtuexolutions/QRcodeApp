@@ -10,15 +10,9 @@ import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 const CardComponent = ({item}) => {
-  // const navigation =useNavigation()
-
-  
   return (
     <TouchableOpacity 
-    onPress={() => {
-      // navigation.navigate('ScanScreen')
-      console.log('hello')
-    }}
+    onPress={item?.onPress}
     activeOpacity={0.6}
     style={styles.container}>
       <View>

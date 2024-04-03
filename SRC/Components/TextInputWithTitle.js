@@ -27,7 +27,7 @@ const TextInputWithTitle = props => {
         <CustomText
           style={[
             {
-              color: Color.veryLightGray,
+              color: Color.white,
               fontSize: moderateScale(12, 0.3),
               marginBottom: moderateScale(5, 0.3),
               width: windowWidth * props.viewWidth,
@@ -47,11 +47,12 @@ const TextInputWithTitle = props => {
           {
             width: windowWidth * props.viewWidth,
             borderWidth: props.border,
+            borderColor: props?.borderColor,
             // borderColor: Color.veryLightGray,
             backgroundColor: props.backgroundColor,
           },
-          props.borderBottomWidth  && {
-            borderBottomWidth:1
+          props.borderBottomWidth && {
+            borderBottomWidth: 1,
           },
 
           props.elevation && {
@@ -92,7 +93,6 @@ const TextInputWithTitle = props => {
             !props.rightIcon && {
               paddingLeft: moderateScale(15, 0.3),
             },
-            
         ]}>
         {props.iconName && (
           <Icon
@@ -102,7 +102,10 @@ const TextInputWithTitle = props => {
               {
                 // backgroundColor :'red',
                 textAlign: 'center',
-                color: (props.color && !props.disable) ? props.color : Color.veryLightGray,
+                color:
+                  props.color && !props.disable
+                    ? props.color
+                    : Color.veryLightGray,
                 // fontSize: moderateScale(18, 0.6),
                 // paddingLeft: Dimensions.get("window").width * 0.0175,
               },
@@ -128,6 +131,10 @@ const TextInputWithTitle = props => {
               style={[
                 {
                   width: windowWidth * props.inputWidth,
+                  // backgroundColor:'red',
+                  color:props.textColor 
+                  ? props.textColor
+                  : Color.white, 
                 },
                 Platform.OS === 'android'
                   ? [
@@ -144,7 +151,6 @@ const TextInputWithTitle = props => {
                       styles.inputBox,
                       {
                         paddingBottom: 0,
-                        
                       },
                     ],
               ]}
@@ -177,7 +183,7 @@ const TextInputWithTitle = props => {
               <Icon
                 name={showPassword ? 'eye' : 'eye-slash'}
                 as={FontAwesome}
-                color={Color.white}
+                color={props.color ? props.color : Color.white}
                 size={moderateScale(18, 0.3)}
               />
             </TouchableOpacity>
@@ -218,7 +224,9 @@ const TextInputWithTitle = props => {
               value={props.value}
               placeholder={`${props.placeholder}`}
               placeholderTextColor={
-                props.placeholderColor ? props.placeholderColor : Color.white
+                props.placeholderColor
+                  ? props.placeholderColor
+                  : Color.themeblue
               }
               keyboardType={props.keyboardType}
               multiline={props.multiline || false}
@@ -255,7 +263,7 @@ const styles = ScaledSheet.create({
 
     // fontFamily: 'PlusJakartaDisplay-Regular',
     textAlign: I18nManager.isRTL ? 'right' : 'left',
-    color: Color.themeLightGray,
+    // color: Color.white,
   },
 });
 export default TextInputWithTitle;

@@ -37,6 +37,9 @@ const Header = props => {
     showList,
     headerColor,
     titleColor,
+    headerRight,
+    rightIconName,
+    iconType,
     close,
     navigateTO,
     headerType,
@@ -95,7 +98,7 @@ const Header = props => {
             name={'arrow-back'}
             as={Ionicons}
             size={moderateScale(25, 0.3)}
-            color={Color.black}
+            color={Color.white}
             onPress={() => {
               navigationN.goBack();
             }}
@@ -105,32 +108,22 @@ const Header = props => {
             name={'menu'}
             as={Feather}
             size={moderateScale(25, 0.3)}
-            color={Color.black}
+            color={titleColor? titleColor : Color.black}
             onPress={() => {
               navigationN.toggleDrawer();
             }}
           />
         )}
       </View>
-      {/* {title ? (
+      {title ? (
         <CustomText
           style={{
             fontSize: moderateScale(18, 0.6),
-            color: Color.black,
+            color: titleColor ? titleColor : Color.black,
           }}isBold>
           {title}
         </CustomText>
-      ) : (
-        <CustomImage
-          resizeMode={'contain'}
-          style={{
-            width: windowWidth * 0.21,
-            // backgroundColor : 'red' ,
-            height: windowHeight * 0.05,
-          }}
-          source={require('../Assets/Images/logo.png')}
-        />
-      )} */}
+      ) : null}
 
       {/* <CustomText isBold style={{color : Color.white , fontSize : moderateScale(20,0.6)}} >Hola!!</CustomText> */}
       {!hideUser && cart ? (
@@ -185,9 +178,17 @@ const Header = props => {
         </View>
       ) : (
         <View
-          style={{
-            width: moderateScale(40, 0.3),
-          }}></View>
+          >
+            {
+              headerRight ? <Icon
+              name={rightIconName}
+              as={iconType}
+              size={moderateScale(25, 0.3)}
+              color={titleColor}/>
+       :null
+            }
+         
+          </View>
       )}
     </LinearGradient>
   );
@@ -235,7 +236,7 @@ const styles = ScaledSheet.create({
     // justifyContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: moderateScale(20, 0.3),
+    paddingHorizontal: moderateScale(12, 0.3),
     paddingVertical: moderateScale(15, 0.3),
     alignItems: 'center',
     // backgroundColor: 'red',

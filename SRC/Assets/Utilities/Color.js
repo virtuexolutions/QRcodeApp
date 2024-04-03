@@ -23,6 +23,7 @@ export default Color = {
   lightBlue :'#D2E4E4',
   orange:'#f79c00',
   darkBlue:'#033B55',
+ themeblue: '#002F58',
   theme2 :'#FF000A',
   
   purple: '#0D668E',
@@ -40,7 +41,7 @@ export default Color = {
   themeLightGray: '#8D8D8D',
   themeBlack: '#3A3838',
   //gradientColors
-  themeBgColor: ['#FFFFDA','#D2E4E4'],
+  themeBgColor: ['#001D55','#012497'],
   themeBgColorNegotiator : ['#0D668E' , '#00ADEF'],
   statusBarColor: ['#297FAD', '#297FAD'],
 };

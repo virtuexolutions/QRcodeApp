@@ -4,6 +4,7 @@ import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import ScreenBoiler from '../Components/ScreenBoiler';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 import {
   ActivityIndicator,
@@ -14,6 +15,7 @@ import {
   StyleSheet,
   FlatList,
   SafeAreaView,
+  LogBox,
 } from 'react-native';
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
@@ -24,31 +26,45 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import SearchbarComponent from '../Components/SearchbarComponent';
 import CardComponent from '../Components/CardComponent';
 import LinearGradient from 'react-native-linear-gradient';
+import navigationService from '../navigationService';
+import {useNavigation} from '@react-navigation/native';
+import {useDrawerStatus} from '@react-navigation/drawer';
+import {useSelector} from 'react-redux';
+import {useEffect} from 'react';
 
 const HomeScreen = () => {
-  const dataArray = [
+  const navigation = useNavigation();
+  const userData = useSelector(state => state.commonReducer.userData);
+  console.log('🚀 ~ HomeScreen ~ userData:', userData);
+  const token = useSelector(state => state.authReducer.token);
+    const dataArray = [
     {
       id: 1,
       image: require('../Assets/Images/cardimage1.png'),
       title: 'QR SCAN',
+      onPress: () => navigation.navigate('ScanScreen'),
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },
     {
       id: 2,
       image: require('../Assets/Images/cardimage2.png'),
       title: 'Create QR',
+      onPress: () => navigation.navigate('SelectCategory'),
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },
     {
       id: 3,
       image: require('../Assets/Images/cardimage3.png'),
-      title: 'Create Photo With QR',
+      title: 'my gallery',
+      onPress: () => navigation.navigate('GalleryView'),
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },
     {
       id: 4,
       image: require('../Assets/Images/cardimage4.png'),
-      title: 'Generate QR',
+      title: 'Generate image QR',
+      onPress: () => navigation.navigate('LinkUrlScreen' ,{fromGenerateimage :true}),
+      // onpress:()=> navigation.navigate('LinkUrlScreen', {item: item}),
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },
     // {
@@ -59,6 +75,11 @@ const HomeScreen = () => {
     // },
   ];
 
+  useEffect(() => {
+    LogBox.ignoreLogs([
+      'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
+    ]);
+  }, []);
   return (
     // <LinearGradient
     //   start={{x: 0, y: 1}}
@@ -76,48 +97,64 @@ const HomeScreen = () => {
         }}>
         <View style={styles.container}>
           <View style={styles.mainView}>
-            <View style={styles.imagecontainer}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Profile');
+              }}
+              style={styles.imagecontainer}>
               <CustomImage
+                onPress={() => {
+                  navigation.navigate('Profile');
+                }}
                 style={{
                   height: '100%',
                   width: '100%',
                 }}
-                source={require('../Assets/Images/dummyman1.png')}
+                source={
+                  userData?.photo
+                    ? {uri: userData?.photo}
+                    : require('../Assets/Images/user.png')
+                }
               />
-            </View>
+            </TouchableOpacity>
 
             <View
               style={{
                 paddingHorizontal: moderateScale(10, 0.6),
               }}>
-              <CustomText style={styles.text1}>ryan francis</CustomText>
-
               <CustomText
                 style={[
                   styles.text1,
                   {
                     fontSize: moderateScale(18, 0.6),
                     color: Color.black,
-                    fontWeight: "bold"
+                    fontWeight: 'bold',
+                    // backgroundColor:'red',
+                    width: windowWidth * 0.35,
                   },
                 ]}>
-                ryan francis
+                {userData?.first_name}
               </CustomText>
-              <CustomText style={styles.text1}>ryan francis</CustomText>
             </View>
           </View>
-          <LinearGradient style={styles.icon}
-          colors={["#001D56", "#012496"]}
-          start={{ x: 0, y: 0 }} 
-          end={{ x: 1, y: 1 }}
-          >
-            <Icon
-              name="tune-variant"
-              as={MaterialCommunityIcons}
-              size={moderateScale(20, 0.6)}
-              color={Color.white}
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.toggleDrawer();
+            }}>
+            <LinearGradient
+              style={styles.icon}
+              colors={['#001D56', '#012496']}
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 1}}>
+              <Icon
+                name="menu"
+                as={Entypo}
+                size={moderateScale(20, 0.6)}
+                color={Color.white}
               />
-          </LinearGradient>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
         <View
           style={{
@@ -129,15 +166,16 @@ const HomeScreen = () => {
             SearchStyle={{
               width: windowWidth * 0.9,
               backgroundColor: Color.white,
+              // borderColor:Color.themeblue
             }}
-            />
+          />
         </View>
         <View>
-          <LinearGradient 
-          colors={["#001D55", "#012497"]}
-          start={{ x: 0, y: 0.5 }}
-        end={{ x: 1, y: 0.5 }}
-          style={styles.cardContainner}>
+          <LinearGradient
+            colors={['#001D55', '#012497']}
+            start={{x: 0, y: 0.5}}
+            end={{x: 1, y: 0.5}}
+            style={styles.cardContainner}>
             <View>
               <CustomText isBold style={styles.cardtitle}>
                 QR CODE GENERATOR
@@ -168,7 +206,7 @@ const HomeScreen = () => {
                   width: '100%',
                 }}
                 source={require('../Assets/Images/cardimage.png')}
-                />
+              />
             </View>
           </LinearGradient>
         </View>
@@ -177,6 +215,7 @@ const HomeScreen = () => {
           nestedScrollEnabled={true}
           scrollEnabled={true}
           data={dataArray}
+          keyExtractor={item => item.id}
           numColumns={1}
           contentContainerStyle={{
             marginHorizontal: moderateScale(10, 0.3),
@@ -192,13 +231,13 @@ const HomeScreen = () => {
       </SafeAreaView>
    //</LinearGradient>
     // </ImageBackground>
-    );
-  };
-  
-  export default HomeScreen;
-  const styles = ScaledSheet.create({
-    text1: {
-      fontSize: moderateScale(10, 0.6),
+  );
+};
+
+export default HomeScreen;
+const styles = ScaledSheet.create({
+  text1: {
+    fontSize: moderateScale(10, 0.6),
     color: Color.white,
   },
   container: {
@@ -218,15 +257,15 @@ const HomeScreen = () => {
     alignItems: 'center',
   },
   imagecontainer: {
-    width: windowHeight * 0.08,
-    height: windowHeight * 0.08,
-    borderRadius: (windowHeight * 0.08) / 2,
+    width: windowHeight * 0.065,
+    height: windowHeight * 0.065,
+    borderRadius: (windowHeight * 0.065) / 2,
     overflow: 'hidden',
   },
   mainContainer: {
     height: windowHeight,
     width: windowWidth,
-    backgroundColor: Color.white
+    backgroundColor: Color.white,
   },
   icon: {
     height: windowHeight * 0.042,
@@ -239,9 +278,9 @@ const HomeScreen = () => {
   cardtitle: {
     fontSize: moderateScale(22, 0.6),
     // color: '#1F1D2B',
-    color:Color.white,
+    color: Color.white,
     width: windowWidth * 0.5,
-    textTransform : 'uppercase'
+    textTransform: 'uppercase',
   },
   carddes: {
     // backgroundColor:'red',

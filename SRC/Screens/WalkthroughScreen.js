@@ -173,7 +173,7 @@ const WalkThroughScreen = props => {
           </View>
     );
   };
-  const RenderBackBtn = () => {
+const RenderBackBtn = () => {
     return (
       <View style={[styles.generalBtn, styles.btnLeft]}>
       {/* <RadialGradient

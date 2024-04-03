@@ -19,7 +19,7 @@ import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import CustomButton from '../Components/CustomButton';
 import {ActivityIndicator} from 'react-native';
 import {Post} from '../Axios/AxiosInterceptorFunction';
-import CardContainer from '../Components/CardContainer';
+// import CardContainer from '../Components/CardContainer';
 import { useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import ScreenBoiler from '../Components/ScreenBoiler';
@@ -33,6 +33,7 @@ const EnterPhone = props => {
   const fromForgot = props?.route?.params?.fromForgot;
   console.log('here=>', fromForgot);
   const [phone, setPhone] = useState('');
+  console.log("🚀 ~ EnterPhone ~ phone:", phone)
   const [isLoading, setIsLoading] = useState(false);
 
   const sendOTP = async () => {
@@ -67,7 +68,7 @@ const EnterPhone = props => {
       statusBarBackgroundColor={'white'}
       statusBarContentStyle={'dark-content'}>
       
-      <LinearGradient
+      {/* <LinearGradient
         style={{
           width: windowWidth,
           height: windowHeight,
@@ -76,7 +77,7 @@ const EnterPhone = props => {
         end={{ x: 1, y:1}}
          colors={[Color.themeColor2,Color.themeColor2]}
         // locations ={[0, 0.5, 0.6]}
-        >
+        > */}
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -88,7 +89,7 @@ const EnterPhone = props => {
           }}>
          
 
-          <CardContainer  style={{paddingVertical: moderateScale(30, 0.3) , alignItems : 'center'}}>
+          {/* <CardContainer  style={{paddingVertical: moderateScale(30, 0.3) , alignItems : 'center'}}> */}
             <CustomText isBold style={styles.txt2}>Forget Password</CustomText>
             <CustomText style={styles.txt3}>
             Forgot your password ? don't worry, jsut take a simple step and create your new password!
@@ -124,16 +125,17 @@ const EnterPhone = props => {
             height={windowHeight * 0.06}
             marginTop={moderateScale(20, 0.3)}
             onPress={() => {
-           navigationService.navigate('VerifyNumber', {phoneNumber : phone})
+              sendOTP()
+          //  navigationService.navigate('VerifyNumber', {phoneNumber : phone})
              }}
-            bgColor={ Color.yellow}
+            bgColor={ Color.themeblue}
            
           />
 
        
-          </CardContainer>
+          {/* </CardContainer> */}
         </KeyboardAwareScrollView>
-        </LinearGradient>
+        {/* </LinearGradient> */}
         </ScreenBoiler>
     </>
   );

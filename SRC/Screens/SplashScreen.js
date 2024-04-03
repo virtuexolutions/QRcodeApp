@@ -64,7 +64,7 @@ const SplashScreen = () => {
               marginTop : moderateScale(10,0.3),
               paddingVertical:moderateScale(20,.6),
               color:Color.white
-            }}>Bible App</CustomText>
+            }}>Lorem Ipsum</CustomText>
              <CustomText  style={{
               textAlign : 'center',
               fontSize : moderateScale(15,0.6),
@@ -73,7 +73,7 @@ const SplashScreen = () => {
     fontStyle : 'italic'
 
               // marginTop : moderateScale(10,0.3)
-            }}>you can easily read bible when ever you want</CustomText>
+            }}>Lorem ipsum text lorem </CustomText>
 
             </View>
         </Animatable.View>

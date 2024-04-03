@@ -46,7 +46,6 @@ const LoginScreen = props => {
   const [password, setPassword] = useState('');
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
-  const [confirmPass, setconfirmPass] = useState('');
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
@@ -68,11 +67,7 @@ const LoginScreen = props => {
         ? ToastAndroid.show('password is required', ToastAndroid.SHORT)
         : alert('password is required');
     }
-    //  else if (userRole == '') {
-    //   return Platform.OS == 'android'
-    //     ? ToastAndroid.show('user role is required', ToastAndroid.SHORT)
-    //     : alert('user role is required');
-    // }
+
 
     const url = 'login';
     const body = {email: email.trim(), password: password};
@@ -80,19 +75,11 @@ const LoginScreen = props => {
     const response = await Post(url, body, apiHeader());
     setIsLoading(false);
 
-    // console.log('LoginResponse============>>>>>>>', response?.data);
     if (response?.data?.success) {
-      console.log(
-        'Login Testing =============>>>>>>',
-        response?.data?.user_info,
-      );
+    // return  console.log("🚀 ~ LoginUser ~ response:", response?.data)
       dispatch(setUserData(response?.data?.user_info));
-      dispatch(SetUserRole(response?.data?.user_info?.role));
       dispatch(setUserToken({token: response?.data?.token}));
     }
-    dispatch(setUserData(response?.data?.user_info));
-    dispatch(setUserToken({token: 'dfhksdjlsk'}));
-    dispatch(SetUserRole('customer'))
   };
 
   return (
@@ -101,55 +88,10 @@ const LoginScreen = props => {
       statusBarContentStyle={'dark-content'}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ImageBackground
-          style={{
-            width: windowWidth,
-            minHeight: windowHeight,
-            paddingBottom: moderateScale(40, 0.6),
-            justifyContent: 'center',
-            // backgroundColor:'red',
-            // height: windowHeight*0.8,
-            alignItems: 'center',
-          }}
+          style={styles.imageView}
           source={require('../Assets/Images/signup_bg.png')}>
           <View
-            style={{
-              marginTop: 40,
-              alignItems: 'center',
-              // backgroundColor: 'red',
-              height: windowHeight * 0.13,
-              width: windowHeight * 0.13,
-              borderRadius: moderateScale((windowHeight * 0.13) / 2),
-              // overflow : 'hidden'
-            }}>
-            {/* <CustomImage
-              resizeMode="contain"
-              source={require('../Assets/Images/dummyUser1.png')}
-              style={{
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'blue',
-
-                borderRadius: moderateScale((windowHeight * 0.13) / 2),
-              }}
-            />
-
-            <TouchableOpacity
-              activeOpacity={0.6}
-              style={styles.edit}
-              onPress={() => {
-                setImagePicker(true);
-              }}>
-              <Icon
-                name="pencil"
-                as={FontAwesome}
-                style={styles.icon2}
-                color={Color.black}
-                size={moderateScale(13, 0.3)}
-                onPress={() => {
-                  setImagePicker(true);
-                }}
-              />
-            </TouchableOpacity> */}
+            style={styles.container}>
             <CustomText
               numberOfLine={3}
               isBold
@@ -161,12 +103,11 @@ const LoginScreen = props => {
               logo here
             </CustomText>
             <CustomText
-              // isBold
               style={{
                 fontSize: moderateScale(11, 0.6),
                 color: Color.white,
                 width: windowWidth * 0.6,
-                // backgroundColor:'red',
+                textAlign: 'center',
                 paddingVertical: moderateScale(10, 0.4),
               }}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -175,19 +116,16 @@ const LoginScreen = props => {
           </View>
           <View
             style={{
-              // paddingVertical: moderateScale(30, 0.3),
               alignItems: 'center',
-              // justifyContent: 'center',
-              marginTop: moderateScale(20, 0.3),
             }}>
             <TextInputWithTitle
               iconName={'user'}
               iconType={FontAwesome}
               LeftIcon={true}
-              titleText={'Username'}
-              placeholder={'Username'}
-              setText={setUserName}
-              value={username}
+              titleText={'User name'}
+              placeholder={'User email'}
+              setText={setEmail}
+              value={email}
               viewHeight={0.06}
               viewWidth={0.75}
               inputWidth={0.55}
@@ -195,7 +133,7 @@ const LoginScreen = props => {
               borderColor={Color.white}
               marginTop={moderateScale(10, 0.3)}
               marginBottom={moderateScale(10, 0.3)}
-              color={Color.white}
+              inputColor={Color.white}
               placeholderColor={Color.white}
               // elevation
             />
@@ -220,29 +158,26 @@ const LoginScreen = props => {
               placeholderColor={Color.white}
               // elevation
             />
-            <TextInputWithTitle
-              iconName={'check'}
-              iconType={FontAwesome}
-              LeftIcon={true}
-              titleText={'confirm password'}
-              placeholder={'confirm password'}
-              setText={setconfirmPass}
-              value={confirmPass}
-              secureText={true}
-              viewHeight={0.06}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              borderBottomWidth={1}
-              marginBottom={moderateScale(10, 0.3)}
-              borderColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.white}
-              placeholderColor={Color.white}
-              // elevation
-            />
+          
+            <CustomText
+              onPress={() => {
+                console.log('====================> verify number screen');
+                navigation.navigate('EnterPhone');
+              }}
+              style={{
+                color: Color.white,
+                position: 'absolute',
+                right: 0,
+                bottom: 145,
+                paddingLeft: moderateScale(20, 0.6),
+                fontSize: moderateScale(11, 0.6),
+              }}>
+              Forgot password?
+            </CustomText>
 
             <View
               style={{
+                // marginTop:moderateScale(10,.3),
                 width: windowWidth * 0.75,
                 flexDirection: 'row',
                 gap: 12,
@@ -250,7 +185,10 @@ const LoginScreen = props => {
                 paddingHorizontal: moderateScale(15, 0.3),
               }}></View>
             <CustomButton
-              onPress={() => dispatch(setUserToken({token: 'meerab'}))}
+              onPress={
+                () => LoginUser()
+                // dispatch(setUserToken({token: 'meerab'}))
+              }
               text={
                 isLoading ? (
                   <ActivityIndicator color={Color.white} size={'small'} />
@@ -263,7 +201,7 @@ const LoginScreen = props => {
               borderRadius={moderateScale(30, 0.3)}
               width={windowWidth * 0.3}
               height={windowHeight * 0.06}
-              marginTop={moderateScale(20, 0.3)}
+              marginTop={moderateScale(40, 0.3)}
               // bgColor={Color.themeColor2}
               borderWidth={1}
               borderColor={Color.white}
@@ -275,6 +213,9 @@ const LoginScreen = props => {
               do you have an account ?{' '}
             </CustomText>
             <CustomText
+              onPress={() => {
+                navigationService.navigate('Signup');
+              }}
               isBold
               style={{
                 fontSize: moderateScale(15, 0.6),
@@ -293,6 +234,7 @@ const LoginScreen = props => {
               // backgroundColor:'red',
               position: 'absolute',
               bottom: 50,
+              textAlign: 'center',
               paddingVertical: moderateScale(10, 0.4),
             }}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -342,6 +284,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  container:{
+    alignItems: 'center',
+    height: windowHeight * 0.13,
+    width: windowHeight * 0.13,
+    borderRadius: moderateScale((windowHeight * 0.13) / 2),
+  },
+  imageView:{
+    width: windowWidth,
+    minHeight: windowHeight,
+    paddingBottom: moderateScale(40, 0.6),
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
 
 export default LoginScreen;

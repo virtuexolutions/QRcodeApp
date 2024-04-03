@@ -19,11 +19,12 @@ import CustomText from '../Components/CustomText';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import CountryPicker, {DARK_THEME} from 'react-native-country-picker-modal';
 import CustomButton from '../Components/CustomButton';
 
-const HelpAndSupport = () => {
-  const navigation = useNavigation();
+const Help = () => {
+  // const navigation = useNavigation();
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -59,24 +60,22 @@ const HelpAndSupport = () => {
         minHeight: windowHeight,
         paddingBottom: moderateScale(40, 0.6),
       }}
-      source={require('../Assets/Images/setting_Bg.png')}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => {
-          navigation.goBack();
-        }}
-        style={styles.back}>
-        <Icon
-          name="arrowleft"
-          as={AntDesign}
-          style={styles.icon2}
-          color={Color.white}
-          size={moderateScale(20, 0.3)}
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
-      </TouchableOpacity>
+      source={require('../Assets/Images/bg.png')}>
+         <View style={styles.header}>
+            <TouchableOpacity
+            >
+
+        <View style={styles.backBtn}>
+          <Icon
+            name="arrowleft"
+            size={moderateScale(24, 0.6)}
+            color={Color.white}
+            as={AntDesign}
+            />
+      
+        </View>
+            </TouchableOpacity>
+        </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{
@@ -84,7 +83,7 @@ const HelpAndSupport = () => {
           // marginTop: windowHeight * 0.1,
         }}
         contentContainerStyle={{
-          paddingTop: windowHeight * 0.1,
+          
           alignItems: 'center',
           justifyContent: 'center',
           paddingBottom: moderateScale(50, 0.6),
@@ -133,94 +132,109 @@ const HelpAndSupport = () => {
           style={{
             alignItems: 'center',
 
-            marginTop: moderateScale(20, 0.3),
+            // marginTop: moderateScale(20, 0.3),
           }}>
-          <TextInputWithTitle
-            titleText={'Username'}
-            placeholder={'Username'}
-            setText={setUserName}
-            value={username}
-            viewHeight={0.06}
-            viewWidth={0.75}
-            inputWidth={0.55}
-            border={1}
-            borderRadius={moderateScale(30, 0.3)}
-            backgroundColor={Color.white}
-            borderColor={Color.black}
-            // marginTop={moderateScale(10, 0.3)}
-            color={Color.black}
-            placeholderColor={Color.veryLightGray}
-            elevation
-          />
-
+            <TextInputWithTitle
+            style={{
+              borderWidth:moderateScale(1,.6),
+              backgroundColor:'red',
+              borderBottomWitdth:moderateScale(10,.6)
+            }}
+              iconName={'user'}
+              iconType={FontAwesome}
+              iconStyle={{
+                backgroundColor:'red'
+              }}
+              LeftIcon={true}
+              titleText={'Username'}
+              placeholder={'Username'}
+              setText={setUserName}
+              value={username}
+              viewHeight={0.06}
+              viewWidth={0.75}
+              inputWidth={0.55}
+              borderColor={Color.white}
+              borderBottomWidth={1}
+              marginBottom={moderateScale(10,.3)}
+              
+              marginTop={moderateScale(10, 0.3)}
+              color={Color.white}
+              placeholderColor={Color.white}
+              // elevation
+            />
           <TextInputWithTitle
             titleText={'Email'}
             placeholder={'Email'}
             setText={setEmail}
             value={email}
+            iconName={'email'}
+            iconType={Fontisto}
             viewHeight={0.06}
             viewWidth={0.75}
             inputWidth={0.55}
-            border={1}
-            borderRadius={moderateScale(30, 0.3)}
-            borderColor={Color.black}
-            backgroundColor={Color.white}
+            borderColor={Color.white}
+            borderBottomWidth={1}
+            marginBottom={moderateScale(10,.3)}
+            
             marginTop={moderateScale(10, 0.3)}
-            color={Color.black}
-            placeholderColor={Color.veryLightGray}
-            elevation
+            color={Color.white}
+            placeholderColor={Color.white}
           />
           <TextInputWithTitle
             titleText={'Phone'}
             placeholder={'Phone'}
             setText={setContact}
             value={contact}
+            iconName={'phone'}
+            iconType={Fontisto}
             viewHeight={0.06}
             viewWidth={0.75}
             inputWidth={0.55}
-            border={1}
-            borderRadius={moderateScale(30, 0.3)}
-            borderColor={Color.black}
-            backgroundColor={Color.white}
+            borderColor={Color.white}
+            borderBottomWidth={1}
+            marginBottom={moderateScale(10,.3)}
+            
             marginTop={moderateScale(10, 0.3)}
-            color={Color.black}
-            placeholderColor={Color.veryLightGray}
-            elevation
+            color={Color.white}
+            placeholderColor={Color.white}
           />
           <TextInputWithTitle
             titleText={'subject'}
             placeholder={'subject'}
             setText={setSubject}
             value={subject}
+            iconName={'subject'}
+            iconType={MaterialIcons}
             viewHeight={0.06}
             viewWidth={0.75}
             inputWidth={0.55}
-            border={1}
-            borderRadius={moderateScale(30, 0.3)}
-            borderColor={Color.black}
-            backgroundColor={Color.white}
+            borderColor={Color.white}
+            borderBottomWidth={1}
+            marginBottom={moderateScale(10,.3)}
+            
             marginTop={moderateScale(10, 0.3)}
-            color={Color.black}
-            placeholderColor={Color.veryLightGray}
-            elevation
+            color={Color.white}
+            placeholderColor={Color.white}
           />
           <TextInputWithTitle
             titleText={'Enter description'}
             placeholder={'Enter description'}
             setText={setDescription}
             value={description}
-            viewHeight={0.2}
+            iconName={'book'}
+            iconType={FontAwesome}
+            viewHeight={0.06}
             viewWidth={0.75}
             inputWidth={0.55}
-            border={1}
-            borderRadius={moderateScale(5, 0.3)}
-            borderColor={Color.black}
-            backgroundColor={Color.white}
+            borderColor={Color.white}
+            borderBottomWidth={1}
+            marginBottom={moderateScale(10,.3)}
+         
             marginTop={moderateScale(10, 0.3)}
-            color={Color.black}
-            placeholderColor={Color.veryLightGray}
+            placeholderColor={Color.white}
+            
             multiline={true}
-            elevation
+           
           />
           {/* <TouchableOpacity
               onPress={() => {
@@ -287,14 +301,16 @@ const HelpAndSupport = () => {
                   'Send question'
                 )
               }
-              fontSize={moderateScale(12, 0.3)}
               textColor={Color.white}
               borderRadius={moderateScale(30, 0.3)}
-              width={windowWidth * 0.75}
+              width={windowWidth * 0.4}
               height={windowHeight * 0.06}
-              marginTop={moderateScale(20, 0.3)}
-              bgColor={Color.themeColor2}
+               marginTop={moderateScale(20, 0.3)}
+             borderColor={Color.white}
+              borderWidth={1}
+              // bgColor={Color.themeColor2}
               isBold
+              // isGradi
             />
           </View>
         </View>
@@ -303,19 +319,23 @@ const HelpAndSupport = () => {
   );
 };
 
-export default HelpAndSupport;
+export default Help;
 const styles = StyleSheet.create({
-  back: {
-    width: moderateScale(35, 0.6),
-    height: moderateScale(35, 0.6),
-    borderRadius: moderateScale(5, 0.6),
-    borderWidth: 0.5,
-    borderColor: '#FFFFFF',
-    position: 'absolute',
-    left: moderateScale(10, 0.6),
-    top: moderateScale(10, 0.6),
-    zIndex: 1,
-    margin: 5,
+ 
+  header: {
+    marginTop: 12,
+    flexDirection: 'row',
+    gap: 12,
+    paddingHorizontal: moderateScale(18, 0.5),
+    paddingVertical: moderateScale(20, 0.5),
+    alignItems: 'center',
+  },
+  backBtn: {
+    width: windowWidth * 0.09,
+    height: windowWidth * 0.09,
+    borderRadius: (windowWidth * 0.09) / 2,
+    borderColor: Color.white,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

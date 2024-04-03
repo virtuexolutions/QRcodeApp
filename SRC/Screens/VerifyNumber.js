@@ -24,12 +24,13 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import {useEffect} from 'react';
-import CardContainer from '../Components/CardContainer';
+// import CardContainer from '../Components/CardContainer';
 import CustomStatusBar from '../Components/CustomStatusBar';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Icon} from 'native-base';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import CustomImage from '../Components/CustomImage';
 
 const VerifyNumber = props => {
   const SelecteduserRole = useSelector(
@@ -81,6 +82,7 @@ const VerifyNumber = props => {
     const response = await Post(url, {code: code}, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
+  // return    console.log("🚀 ~ VerifyOTP ~ response:", response?.data)
       Platform.OS == 'android'
         ? ToastAndroid.show(`otp verified`, ToastAndroid.SHORT)
         : alert(`otp verified`);
@@ -100,73 +102,52 @@ const VerifyNumber = props => {
 
   return (
     <>
-      <CustomStatusBar
-       backgroundColor={
-       Color.white
-      }
-        barStyle={'dark-content'}
-      />
-      <LinearGradient
+      <CustomStatusBar backgroundColor={'#FEFDFC'} barStyle={'dark-content'} />
+      <View
         style={{
+          height: windowHeight * 0.85,
           width: windowWidth,
-          height: windowHeight,
-        }}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y:1}}
-         colors={[Color.themeColor2,Color.themeColor2]}
-        // locations ={[0, 0.5, 0.6]}
-        >
-        <TouchableOpacity
-          activeOpacity={0.8}
+          alignItems: 'center',
+          justifyContent: 'center',
+          // backgroundColor:'red'
+          paddingTop: windowHeight * 0.1,
+          backgroundColor: '#FEFDFC',
+        }}>
+        {/* <View
           style={{
-            position: 'absolute',
-            top: moderateScale(20, 0.3),
-            left: moderateScale(20, 0.3),
-            height: moderateScale(30, 0.3),
-            width: moderateScale(30, 0.3),
-            borderRadius: moderateScale(5, 0.3),
-            justifyContent: 'center',
+            width: windowWidth * 0.7,
+            height: windowHeight * 0.2,
             alignItems: 'center',
-            backgroundColor: 'white',
-            zIndex: 1,
           }}>
-          <Icon
-            name={'arrowleft'}
-            as={AntDesign}
-            size={moderateScale(22, 0.3)}
-            color={Color.yellow}
-            onPress={() => {
-              navigationN.goBack();
+          <CustomImage
+            source={require('../Assets/Images/dummyUser1.png')}
+            resizeMode={'contain'}
+            style={{
+              height: '100%',
             }}
           />
-        </TouchableOpacity>
+        </View> */}
 
-        <KeyboardAwareScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingBottom: moderateScale(20, 0.3),
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            height: windowHeight,
-          }}>
-          <CardContainer
+        <CustomText
+          style={{
+            fontSize: moderateScale(18, 0.6),
+            // marginTop: moderateScale(0, 0.3),
+          }}
+          isBold>
+          Enter OTP
+        </CustomText>
+        {isLoading ? (
+          <View
             style={{
-              paddingVertical: moderateScale(30, 0.3),
+              width: windowWidth,
+              height: windowHeight * 0.5,
+              justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <CustomText isBold style={styles.txt2}>
-              Enter OTP
-            </CustomText>
-            <CustomText style={styles.txt3}>
-              Enter the email address and we'll send and email with instructions
-              to reset your password{' '}
-              {
-                <CustomText style={{color: Color.black}}>
-                  {phoneNumber}
-                </CustomText>
-              }
-            </CustomText>
+            <ActivityIndicator size={'large'} color={Color.themeColor} />
+          </View>
+        ) : (
+          <View style={styles.conatiner}>
             <CodeField
               placeholder={'0'}
               ref={ref}
@@ -191,47 +172,53 @@ const VerifyNumber = props => {
                 </View>
               )}
             />
-            <CustomText style={[styles.txt3, {width: windowWidth * 0.6}]}>
+            <CustomText
+              style={[
+                styles.txt3,
+                {
+                  width: windowWidth * 0.6,
+                  marginHorizontal: moderateScale(40, 0.3),
+                  // alignItems: 'center',
+                },
+              ]}>
               Haven't Recieved Verification Code ?{' '}
               {
                 <TouchableOpacity
                   disabled={timerLabel == 'Resend Code ' ? false : true}
                   onPress={() => {
-                    settimerLabel('ReSend in '), settime(120);
+                    sendOTP();
+                    settimerLabel('ReSend in '), settime(10);
                   }}>
                   <CustomText style={[styles.txt4]}>
-
                     {timerLabel} {time}
                   </CustomText>
                 </TouchableOpacity>
               }
             </CustomText>
             <CustomButton
-              // textTransform={"capitalize"}
               text={
                 isLoading ? (
-                  <ActivityIndicator color={'#ffffff'} size={'small'} />
+                  <ActivityIndicator color={'#FFFFFF'} size={'small'} />
                 ) : (
-                  'Verify now'
+                  'Verify Now'
                 )
               }
-              isBold
               textColor={Color.white}
-              width={windowWidth * 0.4}
-              height={windowHeight * 0.06}
-              marginTop={moderateScale(20, 0.3)}
+              fontSize={moderateScale(16, 0.6)}
+              width={windowWidth * 0.8}
+              height={windowHeight * 0.07}
+              marginTop={moderateScale(30, 0.3)}
               onPress={() => {
-                navigationService.navigate('ResetPassword', {
-                  phone: phoneNumber,
-                });
+                VerifyOTP();
+                // navigationService.navigate('ResetPassword');
               }}
-              bgColor={Color.yellow
-              }
-              // borderRadius={moderateScale(30, 0.3)}
+              bgColor={Color.themeBgColor}
+              borderRadius={moderateScale(30, 0.3)}
+              isGradient
             />
-          </CardContainer>
-        </KeyboardAwareScrollView>
-      </LinearGradient>
+          </View>
+        )}
+      </View>
     </>
   );
 };
@@ -246,7 +233,9 @@ const styles = ScaledSheet.create({
     color: Color.themeLightGray,
     fontSize: moderateScale(11, 0.6),
     textAlign: 'center',
-    width: '95%',
+    width: windowWidth * 0.9,
+    // paddingHorizontal: moderateScale(10, 0.6),
+    // backgroundColor: 'red',
     marginTop: moderateScale(10, 0.3),
     lineHeight: moderateScale(20, 0.3),
   },

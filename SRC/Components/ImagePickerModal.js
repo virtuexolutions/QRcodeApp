@@ -258,6 +258,7 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(15, 0.3),
     fontWeight: 'bold',
     marginBottom: moderateScale(7.5, 0.3),
+    color:Color.themeblue
   },
   modalContentContianer: {
     flexDirection: 'row',
@@ -265,13 +266,13 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     height: windowHeight * 0.21,
-    borderBottomColor: Color.themeColor,
+    borderBottomColor: Color.themeblue,
     borderBottomWidth: 2,
-    borderTopColor: Color.themeColor,
+    borderTopColor: Color.themeblue,
     borderTopWidth: 2,
   },
   modalContentBtn: {
-    backgroundColor: Color.themeColor,
+    backgroundColor: Color.themeblue,
     alignItems: 'center',
     paddingHorizontal: windowWidth * 0.08,
     paddingVertical: windowHeight * 0.02,
@@ -283,7 +284,7 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(12, 0.3),
   },
   modalCancelBtn: {
-    backgroundColor: Color.themeColor2,
+    backgroundColor: '#002F58',
     paddingVertical: windowHeight * 0.008,
     width: windowWidth * 0.2,
     alignItems: 'center',
