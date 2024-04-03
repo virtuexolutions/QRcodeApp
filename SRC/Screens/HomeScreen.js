@@ -13,6 +13,7 @@ import {
   ImageBackground,
   StyleSheet,
   FlatList,
+  SafeAreaView,
 } from 'react-native';
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
@@ -64,7 +65,7 @@ const HomeScreen = () => {
     //   end={{x: 1, y: 1}}
     //   colors={['#49C3E9', '#0066FF']}
     //   style={styles.mainContainer}>
-    <View style={styles.mainContainer}>
+    <SafeAreaView style={styles.mainContainer}>
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -188,7 +189,7 @@ const HomeScreen = () => {
           }}
         />
       </ScrollView>
-      </View>
+      </SafeAreaView>
    //</LinearGradient>
     // </ImageBackground>
     );
