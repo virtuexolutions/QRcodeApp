@@ -26,17 +26,17 @@ import ImagePickerModal from '../Components/ImagePickerModal';
 
 const LinkUrlScreen = props => {
   const fromImage = props?.route?.params?.fromGenerateimage;
+  console.log('🚀 ~ LinkUrlScreen ~ fromImage:', fromImage);
   const navigation = useNavigation();
   const token = useSelector(state => state.authReducer.token);
   const selectedItem = props?.route?.params?.item;
   console.log('🚀 ~ LinkUrlScreen ~ selectedItem:', selectedItem);
-  const [imagePicker, setImagePicker] = useState();
+  const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
   // console.log("🚀 ~ LinkUrlScreen ~ image:", image)
   const [link, setLink] = useState('');
   const [qrName, setQrName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  console.log('🚀 ~ LinkUrlScreen ~ qrName:', qrName);
   const [qrimage, setQrimage] = useState({});
   console.log('🚀 ~ LinkUrlScreen ~ qrimage=======================>:', qrimage);
   // const data = link;
@@ -49,6 +49,7 @@ const LinkUrlScreen = props => {
   };
 
   const sendDocument = async response => {
+    console.log('🚀 ~ sendDocument ~ response==========>:', response);
     const formData = new FormData();
     console.log('hertere'), selectedItem;
     console.log( 'beraa',response);
@@ -57,12 +58,14 @@ const LinkUrlScreen = props => {
     const body = {
       file: {
         name:
-         ( selectedItem?.title == 'image' || fromImage) ? response?.name : response[0].name,
+          selectedItem?.title == 'image' || fromImage
+            ? response?.name
+            : response[0].name,
         type:
-         ( selectedItem?.title == 'image' || fromImage) ? response?.type : response[0].type,
-        uri:( selectedItem?.title == 'image' || fromImage) ? response?.uri : response[0].uri,
+          selectedItem?.title == 'image' || fromImage ? response?.type : response[0].type,
+        uri: selectedItem?.title == 'image'  || fromImage? response?.uri : response[0].uri,
       },
-      name: (selectedItem?.title == 'image' || fromImage) ? response?.name : response[0].name,
+      name: selectedItem?.title == 'image'  || fromImage ? response?.name : response[0].name,
     };
     console.log('🚀 ~ sendDocument ~ body:', body);
     for (let key in body) {
@@ -157,10 +160,11 @@ const LinkUrlScreen = props => {
                     color: Color.themeblue,
                     fontSize: moderateScale(12, 0.6),
                   }}>
-                  {selectedItem?.title == 'pdf'
+                  {/* {selectedItem?.title == 'pdf'
                     ? qrimage?.filename
-                    : (fromImage ||
-                      selectedItem?.title == 'image') && image?.name}
+                    : selectedItem?.title == 'image' ||
+                      (fromImage == true && image?.name)} */}
+                      {qrimage?.filename || qrimage?.name}
                 </CustomText>
                 <Icon
                   name="close"
@@ -243,7 +247,7 @@ const LinkUrlScreen = props => {
           placeholderColor={Color.themeblue}
         />
 
-        {(!link == '' || Object.keys(qrimage).length > 0) && (
+        {(!link == '' || Object.keys(qrimage).length > 0) && qrName != '' && (
           <CustomButton
             onPress={() => {
               if (link != '') {
@@ -251,7 +255,8 @@ const LinkUrlScreen = props => {
                   navigation.navigate('GenerateQr', {
                     data: link,
                     item: selectedItem?.title,
-                  });
+                    qrName : qrName,
+                  })
                   setLink('');
                   setQrName('');
                 } else if (
@@ -261,10 +266,12 @@ const LinkUrlScreen = props => {
                   Platform.OS == 'android'
                     ? ToastAndroid.show('Invalid URL', ToastAndroid.SHORT)
                     : alert('Invalid URL');
-                } else {
+                }
+                 else {
                   navigation.navigate('GenerateQr', {
                     data: link,
                     item: selectedItem?.title,
+                    qrName : qrName,
                   });
                   setLink('');
                   setQrName('');
@@ -273,6 +280,7 @@ const LinkUrlScreen = props => {
                 navigation.navigate('GenerateQr', {
                   data: qrimage,
                   item: selectedItem?.title,
+                  qrName : qrName,
                 });
               }
             }}

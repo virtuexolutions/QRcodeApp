@@ -74,11 +74,20 @@ const MainContainer = () => {
     return <SplashScreen/>;
   }
   return( 
+<<<<<<< HEAD
   <AppNavigator/>
   // <GalleryView/>
   // <Signup/>
  ) 
 // return <SplashScreen/>
+=======
+    <AppNavigator />
+    // <GalleryView/>
+    // <Signup/>
+  ) 
+  // <SplashScreen/>
+// return
+>>>>>>> origin/meerab
 };
 
 const useloader = value => {

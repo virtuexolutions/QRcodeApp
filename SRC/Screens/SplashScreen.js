@@ -1,85 +1,45 @@
-import React from "react";
-import * as Animatable from "react-native-animatable";
-import Color from "../Assets/Utilities/Color";
-import CustomImage from "../Components/CustomImage";
-import { windowHeight, windowWidth } from "../Utillity/utils";
-import { moderateScale, ScaledSheet } from "react-native-size-matters";
-import ScreenBoiler from "../Components/ScreenBoiler";
-import LinearGradient from "react-native-linear-gradient";
-import CustomText from "../Components/CustomText";
-import { Image, ImageBackground } from "react-native";
-import { View } from "native-base";
+import React from 'react';
+import * as Animatable from 'react-native-animatable';
+import Color from '../Assets/Utilities/Color';
+import CustomImage from '../Components/CustomImage';
+import {windowHeight, windowWidth} from '../Utillity/utils';
+import {moderateScale, ScaledSheet} from 'react-native-size-matters';
+import ScreenBoiler from '../Components/ScreenBoiler';
+import LinearGradient from 'react-native-linear-gradient';
+import CustomText from '../Components/CustomText';
+import {Image, ImageBackground} from 'react-native';
+import {View} from 'native-base';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import LottieView from 'lottie-react-native';
+import {height} from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const SplashScreen = () => {
   return (
-    <ScreenBoiler     
-      statusBarBackgroundColor={'white'}
-      statusBarContentStyle={"dark-content"}
-    >
-        {/* <LinearGradient
+    <SafeAreaView>
+      <View
         style={{
-          width: windowWidth,
-          alignItems : 'center',
-          justifyContent : 'center',
           height: windowHeight,
-        }}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y:1}}
-        colors={[Color.themeColor2 , Color.themeColor2]}
-        // locations ={[0, 0.5, 0.6]}
-        > */}
-        <ImageBackground
-        style={{
           width: windowWidth,
-          minHeight: windowHeight,
-          paddingBottom: moderateScale(40, 0.6),
-        }}
-        source={require('../Assets/Images/walkthrough2.png')}>
-        <Animatable.View
-          animation="zoomIn"
-          duration={2500}
-          useNativeDriver
+          backgroundColor: 'white',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'rgba(0,0,0,0.15)',
+        }}>
+        <View
           style={{
-            // backgroundColor : 'red',
-            alignItems : 'center',
-            justifyContent:"center"
-          }}
-          >
- 
-{/*      
-          <CustomImage
-            source={require('../Assets/Images/logo.png')}
-            resizeMode={"stretch"}
-            style={[styles.bottomImage]}
-            /> */}
-            <View style={{
-              height:windowHeight,
-              // backgroundColor:"green",
-              justifyContent:'center',
-              alignItems:"center"
-            }}>
-            <CustomText isBold style={{
-              textAlign : 'center',
-              fontSize : moderateScale(27,0.6),
-              marginTop : moderateScale(10,0.3),
-              paddingVertical:moderateScale(20,.6),
-              color:Color.white
-            }}>Lorem Ipsum</CustomText>
-             <CustomText  style={{
-              textAlign : 'center',
-              fontSize : moderateScale(15,0.6),
-              // color : Color.veryLightGray,
-              color:Color.white,
-    fontStyle : 'italic'
-
-              // marginTop : moderateScale(10,0.3)
-            }}>Lorem ipsum text lorem </CustomText>
-
-            </View>
-        </Animatable.View>
-   </ImageBackground>
-            {/* </LinearGradient> */}
-    </ScreenBoiler>
+            height: windowHeight * 0.5,
+            width: windowWidth * 0.3,
+          }}>
+          <LottieView
+            resizeMode="cover"
+            source={require('../Assets/Images/animatedlogo.json')}
+            style={{height: '100%'}}
+            autoPlay
+            loop
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -87,14 +47,14 @@ const styles = ScaledSheet.create({
   container: {
     flex: 1,
     // alignItems: "center",
-    justifyContent: "center",
+    justifyContent: 'center',
     height: windowHeight,
     width: windowWidth,
-    backgroundColor : Color.themeColor
+    backgroundColor: Color.themeColor,
   },
   bottomImage: {
-    width : windowWidth * 0.4,
-    height :windowWidth * 0.3,
+    width: windowWidth * 0.4,
+    height: windowWidth * 0.3,
   },
   // textContainer: {
   //   flexDirection: "row",
@@ -105,14 +65,12 @@ const styles = ScaledSheet.create({
   //   justifyContent : 'center',
   //   alignItems : 'center',
   //   // backgroundColor : Color.white,
-    
 
   // },
   LogoText: {
     fontSize: moderateScale(35, 0.3),
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
- 
 });
 
 export default SplashScreen;
