@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Touchable,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ScreenBoiler from '../Components/ScreenBoiler';
@@ -71,6 +72,8 @@ const GalleryView = () => {
   }, [selectedItem]);
 
   return (
+    <SafeAreaView>
+
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
@@ -249,6 +252,8 @@ const GalleryView = () => {
         </View>
       </View>
     </ScrollView>
+    </SafeAreaView>
+
   );
 };
 

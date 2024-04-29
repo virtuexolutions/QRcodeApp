@@ -58,7 +58,7 @@ const Signup = () => {
   const [imagePicker, setImagePicker] = useState(false);
   // console.log('🚀 ~ file: Signup.js:50 ~ Signup ~ imagePicker:', imagePicker);
   const [image, setImage] = useState({});
-  // console.log('🚀 ~ Signup ~ image:', image);
+  console.log('🚀 ~ Signup ~ image:', image);
 
   const [country, setCountry] = useState({
     callingCode: ['1'],

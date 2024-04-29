@@ -6,6 +6,7 @@ import {
   ToastAndroid,
   Alert,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import QRCode from 'react-native-qrcode-svg';
@@ -58,20 +59,24 @@ const GenerateQr = props => {
       if (Object.keys(Image)?.length > 0) {
         formData.append('image', Image);
       }
-      const url = 'auth/document';
+        console.log("🚀 ~ saveQrImage ~ Image:", Image)
+    
+            const url = 'auth/document';
       setIsLoading(true);
       const response = await Post(url, formData, apiHeader(token));
-      //  return  console.log("🚀 ~ saveQrImage ~ formData:", formData)
+      console.log("🚀 ~ saveQrImage ~ formData:", formData)
      
       Platform.OS == 'android'
       ? ToastAndroid.show('Succesfully generated!', ToastAndroid.SHORT)
       : alert('Invalid URL');
-    // return   console.log('🚀 ~ saveQrImage ~ response:', response?.data);
+     console.log('🚀 ~ saveQrImage ~ response:', response?.data);
      navigation.navigate('HomeScreen');
       }
     }
     return (
-      <View>
+      <SafeAreaView style={{width: windowWidth, height: windowHeight}}>
+
+      
       
         <View style={styles.row}>
         <CustomButton
@@ -134,7 +139,9 @@ const GenerateQr = props => {
           />
         
         </View>
-      </View>
+      
+      </SafeAreaView>
+
     );
   };
   

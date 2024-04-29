@@ -33,6 +33,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import {setUserData} from '../Store/slices/common';
 import LinearGradient from 'react-native-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -84,7 +85,7 @@ const Profile = () => {
     if (response != undefined) {
       Platform.OS == 'android'
         ? ToastAndroid.show('profile updated Successfully', ToastAndroid.SHORT)
-        : alert.alert('profile updated Successfully');
+        : alert('profile updated Successfully');
       console.log('🚀 ~ profileUpdate ~ response:', response?.data?.user_info);
       navigation.navigate('HomeScreen');
     }
@@ -92,10 +93,14 @@ const Profile = () => {
   };
 
   return (
+    
+    <SafeAreaView style={{width: windowWidth, height: windowHeight}}>
     <ScrollView
-      contentContainerStyle={{
-        height: windowHeight,
-      }}
+     contentContainerStyle={{
+      paddingBottom: moderateScale(20, 0.6),
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
       showsVerticalScrollIndicator={false}>
       <ImageBackground
         style={{
@@ -484,6 +489,8 @@ const Profile = () => {
         setFileObject={setImage}
       />
     </ScrollView>
+    </SafeAreaView>
+
   );
 };
 

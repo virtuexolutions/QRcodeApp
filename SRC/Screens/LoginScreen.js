@@ -231,11 +231,12 @@ const LoginScreen = props => {
               fontSize: moderateScale(11, 0.6),
               color: Color.white,
               width: windowWidth * 0.6,
+              marginTop : moderateScale(40,0.3),
               // backgroundColor:'red',
-              position: 'absolute',
-              bottom: 50,
+              // position: 'absolute',
+              // bottom: moderateScale(50,0.6),
               textAlign: 'center',
-              paddingVertical: moderateScale(10, 0.4),
+              // paddingVertical: moderateScale(10, 0.4),
             }}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry.

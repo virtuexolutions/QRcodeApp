@@ -9,10 +9,12 @@ import {
   ActivityIndicator,
   ScrollView,
   View,
+  Alert,
   TouchableOpacity,
   ImageBackground,
   StyleSheet,
   ToastAndroid,
+  SafeAreaView,
 } from 'react-native';
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
@@ -76,7 +78,7 @@ const Profile = () => {
   };
 
   return (
-    <View
+    <SafeAreaView
       style={{
         height: windowHeight,
         width: windowWidth,
@@ -211,7 +213,7 @@ const Profile = () => {
           isBold
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

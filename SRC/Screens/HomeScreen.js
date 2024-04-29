@@ -37,7 +37,8 @@ const HomeScreen = () => {
   const userData = useSelector(state => state.commonReducer.userData);
   console.log('🚀 ~ HomeScreen ~ userData:', userData);
   const token = useSelector(state => state.authReducer.token);
-    const dataArray = [
+  const [ search, setSearch ] = useState('');
+  const dataArray = [
     {
       id: 1,
       image: require('../Assets/Images/cardimage1.png'),
@@ -161,6 +162,8 @@ const HomeScreen = () => {
             paddingVertical: moderateScale(20, 0.6),
           }}>
           <SearchbarComponent
+          search={search}
+          setSearch={setSearch}
             placeHolderColor={Color.veryLightGray}
             placeholderName={'Search..'}
             SearchStyle={{

@@ -20,18 +20,10 @@ import {
 import SplashScreen from './SRC/Screens/SplashScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './SRC/appNavigation';
-
-
-import Signup from './SRC/Screens/Signup';
-import LoginScreen from './SRC/Screens/LoginScreen';
+import { Platform } from 'react-native';
 import WalkThroughScreen from './SRC/Screens/WalkthroughScreen';
-import HomeScreen from './SRC/Screens/HomeScreen';
-import Settings from './SRC/Screens/Settings';
-import Profile from './SRC/Screens/Profile';
-import PrivacyPolicy from './SRC/Screens/PrivacyPolicy';
-import TermsAndConditions from './SRC/Screens/TermsAndConditions';
-import Help from './SRC/Screens/Help';
-import GalleryView from './SRC/Screens/GalleryView';
+
+
 
 const App = () => {
   const [publishableKey, setPublishableKey] = useState('');
@@ -72,15 +64,17 @@ const MainContainer = () => {
       await requestWritePermission();
       await requestLocationPermission();
     }
-    GetPermission();
+    if(Platform.OS == 'android'){
+      GetPermission();
+      }
   }, []);
 
   const [isloading] = useloader(true);
   if (isloading == true) {
-    return <SplashScreen />;
+    return <SplashScreen/>;
   }
   return( 
-  <AppNavigator />
+  <AppNavigator/>
   // <GalleryView/>
   // <Signup/>
  ) 

@@ -88,15 +88,19 @@ const ResetPassword = props => {
   return (
     <>
       <CustomStatusBar backgroundColor={'#FEFDFC'} barStyle={'dark-content'} />
+      <SafeAreaView
+      style={{
+        height: windowHeight,
+        width: windowWidth,
+        justifyContent: 'center',
+        alignItems: 'center',
+        //  height: windowHeight * 0.1,
+        backgroundColor: '#FEFDFC',
+      }}
+      >
+
       <View
-        style={{
-          height: windowHeight,
-          width: windowWidth,
-          justifyContent: 'center',
-          alignItems: 'center',
-          //  height: windowHeight * 0.1,
-          backgroundColor: '#FEFDFC',
-        }}>
+        >
         {/* <View
           style={{
             width: windowWidth * 0.7,
@@ -179,6 +183,8 @@ const ResetPassword = props => {
           isGradient
         />
       </View>
+      </SafeAreaView>
+
     </>
   );
 };

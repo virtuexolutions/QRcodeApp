@@ -1,4 +1,4 @@
-import {Alert, Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, Linking, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React,{useEffect ,useState} from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
@@ -17,6 +17,7 @@ const ScanScreen = () => {
   const navigation = useNavigation();
     // const [showImage , setShowImage] = useState(false)
     const [path , setPath] = useState('')
+
 
   const checkIfImageExists = async (imageUrl) => {
     try {
@@ -48,7 +49,8 @@ const ScanScreen = () => {
   
  
   return (
-    <View
+    <SafeAreaView
+
       style={{
         backgroundColor: 'white',
         height: windowHeight,
@@ -122,7 +124,7 @@ const ScanScreen = () => {
         />
 
       }
-    </View>
+    </SafeAreaView>
   );
 };
 

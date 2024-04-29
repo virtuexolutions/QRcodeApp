@@ -63,6 +63,7 @@ const ImagePickerModal = props => {
             } else if (response.customButton) {
               alert(response.customButton);
             } else {
+              console.log('herer == >> > ' , response?.assets[0])
               setFileObject &&
                 setFileObject({
                   uri: response?.assets[0]?.uri,
@@ -99,6 +100,7 @@ const ImagePickerModal = props => {
       }
     }
     launchCamera(options, response => {
+      console.log(response)
       if (Platform.OS == 'ios') {
         setShow(false);
       }

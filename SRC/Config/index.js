@@ -1,5 +1,7 @@
 // export const baseUrl = "https://businessup.fashionaddaoutlet.com";
-export const baseUrl = "https://0208-103-125-71-28.ngrok-free.app";
+// export const baseUrl = "https://0208-103-125-71-28.ngrok-free.app";
+// export const baseUrl = "https://0208-103-125-71-28.ngrok-free.app";
+export const baseUrl="https://qrcode.ad-wize.net";
 export const imageUrl = `${baseUrl}/api/images/`;
 export const profilePicUrl = `${baseUrl}/uploads`
 

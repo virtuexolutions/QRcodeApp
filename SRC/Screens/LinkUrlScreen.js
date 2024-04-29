@@ -1,5 +1,6 @@
 import {
   Platform,
+  SafeAreaView,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -49,19 +50,19 @@ const LinkUrlScreen = props => {
 
   const sendDocument = async response => {
     const formData = new FormData();
-    // console.log('hertere');
-    // console.log( 'beraa',response);
+    console.log('hertere'), selectedItem;
+    console.log( 'beraa',response);
 
     const url = 'auth/pdf';
     const body = {
       file: {
         name:
-          selectedItem?.title == 'image' ? response?.name : response[0].name,
+         ( selectedItem?.title == 'image' || fromImage) ? response?.name : response[0].name,
         type:
-          selectedItem?.title == 'image' ? response?.type : response[0].type,
-        uri: selectedItem?.title == 'image' ? response?.uri : response[0].uri,
+         ( selectedItem?.title == 'image' || fromImage) ? response?.type : response[0].type,
+        uri:( selectedItem?.title == 'image' || fromImage) ? response?.uri : response[0].uri,
       },
-      name: selectedItem?.title == 'image' ? response?.name : response[0].name,
+      name: (selectedItem?.title == 'image' || fromImage) ? response?.name : response[0].name,
     };
     console.log('🚀 ~ sendDocument ~ body:', body);
     for (let key in body) {
@@ -101,7 +102,7 @@ const LinkUrlScreen = props => {
   }, [image]);
 
   return (
-    <View style={styles.mainContainer}>
+    <SafeAreaView style={styles.mainContainer}>
       {/* <View style={styles.rowContainer}> */}
       <View
         style={{
@@ -158,8 +159,8 @@ const LinkUrlScreen = props => {
                   }}>
                   {selectedItem?.title == 'pdf'
                     ? qrimage?.filename
-                    : fromImage == true &&
-                      selectedItem?.title == 'image' && image?.name}
+                    : (fromImage ||
+                      selectedItem?.title == 'image') && image?.name}
                 </CustomText>
                 <Icon
                   name="close"
@@ -295,7 +296,7 @@ const LinkUrlScreen = props => {
         setShow={setImagePicker}
         setFileObject={setImage}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

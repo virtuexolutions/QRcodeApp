@@ -65,8 +65,11 @@ const EnterPhone = props => {
   return (
     <>
      <ScreenBoiler
-      statusBarBackgroundColor={'white'}
-      statusBarContentStyle={'dark-content'}>
+      statusBarBackgroundColor={Color.themeBgColor}
+      statusBarContentStyle={'light-content'}
+      showBack
+      showHeader
+      >
       
       {/* <LinearGradient
         style={{

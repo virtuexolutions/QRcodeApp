@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
   PixelRatio,
+  SafeAreaView,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -52,12 +53,12 @@ const WalkThroughScreen = props => {
 
   const RenderSlider = ({ item }) => {
     return (
-      <View style={styles.SliderContainer}>
+      <SafeAreaView style={styles.SliderContainer}>
         <ImageBackground
           style={{
             width: windowWidth,
             minHeight: windowHeight,
-            paddingBottom: moderateScale(40, 0.6),
+            // paddingBottom: moderateScale(40, 0.6),
             justifyContent: 'center',
             // backgroundColor:'red',
             // height: windowHeight*0.8,
@@ -113,7 +114,7 @@ const WalkThroughScreen = props => {
             
           </View>
         </ImageBackground>
-      </View>
+      </SafeAreaView>
     );
   };
 
@@ -196,7 +197,7 @@ const RenderBackBtn = () => {
       showHeader={false}
       statusBarBackgroundColor={[Color.white, Color.white]}
       statusBarContentStyle={'dark-content'}>
-      <View style={styles.container}>
+      {/* <View style={styles.container}> */}
         
         <AppIntroSlider
           renderItem={RenderSlider}
@@ -212,7 +213,7 @@ const RenderBackBtn = () => {
           renderDoneButton={RenderDoneBtn}
           renderSkipButton={RenderSkipBtn}
         />
-      </View>
+      {/* </View> */}
     </ScreenBoiler>
   );
 };
@@ -277,11 +278,11 @@ const styles = StyleSheet.create({
     overflow:"hidden",
     justifyContent:'center',
     // marginTop: moderateScale(18, 0.3),
-    borderRadius: moderateScale(100, 0.9),
+    borderRadius: moderateScale(100, 0.6),
     borderColor:Color.white,
     backgroundColor: "#001D56",
     // opacity: 0.5,
-    borderWidth: moderateScale(1.5,0.7),
+    borderWidth: 1,
 
     // borderWidth:  moderateScale(3,0.1),
   },

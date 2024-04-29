@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {Icon} from 'native-base';
@@ -44,6 +44,8 @@ const SelectCategory = () => {
   ];
 
   return (
+    <SafeAreaView>
+
     <LinearGradient
       style={{
         height: windowHeight,
@@ -105,6 +107,8 @@ const SelectCategory = () => {
         }}
       />
     </LinearGradient>
+  
+    </SafeAreaView>
   );
 };
 

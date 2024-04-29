@@ -32,19 +32,19 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>YouAreHere would like to access Your camera</string>
+	<string>QrcodeApp would like to access Your camera</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>We need access to the app's Documents folder for file management and storage.</string>
 	<key>NSDownloadsFolderUsageDescription</key>
 	<string>Access the Downloads folder for importing files and documents.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>YouAreHere would like to access Your location</string>
+	<string>QrcodeApp would like to access Your location</string>
 	<key>NSOpenAccessUsageDescription</key>
 	<string>We need access to external files and directories for importing and exporting data.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>YouAreHere would like to access Your Gallery</string>
+	<string>QrcodeApp would like to access Your Gallery</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>YouAreHere would like to access Your Gallery</string>
+	<string>QrcodeApp would like to access Your Gallery</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -74,8 +74,12 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
