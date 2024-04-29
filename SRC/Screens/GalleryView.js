@@ -44,6 +44,7 @@ const GalleryView = () => {
   const [imageUrls, setImageUrls] = useState([]);
   console.log('🚀 ~ GalleryView ~ imageUrls:', imageUrls);
   const onSelect = index => {
+    console.log('🚀 ~ onSelect ~ onSelect:', onSelect);
     setIsVisible(true);
     setImageIndex(index);
   };
@@ -186,7 +187,8 @@ const GalleryView = () => {
               data={galleryImages}
               keyExtractor={item => item.id}
               contentContainerStyle={{
-                // paddingTop:moderateScale(10,.6),
+                // backgroundColor :'red',
+                paddingTop: moderateScale(10, 0.6),
                 paddingBottom: moderateScale(50, 0.6),
                 // alignItems : 'center'
               }}
@@ -200,13 +202,32 @@ const GalleryView = () => {
                   `${baseUrl}${item?.image}`,
                 );
                 return (
-                  <View style={styles.imageContainer}>
-                    <CustomImage
-                      onPress={() => onSelect(index)}
-                      source={{uri: `${baseUrl}${item?.image}`}}
-                      style={styles.galleryImg}
-                      // resizeMode="cover"
-                    />
+                  <View>
+                    <View style={styles.imageContainer}>
+                      <CustomImage
+                        onPress={() => onSelect(index)}
+                        source={{uri: `${baseUrl}${item?.image}`}}
+                        style={styles.galleryImg}
+                        // resizeMode="cover"
+                      />
+                    </View>
+                    <CustomText
+                      numberOfLines={1}
+                      isBold
+                      style={{
+                        marginVertical: moderateScale(2, 0.3),
+
+                        paddingLeft: moderateScale(8, 0.6),
+                        // backgroundColor :'red',
+                        width: windowWidth * 0.25,
+                        fontSize: moderateScale(13, 0.6),
+                        color: 'black',
+                        marginHorizontal: moderateScale(10, 0.3),
+                        // textAlign :'center',
+                      }}>
+                      {/* jsgahsgdhgajsgdjagsjdhgagdasdgaj */}
+                      {item?.qr_name}
+                    </CustomText>
                   </View>
                 );
               }}
@@ -223,6 +244,7 @@ const GalleryView = () => {
                       style={{
                         width: windowWidth * 0.25,
                         height: windowHeight * 0.15,
+
                         // backgroundColor:'red',
                       }}>
                       <CustomImage
@@ -238,14 +260,19 @@ const GalleryView = () => {
               }}
             />
           )}
-
-          <ImageView
-            backgroundColor={'black'}
-            images={imageUrls}
-            imageIndex={currentImageIndex}
-            visible={visible}
-            onRequestClose={() => setIsVisible(false)}
-          />
+          <View style={{
+            width :windowWidth*0.7,
+            marginHorizontal :moderateScale(20,.3),
+            backgroundColor:'red',
+}}>
+            <ImageView
+              backgroundColor={'#002F58'}
+              images={imageUrls}
+              imageIndex={currentImageIndex}
+              visible={visible}
+              onRequestClose={() => setIsVisible(false)}
+            />
+          </View>
         </View>
       </View>
     </ScrollView>

@@ -34,9 +34,10 @@ import {useEffect} from 'react';
 const HomeScreen = () => {
   const navigation = useNavigation();
   const userData = useSelector(state => state.commonReducer.userData);
-  console.log('🚀 ~ HomeScreen ~ userData:', userData);
+  console.log('🚀 ~ HomeScreen ~ userData:============>', userData);
   const token = useSelector(state => state.authReducer.token);
-    const dataArray = [
+  console.log("🚀 ~ HomeScreen ~ token============>:", token)
+  const dataArray = [
     {
       id: 1,
       image: require('../Assets/Images/cardimage1.png'),
@@ -62,7 +63,11 @@ const HomeScreen = () => {
       id: 4,
       image: require('../Assets/Images/cardimage4.png'),
       title: 'Generate image QR',
-      onPress: () => navigation.navigate('LinkUrlScreen' ,{fromGenerateimage :true}),
+      onPress: () =>
+        navigation.navigate('LinkUrlScreen', {
+          fromGenerateimage: true,
+          item: {title: 'image'},
+        }),
       // onpress:()=> navigation.navigate('LinkUrlScreen', {item: item}),
       description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
     },

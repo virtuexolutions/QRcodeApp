@@ -80,11 +80,12 @@ const MainContainer = () => {
     return <SplashScreen />;
   }
   return( 
-  <AppNavigator />
-  // <GalleryView/>
-  // <Signup/>
- ) 
-// return <SplashScreen/>
+    <AppNavigator />
+    // <GalleryView/>
+    // <Signup/>
+  ) 
+  // <SplashScreen/>
+// return
 };
 
 const useloader = value => {
