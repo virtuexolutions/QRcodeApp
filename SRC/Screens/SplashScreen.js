@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as Animatable from 'react-native-animatable';
 import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
@@ -11,7 +11,6 @@ import {Image, ImageBackground} from 'react-native';
 import {View} from 'native-base';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
-import {height} from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const SplashScreen = () => {
   return (

@@ -82,6 +82,8 @@ const MainContainer = () => {
   return( 
     <AppNavigator />
     // <GalleryView/>
+    // <SplashScreen />
+
     // <Signup/>
   ) 
   // <SplashScreen/>
