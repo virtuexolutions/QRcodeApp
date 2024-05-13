@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 const CardComponent = ({item}) => {
+  // console.log("🚀 ~ CardComponent ~ item===========>:", item)
   return (
     <TouchableOpacity 
     onPress={item?.onPress}

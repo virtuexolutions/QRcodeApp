@@ -9,25 +9,32 @@ import {
   Touchable,
   ActivityIndicator,
   SafeAreaView,
+  Modal,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ScreenBoiler from '../Components/ScreenBoiler';
-import {windowHeight, windowWidth} from '../Utillity/utils';
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale} from 'react-native-size-matters';
 import CustomText from '../Components/CustomText';
 import ImageView from 'react-native-image-viewing';
 import CustomButton from '../Components/CustomButton';
 import Color from '../Assets/Utilities/Color';
 import Header from '../Components/Header';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Icon} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
-import {Get} from '../Axios/AxiosInterceptorFunction';
+import {Get, Post} from '../Axios/AxiosInterceptorFunction';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {useFocus} from 'native-base/lib/typescript/components/primitives';
 import CustomImage from '../Components/CustomImage';
 import {baseUrl} from '../Config';
+import QRCode from 'react-native-qrcode-svg';
+import {Button} from 'react-native-share';
+import CustomImageView from '../Components/CustomImageView';
 
 const GalleryView = () => {
   const navigation = useNavigation();
@@ -35,40 +42,71 @@ const GalleryView = () => {
 
   const [selectedItem, setSelectedItem] = useState('image');
   console.log('🚀 ~ GalleryView ~ selectedItem:', selectedItem);
+  const [selectedImage, setSelectedImage] = useState([]);
+  console.log('🚀 ~ GalleryView ~ selectedImage:', selectedImage);
 
   const [visible, setIsVisible] = useState(false);
   const [yestImageIsVisible, setYestImageVisible] = useState(false);
   const [galleryImages, setGalleryImages] = useState([]);
-  console.log('🚀 ~ GalleryView ~ galleryImages:', galleryImages);
+  // console.log("🚀 ~ GalleryView ~ galleryImages:", galleryImages)
+  console.log(
+    '🚀 ~ GalleryView ~ galleryImages==========================>:',
+    galleryImages,
+  );
   const [isLoading, setIsLoading] = useState(false);
-  const [currentImageIndex, setImageIndex] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [imageUrls, setImageUrls] = useState([]);
   console.log('🚀 ~ GalleryView ~ imageUrls:', imageUrls);
-  const onSelect = index => {
-    console.log('🚀 ~ onSelect ~ onSelect:', onSelect);
+
+  function showModalAndSetIndex(index) {
     setIsVisible(true);
-    setImageIndex(index);
+    setSelectedImageIndex(index);
+  }
+  const DeleteImages = async () => {
+    const url = 'auth/document-delete';
+    const body = {
+      type: selectedItem,
+      id: selectedImage,
+    };
+    console.log('🚀 ~ DeleteImages ~ body:', body);
+    setIsLoading(true);
+    const response = await Post(url, body, apiHeader(token));
+    setIsLoading(false);
+
+    if (response != undefined) {
+      setSelectedImage([]);
+      console.log('delete respose here======> ', response?.data);
+      setGalleryImages(prevImages => {
+        return {
+          ...prevImages,
+          [selectedItem]: prevImages[selectedItem].filter(
+            item => !selectedImage.includes(item.id),
+          ),
+        };
+      });
+    }
   };
 
   const GetQrcodes = async () => {
-    const url = `auth/document?type=${selectedItem}`;
+    // const url = `auth/document?type=${selectedItem}`;
+    const url = `auth/document`;
     setIsLoading(true);
+    setSelectedImage([]);
     const response = await Get(url, token);
     setIsLoading(false);
     console.log('User tooken ==>', token);
     if (response != undefined) {
-      console.log('QR===>', response?.data);
+      // console.log("🚀 ~ GetQrcodes ~ response===========================>:", response?.data)
+      //  return  console.log('QR===>',
+      //  selectedItem === "text"?
+      //  response?.data?.info?.text : selectedItem === "image" ? response?.data?.info?.image : response?.data?.info?.pdf);
       setGalleryImages(response?.data?.info);
-      setImageUrls(
-        response?.data?.info?.map((item, index) => {
-          return {uri: `${baseUrl}${item.image}`};
-        }),
-      );
     }
   };
   useEffect(() => {
     if (selectedItem != '') {
       GetQrcodes();
+      // setSelectedImage([]);
     }
   }, [selectedItem]);
 
@@ -82,7 +120,18 @@ const GalleryView = () => {
       }}
       style={styles.mainScreen}>
       <View style={styles.row}>
-        <CustomButton
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Icon
+            as={MaterialIcons}
+            name="keyboard-backspace"
+            size={moderateScale(24, 0.6)}
+            color={Color.themeblue}
+          />
+        </TouchableOpacity>
+        {/* <CustomButton
           iconStyle={{
             width: windowWidth * 0.09,
             height: windowHeight * 0.05,
@@ -104,18 +153,62 @@ const GalleryView = () => {
           bgColor={Color.themeBgColor}
           width={windowHeight * 0.06}
           height={windowHeight * 0.06}
-        />
+        /> */}
 
-        <CustomText
-          isBold
-          style={{
-            fontSize: moderateScale(22, 0.6),
-            width: windowWidth * 0.53,
-            color: Color.themeblue,
-            // backgroundColor:'red',
-          }}>
-          gallery
-        </CustomText>
+        {selectedImage?.length == 0 && (
+          <CustomText
+            isBold
+            style={{
+              // textAlign:selectedImage.length > 0 ? 'center' : 'justify' ,
+              fontSize: moderateScale(22, 0.6),
+              width: windowWidth * 0.53,
+              color: Color.themeblue,
+              // backgroundColor:'red',
+            }}>
+            gallery
+          </CustomText>
+        )}
+        {selectedImage?.length > 0 && (
+          <View
+            style={{
+              width: windowWidth * 0.6,
+              height: windowHeight * 0.05,
+              flexDirection: 'row',
+              backgroundColor: 'rgba(256,256,256,.5)',
+              marginBottom: moderateScale(10, 0.3),
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Icon
+              name={'cross'}
+              as={Entypo}
+              color={'black'}
+              size={5}
+              onPress={() => {
+                setSelectedImage([]);
+              }}
+            />
+            <CustomText
+              style={{
+                fontSize: moderateScale(12, 0.6),
+                marginLeft: moderateScale(10, 0.3),
+                width: windowWidth * 0.45,
+              }}>
+              {selectedImage?.length} Selected items
+            </CustomText>
+
+            <Icon
+              name={'delete'}
+              as={AntDesign}
+              size={5}
+              color={Color.themeBgColor}
+              onPress={() => {
+                console.log('Deleting image');
+                DeleteImages();
+              }}
+            />
+          </View>
+        )}
       </View>
       <View>
         <View style={styles.container}>
@@ -187,7 +280,15 @@ const GalleryView = () => {
               showsVerticalScrollIndicator={true}
               nestedScrollEnabled={true}
               numColumns={3}
-              data={galleryImages}
+              data={
+                selectedItem == 'image'
+                  ? galleryImages?.image
+                  : selectedItem == 'text'
+                  ? galleryImages?.text
+                  : selectedItem == 'pdf'
+                  ? galleryImages?.pdf
+                  : galleryImages?.url
+              }
               keyExtractor={item => item.id}
               contentContainerStyle={{
                 // backgroundColor :'red',
@@ -200,19 +301,103 @@ const GalleryView = () => {
                 alignSelf: 'center',
               }}
               renderItem={({item, index}) => {
-                console.log(
-                  '🚀 ~ GalleryView ~ item:',
-                  `${baseUrl}${item?.image}`,
-                );
+                console.log('🚀 ~ GalleryView ~ item:', item);
                 return (
                   <View>
-                    <View style={styles.imageContainer}>
-                      <CustomImage
-                        onPress={() => onSelect(index)}
-                        source={{uri: `${baseUrl}${item?.image}`}}
-                        style={styles.galleryImg}
-                        // resizeMode="cover"
-                      />
+                    <View style={[styles.imageContainer]}>
+                      <TouchableOpacity
+                        style={
+                          selectedImage.length > 0 && {
+                            opacity: 0.6,
+                          }
+                        }
+                        onPress={() => {
+                          selectedImage?.length == 0
+                            ? showModalAndSetIndex(index)
+                            : !selectedImage.some(
+                                (data, index) => data == item?.id,
+                              )
+                            ? setSelectedImage(prev => [...prev, item?.id])
+                            : setSelectedImage(
+                                selectedImage.filter(
+                                  (data, index) => data != item?.id,
+                                ),
+                              );
+                        }}
+                        onLongPress={() => {
+                          setSelectedImage(prev => [...prev, item?.id]);
+                        }}>
+                        <QRCode
+                          value={
+                            selectedItem == 'image'
+                              ? item?.path
+                              : selectedItem == 'text'
+                              ? item?.text
+                              : selectedItem == 'pdf'
+                              ? item?.path
+                              : item?.text
+                          }
+                          logo={require('../Assets/Images/cardimage.png')}
+                          size={100}
+                        />
+                      </TouchableOpacity>
+
+                      {selectedImage.length > 0 &&
+                        selectedImage.includes(item?.id) && (
+                          <TouchableOpacity
+                            onPress={() => {
+                              setSelectedImage(
+                                selectedImage.filter(
+                                  (data, index) => data != item?.id,
+                                ),
+                              );
+                            }}
+                            style={{
+                              width: windowHeight * 0.035,
+                              height: windowHeight * 0.035,
+                              position: 'absolute',
+                              top: 0,
+                              right: 8,
+                              zIndex: 1,
+                              backgroundColor: 'white',
+                              justifyContent: 'center',
+                              overflow: 'hidden',
+                              alignItems: 'center',
+                            }}>
+                            <Icon
+                              name={'checkbox-marked'}
+                              as={MaterialCommunityIcons}
+                              color={Color.blue}
+                              size={moderateScale(30, 0.2)}
+                            />
+                          </TouchableOpacity>
+                        )}
+                      {selectedImage.length > 0 &&
+                        !selectedImage.includes(item?.id) && (
+                          <TouchableOpacity
+                            onPress={() => {
+                              setSelectedImage(prev => [...prev, item?.id]);
+                            }}
+                            style={{
+                              width: windowHeight * 0.035,
+                              height: windowHeight * 0.035,
+                              position: 'absolute',
+                              top: 0,
+                              right: 8,
+                              zindex: 1,
+                              backgroundColor: Color.white,
+                              justifyContent: 'center',
+                              overflow: 'hidden',
+                              alignItems: 'center',
+                            }}>
+                            <Icon
+                              name={'checkbox-blank-outline'}
+                              as={MaterialCommunityIcons}
+                              color={Color.black}
+                              size={moderateScale(30, 0.2)}
+                            />
+                          </TouchableOpacity>
+                        )}
                     </View>
                     <CustomText
                       numberOfLines={1}
@@ -263,19 +448,21 @@ const GalleryView = () => {
               }}
             />
           )}
-          <View style={{
-            width :windowWidth*0.7,
-            marginHorizontal :moderateScale(20,.3),
-            backgroundColor:'red',
-}}>
-            <ImageView
-              backgroundColor={'#002F58'}
-              images={imageUrls}
-              imageIndex={currentImageIndex}
-              visible={visible}
-              onRequestClose={() => setIsVisible(false)}
-            />
-          </View>
+          <CustomImageView
+            visible={visible}
+            selectedItem={selectedItem}
+            selectedImageIndex={selectedImageIndex}
+            setIsVisible={setIsVisible}
+            galleryImages={
+              selectedItem == 'image'
+                ? galleryImages?.image
+                : selectedItem == 'text'
+                ? galleryImages?.text
+                : selectedItem == 'pdf'
+                ? galleryImages?.pdf
+                : galleryImages?.url
+            }
+          />
         </View>
       </View>
     </ScrollView>
@@ -333,4 +520,43 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  deleteButton: {
+    flexDirection: 'row',
+    gap: moderateScale(34, 0.3),
+    position: 'absolute',
+    bottom: 100,
+    left: 138,
+  },
+  deleteButtonText: {
+    fontWeight: 'bold',
+    fontSize: moderateScale(18, 0.3),
+  },
 });
+{
+  /* <CustomImage
+                      onPress={() => {
+                        selectedImage?.length == 0
+                          ?  onSelect(index)
+                          : !selectedImage.some((data, index) => data == item?.id)
+                          ? setSelectedImage(prev => [...prev, item?.id])
+                          : setSelectedImage(
+                              selectedImage.filter((data, index) => data != item?.id),
+                            );
+                      }}
+                      onLongPress={() => {
+                        setSelectedImage(prev => [...prev, item?.id]);
+                      }}
+                      // onPress={() => {
+                        //   selectedItem?.length == 0
+                        //     ?  onSelect(index)
+                        //     : !selectedItem.some((data, index) => data?.name == item?.name)
+                        //     ? setSelectedItem([...selectedItem, item])
+                        //     : setSelectedItem(
+                        //         selectedItem.filter((data, index) => data?.name != item?.name),
+                        //       );
+                        // }}
+                        source={{uri: `${baseUrl}${item?.image}`}}
+                        style={styles.galleryImg}
+                        // resizeMode="cover"
+                      /> */
+}

@@ -22,8 +22,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './SRC/appNavigation';
 import { Platform } from 'react-native';
 import WalkThroughScreen from './SRC/Screens/WalkthroughScreen';
-
-
+import HomeScreen from './SRC/Screens/HomeScreen';
+import Settings from './SRC/Screens/Settings';
+import Profile from './SRC/Screens/Profile';
+import PrivacyPolicy from './SRC/Screens/PrivacyPolicy';
+import TermsAndConditions from './SRC/Screens/TermsAndConditions';
+import Help from './SRC/Screens/Help';
+import GalleryView from './SRC/Screens/GalleryView';
+import { LogBox } from 'react-native';
 
 const App = () => {
   const [publishableKey, setPublishableKey] = useState('');
@@ -33,7 +39,9 @@ const App = () => {
     setPublishableKey(key);
   };
 
-  
+  useEffect(() => {
+    LogBox.ignoreLogs(['In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.']);
+  }, []);
 
 
   console.reportErrorsAsExceptions = false;
@@ -74,12 +82,9 @@ const MainContainer = () => {
     return <SplashScreen/>;
   }
   return( 
-  <AppNavigator/>
-  // <GalleryView/>
-  // <Signup/>
- ) 
-// return <SplashScreen/>
-};
+    <AppNavigator />
+   ) 
+ };
 
 const useloader = value => {
   const [isloading, setIsloading] = useState(value);

@@ -1,43 +1,25 @@
-import React from 'react';
-import * as Animatable from 'react-native-animatable';
-import Color from '../Assets/Utilities/Color';
-import CustomImage from '../Components/CustomImage';
+import React, {useEffect, useRef} from 'react';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
-import ScreenBoiler from '../Components/ScreenBoiler';
-import LinearGradient from 'react-native-linear-gradient';
-import CustomText from '../Components/CustomText';
-import {Image, ImageBackground} from 'react-native';
 import {View} from 'native-base';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import LottieView from 'lottie-react-native';
-import {height} from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
+import FastImage from 'react-native-fast-image';
+import Color from '../Assets/Utilities/Color';
 
 const SplashScreen = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <View
         style={{
-          height: windowHeight,
-          width: windowWidth,
-          backgroundColor: 'red',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'rgba(0,0,0,0.15)',
+          height: windowHeight*0.55,
+          width: windowWidth * 0.99, // flex: 1,
+         
         }}>
-        <View
-          style={{
-            height: windowHeight * 0.5,
-            width: windowWidth,
-          }}>
-          <LottieView
-            resizeMode="cover"
-            source={require('../Assets/Images/animatedlogo.json')}
-            style={{height: '100%' , wodth : '100%'}}
-            autoPlay
-            loop
-          />
-        </View>
+        <FastImage
+          source={require('../Assets/Images/gif.gif')}
+          style={{width: '100%', height: '100%'}}
+          animated
+        />
       </View>
     </SafeAreaView>
   );
@@ -45,12 +27,12 @@ const SplashScreen = () => {
 
 const styles = ScaledSheet.create({
   container: {
-    flex: 1,
-    // alignItems: "center",
-    justifyContent: 'center',
     height: windowHeight,
     width: windowWidth,
-    backgroundColor: Color.themeColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Color.white,
+    // backgroundColor :'rgba(0,0,0,0.1)'
   },
   bottomImage: {
     width: windowWidth * 0.4,

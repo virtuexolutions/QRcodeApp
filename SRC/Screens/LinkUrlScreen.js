@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Platform,
   SafeAreaView,
   StyleSheet,
@@ -38,7 +39,7 @@ const LinkUrlScreen = props => {
   const [qrName, setQrName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [qrimage, setQrimage] = useState({});
-  console.log('🚀 ~ LinkUrlScreen ~ qrimage=======================>:', qrimage);
+  const [pdfData, setPdfData] = useState({});
   // const data = link;
 
   const isURL = text => {
@@ -48,26 +49,54 @@ const LinkUrlScreen = props => {
     return urlRegex.test(text);
   };
 
+  const sendTextAndUrl = async () => {
+    const url = 'auth/url';
+    const body = {
+      type: selectedItem?.title,
+      text: link,
+    };
+    setIsLoading(true);
+    const response = await Post(url, body, apiHeader(token));
+    setIsLoading(false);
+    if (response != undefined) {
+      console.log('🚀 ~ sendTextAndUrl ~ response:', response?.data);
+      navigation.navigate('GenerateQr', {
+        data: link,
+        item: selectedItem?.title,
+        qrName: qrName,
+      });
+      setLink('');
+      setQrName('');
+    }
+  };
+
   const sendDocument = async response => {
     console.log('🚀 ~ sendDocument ~ response==========>:', response);
     const formData = new FormData();
-    console.log('hertere'), selectedItem;
-    console.log( 'beraa',response);
 
     const url = 'auth/pdf';
     const body = {
+      type: selectedItem?.title,
       file: {
         name:
           selectedItem?.title == 'image' || fromImage
             ? response?.name
             : response[0].name,
         type:
-          selectedItem?.title == 'image' || fromImage ? response?.type : response[0].type,
-        uri: selectedItem?.title == 'image'  || fromImage? response?.uri : response[0].uri,
+          selectedItem?.title == 'image' || fromImage
+            ? response?.type
+            : response[0].type,
+        uri:
+          selectedItem?.title == 'image' || fromImage
+            ? response?.uri
+            : response[0].uri,
       },
-      name: selectedItem?.title == 'image'  || fromImage ? response?.name : response[0].name,
+      name:
+        selectedItem?.title == 'image' || fromImage
+          ? response?.name
+          : response[0].name,
     };
-    console.log('🚀 ~ sendDocument ~ body:', body);
+    // return console.log('🚀 ~ sendDocument ~ body:', body);
     for (let key in body) {
       formData.append(key, body[key]);
     }
@@ -77,7 +106,12 @@ const LinkUrlScreen = props => {
 
     if (resposne != undefined) {
       console.log('🚀 ~ sendDocument ~ resposne:', resposne?.data);
-      setQrimage(resposne?.data?.pdf_info);
+      // setQrimage(resposne?.data?.pdf_info);
+      navigation.navigate('GenerateQr', {
+        data: resposne?.data?.pdf_info,
+        item: selectedItem?.title,
+        qrName: qrName,
+      });
 
       // console.log('sending document', resposne?.data);
     }
@@ -91,18 +125,18 @@ const LinkUrlScreen = props => {
       });
       console.log('🚀 ~ handleDocumentSelection ~ response:', response);
       // console.log('This is document Response==========================>>>>>>>>',response)
-
-      sendDocument(response);
+      setPdfData(response);
+      // sendDocument(response);
     } catch (err) {
       console.warn(err);
     }
   }, []);
 
-  useEffect(() => {
-    if (Object.keys(image).length > 0) {
-      sendDocument(image);
-    }
-  }, [image]);
+  // useEffect(() => {
+  //   if (Object.keys(image).length > 0) {
+  //     sendDocument(image);
+  //   }
+  // }, [image]);
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -150,7 +184,8 @@ const LinkUrlScreen = props => {
                 : setImagePicker(true);
             }}
             style={styles.input2}>
-            {Object.keys(qrimage).length > 0 ? (
+            {Object.keys(image).length > 0 ||
+            Object.keys(pdfData).length > 0 ? (
               <>
                 <CustomText
                   isBold
@@ -164,7 +199,7 @@ const LinkUrlScreen = props => {
                     ? qrimage?.filename
                     : selectedItem?.title == 'image' ||
                       (fromImage == true && image?.name)} */}
-                      {qrimage?.filename || qrimage?.name}
+                  {pdfData[0]?.name || image?.name}
                 </CustomText>
                 <Icon
                   name="close"
@@ -173,8 +208,8 @@ const LinkUrlScreen = props => {
                   color={Color.themeblue}
                   size={moderateScale(15, 0.3)}
                   onPress={() => {
-                    // setImagePicker(true);
-                    setQrimage({});
+                    setImage({});
+                    setPdfData({});
                   }}
                   style={{marginLeft: moderateScale(10, 0.3)}}
                 />
@@ -247,57 +282,59 @@ const LinkUrlScreen = props => {
           placeholderColor={Color.themeblue}
         />
 
-        {(!link == '' || Object.keys(qrimage).length > 0) && qrName != '' && (
-          <CustomButton
-            onPress={() => {
-              if (link != '') {
-                if (selectedItem?.title == 'url' && isURL(link)) {
-                  navigation.navigate('GenerateQr', {
-                    data: link,
-                    item: selectedItem?.title,
-                    qrName : qrName,
-                  })
-                  setLink('');
-                  setQrName('');
-                } else if (
-                  selectedItem?.title == 'url' &&
-                  isURL(link) == false
-                ) {
-                  Platform.OS == 'android'
-                    ? ToastAndroid.show('Invalid URL', ToastAndroid.SHORT)
-                    : alert('Invalid URL');
+        {(!link == '' ||
+          Object.keys(image).length > 0 ||
+          Object.keys(pdfData).length > 0) &&
+          qrName != '' && (
+            <CustomButton
+              onPress={() => {
+                if (link != '') {
+                  if (selectedItem?.title == 'url' && isURL(link)) {
+                    sendTextAndUrl();
+                    // navigation.navigate('GenerateQr', {
+                    //   data: link,
+                    //   item: selectedItem?.title,
+                    //   qrName: qrName,
+                    // });
+                  } else if (
+                    selectedItem?.title == 'url' &&
+                    isURL(link) == false
+                  ) {
+                    Platform.OS == 'android'
+                      ? ToastAndroid.show('Invalid URL', ToastAndroid.SHORT)
+                      : alert('Invalid URL');
+                  } else {
+                    sendTextAndUrl();
+                    // navigation.navigate('GenerateQr', {
+                    //   data: link,
+                    //   item: selectedItem?.title,
+                    //   qrName: qrName,
+                    // });
+                    // setLink('');
+                    // setQrName('');
+                  }
+                } else {
+                  if (selectedItem?.title == 'image') {
+                    sendDocument(image);
+                  } else {
+                    sendDocument(pdfData);
+                  }
                 }
-                 else {
-                  navigation.navigate('GenerateQr', {
-                    data: link,
-                    item: selectedItem?.title,
-                    qrName : qrName,
-                  });
-                  setLink('');
-                  setQrName('');
-                }
-              } else {
-                navigation.navigate('GenerateQr', {
-                  data: qrimage,
-                  item: selectedItem?.title,
-                  qrName : qrName,
-                });
-              }
-            }}
-            text={'generate  code'}
-            fontSize={moderateScale(12, 0.3)}
-            textColor={Color.white}
-            borderRadius={moderateScale(30, 0.3)}
-            width={windowWidth * 0.45}
-            height={windowHeight * 0.06}
-            marginTop={moderateScale(20, 0.3)}
-            // borderWidth={1}
-            // borderColor={Color.themeblue}
-            isBold
-            isGradient={true}
-            bgColor={Color.themeBgColor}
-          />
-        )}
+              }}
+              text={'generate  code'}
+              fontSize={moderateScale(12, 0.3)}
+              textColor={Color.white}
+              borderRadius={moderateScale(30, 0.3)}
+              width={windowWidth * 0.45}
+              height={windowHeight * 0.06}
+              marginTop={moderateScale(20, 0.3)}
+              // borderWidth={1}
+              // borderColor={Color.themeblue}
+              isBold
+              isGradient={true}
+              bgColor={Color.themeBgColor}
+            />
+          )}
       </View>
       <ImagePickerModal
         show={imagePicker}
