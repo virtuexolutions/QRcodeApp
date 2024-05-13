@@ -22,7 +22,7 @@ import Header from '../Components/Header';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Fontisto from 'react-native-vector-icons/Fontisto';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Icon} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import {Get, Post} from '../Axios/AxiosInterceptorFunction';
@@ -32,7 +32,7 @@ import {useFocus} from 'native-base/lib/typescript/components/primitives';
 import CustomImage from '../Components/CustomImage';
 import {baseUrl} from '../Config';
 import QRCode from 'react-native-qrcode-svg';
-import { Button } from 'react-native-share';
+import {Button} from 'react-native-share';
 import CustomImageView from '../Components/CustomImageView';
 
 const GalleryView = () => {
@@ -53,22 +53,21 @@ const GalleryView = () => {
     galleryImages,
   );
   const [isLoading, setIsLoading] = useState(false);
-  const [currentImageIndex, setImageIndex] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [imageUrls, setImageUrls] = useState([]);
   console.log('🚀 ~ GalleryView ~ imageUrls:', imageUrls);
-  const onSelect = index => {
-    console.log('🚀 ~ onSelect ~ onSelect:', onSelect);
-    setIsVisible(true);
-    setImageIndex(index);
-  };
 
+  function showModalAndSetIndex(index) {
+    setIsVisible(true);
+    setSelectedImageIndex(index);
+  }
   const DeleteImages = async () => {
     const url = 'auth/document-delete';
     const body = {
       type: selectedItem,
-      id:selectedImage
+      id: selectedImage,
     };
-    console.log("🚀 ~ DeleteImages ~ body:", body)
+    console.log('🚀 ~ DeleteImages ~ body:', body);
     setIsLoading(true);
     const response = await Post(url, body, apiHeader(token));
     setIsLoading(false);
@@ -80,18 +79,18 @@ const GalleryView = () => {
         return {
           ...prevImages,
           [selectedItem]: prevImages[selectedItem].filter(
-            item => !selectedImage.includes(item.id)
-          )
+            item => !selectedImage.includes(item.id),
+          ),
         };
       });
     }
-  
   };
 
   const GetQrcodes = async () => {
     // const url = `auth/document?type=${selectedItem}`;
     const url = `auth/document`;
     setIsLoading(true);
+    setSelectedImage([]);
     const response = await Get(url, token);
     setIsLoading(false);
     console.log('User tooken ==>', token);
@@ -101,16 +100,12 @@ const GalleryView = () => {
       //  selectedItem === "text"?
       //  response?.data?.info?.text : selectedItem === "image" ? response?.data?.info?.image : response?.data?.info?.pdf);
       setGalleryImages(response?.data?.info);
-      // setImageUrls(
-      //   response?.data?.info?.map((item, index) => {
-      //     return {uri: `${baseUrl}${item.image}`};
-      //   }),
-      // );
     }
   };
   useEffect(() => {
     if (selectedItem != '') {
       GetQrcodes();
+      // setSelectedImage([]);
     }
   }, [selectedItem]);
 
@@ -122,7 +117,18 @@ const GalleryView = () => {
       }}
       style={styles.mainScreen}>
       <View style={styles.row}>
-        <CustomButton
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Icon
+            as={MaterialIcons}
+            name="keyboard-backspace"
+            size={moderateScale(24, 0.6)}
+            color={Color.themeblue}
+          />
+        </TouchableOpacity>
+        {/* <CustomButton
           iconStyle={{
             width: windowWidth * 0.09,
             height: windowHeight * 0.05,
@@ -144,7 +150,7 @@ const GalleryView = () => {
           bgColor={Color.themeBgColor}
           width={windowHeight * 0.06}
           height={windowHeight * 0.06}
-        />
+        /> */}
 
         {selectedImage?.length == 0 && (
           <CustomText
@@ -195,10 +201,7 @@ const GalleryView = () => {
               color={Color.themeBgColor}
               onPress={() => {
                 console.log('Deleting image');
-                DeleteImages()
-       
-                // dispatch(deleteFolders(selectedItem));
-                // setSelectedImage([]);
+                DeleteImages();
               }}
             />
           </View>
@@ -295,67 +298,103 @@ const GalleryView = () => {
                 alignSelf: 'center',
               }}
               renderItem={({item, index}) => {
-                console.log('🚀 ~ GalleryView ~ item:', `${item?.id}`);
+                console.log('🚀 ~ GalleryView ~ item:', item);
                 return (
                   <View>
-                    <View style={styles.imageContainer}>
-                     <TouchableOpacity
-                      onPress={() => {
-                        selectedImage?.length == 0
-                          ?  setIsVisible(true)
-                          : !selectedImage.some((data, index) => data == item?.id)
-                          ? setSelectedImage(prev => [...prev, item?.id])
-                          : setSelectedImage(
-                              selectedImage.filter((data, index) => data != item?.id),
-                            );
-                      }}
-                      onLongPress={() => {
-                        setSelectedImage(prev => [...prev, item?.id]);
-                      }}
-                     >
-
-                      <QRCode
-                        value={selectedItem == 'image'
-                        ? item?.path
-                        : selectedItem == 'text'
-                        ? item?.text
-                        : selectedItem == 'pdf'
-                        ? item?.path
-                        : item?.text}
-                        // getRef={c => (this.save=c)}
-                        // value="Just some string value"
-                        logo={require('../Assets/Images/cardimage.png')}
-                        size={100}
-                        
-                        // getRef={(ref)=>setQrCodeRef(ref)}
+                    <View style={[styles.imageContainer]}>
+                      <TouchableOpacity
+                        style={
+                          selectedImage.length > 0 && {
+                            opacity: 0.6,
+                          }
+                        }
+                        onPress={() => {
+                          selectedImage?.length == 0
+                            ? showModalAndSetIndex(index)
+                            : !selectedImage.some(
+                                (data, index) => data == item?.id,
+                              )
+                            ? setSelectedImage(prev => [...prev, item?.id])
+                            : setSelectedImage(
+                                selectedImage.filter(
+                                  (data, index) => data != item?.id,
+                                ),
+                              );
+                        }}
+                        onLongPress={() => {
+                          setSelectedImage(prev => [...prev, item?.id]);
+                        }}>
+                        <QRCode
+                          value={
+                            selectedItem == 'image'
+                              ? item?.path
+                              : selectedItem == 'text'
+                              ? item?.text
+                              : selectedItem == 'pdf'
+                              ? item?.path
+                              : item?.text
+                          }
+                          logo={require('../Assets/Images/cardimage.png')}
+                          size={100}
                         />
-</TouchableOpacity>
+                      </TouchableOpacity>
 
-                     
-                      { selectedImage.length > 0 && selectedImage.some((data, index1) => data === item?.id)
-                       &&
-                       <View
-                      style={{
-                        width:  windowHeight * 0.05,
-                        height: windowHeight * 0.05,
-                        position: 'absolute',
-                        top: 20,
-                        left: 28,
-                        borderRadius:(windowHeight * 0.05)/2,
-                        backgroundColor:Color.blue,
-                        justifyContent: 'center',
-                        overflow:'hidden',
-                        alignItems: 'center',
-                      }}
-                      >
-                      <Icon
-                      style={{position:'absolute',}}
-                      name='check'
-                      as={Fontisto}
-                      color={Color.white}
-                      size={moderateScale(14,0.2)}
-                      />
-                      </View>}
+                      {selectedImage.length > 0 &&
+                        selectedImage.includes(item?.id) && (
+                          <TouchableOpacity
+                            onPress={() => {
+                              setSelectedImage(
+                                selectedImage.filter(
+                                  (data, index) => data != item?.id,
+                                ),
+                              );
+                            }}
+                            style={{
+                              width: windowHeight * 0.035,
+                              height: windowHeight * 0.035,
+                              position: 'absolute',
+                              top: 0,
+                              right: 8,
+                              zIndex: 1,
+                              backgroundColor: 'white',
+                              justifyContent: 'center',
+                              overflow: 'hidden',
+                              alignItems: 'center',
+                            }}>
+                            <Icon
+                              name={'checkbox-marked'}
+                              as={MaterialCommunityIcons}
+                              color={Color.blue}
+                              size={moderateScale(30, 0.2)}
+                            />
+                          </TouchableOpacity>
+                        )}
+                      {selectedImage.length > 0 &&
+                        !selectedImage.includes(item?.id) && (
+                          <TouchableOpacity
+                            onPress={() => {
+                              setSelectedImage(prev => [...prev, item?.id]);
+                            }}
+                            style={{
+                              width: windowHeight * 0.035,
+                              height: windowHeight * 0.035,
+                              position: 'absolute',
+                              top: 0,
+                              right: 8,
+                              zindex: 1,
+                              backgroundColor: Color.white,
+                              justifyContent: 'center',
+                              overflow: 'hidden',
+                              alignItems: 'center',
+                            }}>
+                            <Icon
+                              name={'checkbox-blank-outline'}
+                              as={MaterialCommunityIcons}
+                              color={Color.black}
+                              size={moderateScale(30, 0.2)}
+                            />
+                          </TouchableOpacity>
+                        )}
                     </View>
                     <CustomText
                       numberOfLines={1}
@@ -406,80 +445,21 @@ const GalleryView = () => {
               }}
             />
           )}
-         <CustomImageView
-         visible={visible}
-         selectedItem={selectedItem}
-         setIsVisible={setIsVisible}
-         galleryImages={ selectedItem == 'image'
-         ? galleryImages?.image
-         : selectedItem == 'text'
-         ? galleryImages?.text
-         : selectedItem == 'pdf'
-         ? galleryImages?.pdf
-         : galleryImages?.url}
-         />
-          {/* <View
-            style={{
-              width: windowWidth * 0.7,
-              marginHorizontal: moderateScale(20, 0.3),
-              backgroundColor: 'red',
-            }}>
-            <ImageView
-              backgroundColor={'#002F58'}
-              images={imageUrls}
-              imageIndex={currentImageIndex}
-              visible={visible}
-              // HeaderComponent={}
-              onRequestClose={() => setIsVisible(false)}
-              FooterComponent={() => (
-                <View style={styles.deleteButton}>
-                  <CustomButton
-                    iconStyle={{
-                      width: windowWidth * 0.09,
-                      height: windowHeight * 0.05,
-                      textAlign: 'center',
-                      paddingTop: moderateScale(15, 0.6),
-                      fontSize: moderateScale(24, 0.6),
-                      color: Color.white,
-                    }}
-                    iconName="delete"
-                    iconType={MaterialCommunityIcons}
-                    iconSize={18}
-                    color={Color.white}
-                    marginTop={moderateScale(5, 0.3)}
-                    // text={'Use'}
-                    isGradient={true}
-                    onPress={() => {}}
-                    bgColor={Color.themeBgColor}
-                    width={windowHeight * 0.06}
-                    height={windowHeight * 0.06}
-                  />
-                  <CustomButton
-                    iconStyle={{
-                      width: windowWidth * 0.09,
-                      height: windowHeight * 0.05,
-                      textAlign: 'center',
-                      paddingTop: moderateScale(15, 0.6),
-                      fontSize: moderateScale(24, 0.6),
-                      color: Color.white,
-                    }}
-                    iconName="content-save"
-                    iconType={MaterialCommunityIcons}
-                    iconSize={18}
-                    color={Color.white}
-                    marginTop={moderateScale(5, 0.3)}
-                    // text={'Use'}
-                    isGradient={true}
-                    onPress={() => {}}
-                    bgColor={Color.themeBgColor}
-                    width={windowHeight * 0.06}
-                    height={windowHeight * 0.06}
-                  />
-                  
-                </View>
-              )}
-            />
-          </View> */}
+          <CustomImageView
+            visible={visible}
+            selectedItem={selectedItem}
+            selectedImageIndex={selectedImageIndex}
+            setIsVisible={setIsVisible}
+            galleryImages={
+              selectedItem == 'image'
+                ? galleryImages?.image
+                : selectedItem == 'text'
+                ? galleryImages?.text
+                : selectedItem == 'pdf'
+                ? galleryImages?.pdf
+                : galleryImages?.url
+            }
+          />
         </View>
       </View>
     </ScrollView>
@@ -546,9 +526,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: moderateScale(18, 0.3),
   },
- 
 });
- {/* <CustomImage
+{
+  /* <CustomImage
                       onPress={() => {
                         selectedImage?.length == 0
                           ?  onSelect(index)
@@ -573,4 +553,5 @@ const styles = StyleSheet.create({
                         source={{uri: `${baseUrl}${item?.image}`}}
                         style={styles.galleryImg}
                         // resizeMode="cover"
-                      /> */}
+                      /> */
+}

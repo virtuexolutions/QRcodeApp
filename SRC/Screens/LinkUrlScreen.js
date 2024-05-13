@@ -58,7 +58,14 @@ const LinkUrlScreen = props => {
     const response = await Post(url, body, apiHeader(token));
     setIsLoading(false);
     if (response != undefined) {
-       console.log('🚀 ~ sendTextAndUrl ~ response:', response?.data);
+      console.log('🚀 ~ sendTextAndUrl ~ response:', response?.data);
+      navigation.navigate('GenerateQr', {
+        data: link,
+        item: selectedItem?.title,
+        qrName: qrName,
+      });
+      setLink('');
+      setQrName('');
     }
   };
 
@@ -68,7 +75,7 @@ const LinkUrlScreen = props => {
 
     const url = 'auth/pdf';
     const body = {
-      type:selectedItem?.title,
+      type: selectedItem?.title,
       file: {
         name:
           selectedItem?.title == 'image' || fromImage
@@ -176,7 +183,8 @@ const LinkUrlScreen = props => {
                 : setImagePicker(true);
             }}
             style={styles.input2}>
-            {Object.keys(image).length > 0 || Object.keys(pdfData).length > 0 ? (
+            {Object.keys(image).length > 0 ||
+            Object.keys(pdfData).length > 0 ? (
               <>
                 <CustomText
                   isBold
@@ -281,14 +289,12 @@ const LinkUrlScreen = props => {
               onPress={() => {
                 if (link != '') {
                   if (selectedItem?.title == 'url' && isURL(link)) {
-                    sendTextAndUrl()
+                    sendTextAndUrl();
                     // navigation.navigate('GenerateQr', {
                     //   data: link,
                     //   item: selectedItem?.title,
                     //   qrName: qrName,
                     // });
-                    setLink('');
-                    setQrName('');
                   } else if (
                     selectedItem?.title == 'url' &&
                     isURL(link) == false
@@ -297,14 +303,14 @@ const LinkUrlScreen = props => {
                       ? ToastAndroid.show('Invalid URL', ToastAndroid.SHORT)
                       : alert('Invalid URL');
                   } else {
-                    sendTextAndUrl()
+                    sendTextAndUrl();
                     // navigation.navigate('GenerateQr', {
                     //   data: link,
                     //   item: selectedItem?.title,
                     //   qrName: qrName,
                     // });
-                    setLink('');
-                    setQrName('');
+                    // setLink('');
+                    // setQrName('');
                   }
                 } else {
                   if (selectedItem?.title == 'image') {

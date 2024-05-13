@@ -32,6 +32,7 @@ import PrivacyPolicy from './SRC/Screens/PrivacyPolicy';
 import TermsAndConditions from './SRC/Screens/TermsAndConditions';
 import Help from './SRC/Screens/Help';
 import GalleryView from './SRC/Screens/GalleryView';
+import { LogBox } from 'react-native';
 
 const App = () => {
   const [publishableKey, setPublishableKey] = useState('');
@@ -41,7 +42,9 @@ const App = () => {
     setPublishableKey(key);
   };
 
-  
+  useEffect(() => {
+    LogBox.ignoreLogs(['In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.']);
+  }, []);
 
 
   console.reportErrorsAsExceptions = false;
@@ -81,18 +84,12 @@ const MainContainer = () => {
   }
   return( 
     <AppNavigator />
-    // <GalleryView/>
-    // <SplashScreen />
-
-    // <Signup/>
-  ) 
-  // <SplashScreen/>
-// return
-};
+   ) 
+ };
 
 const useloader = value => {
   const [isloading, setIsloading] = useState(value);
-  const [loadingTime] = useState(2000);
+  const [loadingTime] = useState(10000);
   useEffect(() => {
     setTimeout(() => setIsloading(false), loadingTime);
   }, []);
