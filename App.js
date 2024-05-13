@@ -74,25 +74,16 @@ const MainContainer = () => {
     return <SplashScreen/>;
   }
   return( 
-<<<<<<< HEAD
   <AppNavigator/>
   // <GalleryView/>
   // <Signup/>
  ) 
 // return <SplashScreen/>
-=======
-    <AppNavigator />
-    // <GalleryView/>
-    // <Signup/>
-  ) 
-  // <SplashScreen/>
-// return
->>>>>>> origin/meerab
 };
 
 const useloader = value => {
   const [isloading, setIsloading] = useState(value);
-  const [loadingTime] = useState(2000);
+  const [loadingTime] = useState(10000);
   useEffect(() => {
     setTimeout(() => setIsloading(false), loadingTime);
   }, []);

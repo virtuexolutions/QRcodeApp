@@ -76,7 +76,7 @@ const LoginScreen = props => {
     setIsLoading(false);
 
     if (response?.data?.success) {
-    // return  console.log("🚀 ~ LoginUser ~ response:", response?.data)
+      console.log("🚀 ~ LoginUser ~ response:", response?.data?.user_info)
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({token: response?.data?.token}));
     }

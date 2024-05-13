@@ -20,7 +20,7 @@ const SplashScreen = () => {
         style={{
           height: windowHeight,
           width: windowWidth,
-          backgroundColor: 'white',
+          backgroundColor: 'red',
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: 'rgba(0,0,0,0.15)',
@@ -28,12 +28,12 @@ const SplashScreen = () => {
         <View
           style={{
             height: windowHeight * 0.5,
-            width: windowWidth * 0.3,
+            width: windowWidth,
           }}>
           <LottieView
             resizeMode="cover"
             source={require('../Assets/Images/animatedlogo.json')}
-            style={{height: '100%'}}
+            style={{height: '100%' , wodth : '100%'}}
             autoPlay
             loop
           />

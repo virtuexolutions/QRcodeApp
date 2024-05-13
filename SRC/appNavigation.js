@@ -54,7 +54,7 @@ const AppNavigator = () => {
 
   const AppNavigatorContainer = () => {
     const firstScreen =
-    !walkThrough
+    walkThrough == false
     ? 'WalkThroughScreen'
     : token == null
     ? 'LoginScreen'

@@ -38,6 +38,7 @@ const HomeScreen = () => {
   console.log('🚀 ~ HomeScreen ~ userData:============>', userData);
   const token = useSelector(state => state.authReducer.token);
   console.log("🚀 ~ HomeScreen ~ token============>:", token)
+  const [search, setSearch] = useState('');
   const dataArray = [
     {
       id: 1,

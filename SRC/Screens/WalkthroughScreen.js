@@ -141,7 +141,7 @@ const WalkThroughScreen = props => {
   const RenderDoneBtn = () => {
     return (
       <View style={[styles.doneBtn, styles.btnRight,{
-    top: moderateScale(-610, 0.6),
+    // top: moderateScale(-610, 0.6),
 
       }]}>
 
@@ -150,7 +150,9 @@ const WalkThroughScreen = props => {
           dispatch(setWalkThrough(true));
         }}
         isBold
-        style={{color:Color.white,overflow:'hidden' , fontSize:moderateScale(12, 0.9)}}
+        style={{color:Color.white,overflow:'hidden' , 
+        position :'absolute',
+        fontSize:moderateScale(12, 0.9)}}
         >
         Done
       </CustomText>
@@ -283,21 +285,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#001D56",
     // opacity: 0.5,
     borderWidth: 1,
-
-    // borderWidth:  moderateScale(3,0.1),
+    
+   
   },
   btnLeft: {
     backgroundColor: "#001D56",
     position:'absolute',
     paddingHorizontal: moderateScale(7, 0.2),
     paddingVertical: moderateScale(7, 0.2),
-    top: moderateScale(-600, 0.7),
+    top: moderateScale(-520, 0.7),
     // right: moderateScale(20,0.1),
     zIndex:1,
   },
   skip: {
  
-    top: moderateScale(-610, 0.7),
+    top: moderateScale(-520, 0.7),
     // width:windowWidth * 0.18,
     // height: windowHeight * 0.09,
     alignItems:'center',
@@ -312,11 +314,11 @@ const styles = StyleSheet.create({
   btnRight: {
     backgroundColor: "#001D56",
     paddingHorizontal: moderateScale(8, 0.4),
-    paddingVertical: moderateScale(8, 0.4),
+    // paddingVertical: moderateScale(8, 0.4),
     position:'absolute',
     // opacity:0.34,
-    top: moderateScale(-600, 0.7),
-    right: moderateScale(11,0.1),
+    top: moderateScale(-520, 0.6),
+    right: moderateScale(11,0.6),
     zIndex:1,
   },
 });
