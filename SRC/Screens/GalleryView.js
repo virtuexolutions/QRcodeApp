@@ -41,22 +41,19 @@ const GalleryView = () => {
   const token = useSelector(state => state.authReducer.token);
 
   const [selectedItem, setSelectedItem] = useState('image');
-  console.log('🚀 ~ GalleryView ~ selectedItem:', selectedItem);
+  // console.log('🚀 ~ GalleryView ~ selectedItem:', selectedItem);
   const [selectedImage, setSelectedImage] = useState([]);
-  console.log('🚀 ~ GalleryView ~ selectedImage:', selectedImage);
+  // console.log('🚀 ~ GalleryView ~ selectedImage:', selectedImage);
 
   const [visible, setIsVisible] = useState(false);
   const [yestImageIsVisible, setYestImageVisible] = useState(false);
   const [galleryImages, setGalleryImages] = useState([]);
   // console.log("🚀 ~ GalleryView ~ galleryImages:", galleryImages)
-  console.log(
-    '🚀 ~ GalleryView ~ galleryImages==========================>:',
-    galleryImages,
-  );
+
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [imageUrls, setImageUrls] = useState([]);
-  console.log('🚀 ~ GalleryView ~ imageUrls:', imageUrls);
+  // console.log('🚀 ~ GalleryView ~ imageUrls:', imageUrls);
 
   function showModalAndSetIndex(index) {
     setIsVisible(true);
@@ -96,7 +93,7 @@ const GalleryView = () => {
     setIsLoading(false);
     console.log('User tooken ==>', token);
     if (response != undefined) {
-      // console.log("🚀 ~ GetQrcodes ~ response===========================>:", response?.data)
+      console.log("🚀 ~ GetQrcodes ~ response===========================>:", JSON.stringify(response?.data ,null ,2))
       //  return  console.log('QR===>',
       //  selectedItem === "text"?
       //  response?.data?.info?.text : selectedItem === "image" ? response?.data?.info?.image : response?.data?.info?.pdf);
@@ -301,7 +298,7 @@ const GalleryView = () => {
                 alignSelf: 'center',
               }}
               renderItem={({item, index}) => {
-                console.log('🚀 ~ GalleryView ~ item:', item);
+                // console.log('🚀 ~ GalleryView ~ item:', item);
                 return (
                   <View>
                     <View style={[styles.imageContainer]}>
@@ -403,7 +400,7 @@ const GalleryView = () => {
                       numberOfLines={1}
                       isBold
                       style={{
-                        marginVertical: moderateScale(2, 0.3),
+                        marginTop: moderateScale(15, 0.3),
 
                         paddingLeft: moderateScale(8, 0.6),
                         // backgroundColor :'red',

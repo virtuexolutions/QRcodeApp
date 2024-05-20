@@ -55,7 +55,7 @@ const VerificationModal = ({
         <View
           style={styles.headingContainer}>
           <CustomText style={styles.heading2} isBold>
-            you want to save or not
+            this qr code contains 
           </CustomText>
         </View>
         <CustomText style={styles.heading1} isBold>
@@ -78,6 +78,8 @@ const VerificationModal = ({
           <CustomText
             numberOfLines={2}
             style={{
+              // backgroundColor :'red',
+              marginRight :moderateScale(35,.3),
               color: Color.black,
               width: windowWidth * 0.4,
               fontSize: moderateScale(15, 0.6),
@@ -129,18 +131,20 @@ const VerificationModal = ({
             marginTop={moderateScale(5, 0.3)}
           />
           <CustomButton
-            bgColor={'grey'}
-            textColor={Color.black}
+            bgColor={'transparent'}
+            textColor={Color.themeblue}
             width={windowWidth * 0.23}
             height={windowHeight * 0.05}
             borderRadius={moderateScale(10, 0.4)}
-            text={'cancel'}
+            text={'skip'}
             fontSize={moderateScale(12, 0.3)}
             onPress={() => {
               navigation.navigate('HomeScreen');
             }}
             isBold
             marginTop={moderateScale(5, 0.3)}
+            borderColor={Color.themeblue}
+            borderWidth={1}
           />
         </View>
       </View>
@@ -175,18 +179,22 @@ const styles = StyleSheet.create({
   imagecontainer: {
     height: windowHeight * 0.1,
     width: windowWidth * 0.3,
-    marginRight: moderateScale(60, 0.3),
+    marginRight: moderateScale(69, 0.3),
   },
   heading1: {
     color: Color.black,
     paddingTop: moderateScale(10, 0.6),
-    width: windowWidth * 0.52,
+    width: windowWidth * 0.5,
+    // paddingHorizontal: moderateScale(2,.6),
+        // backgroundColor :'red',
     fontSize: moderateScale(14, 0.6),
   },
   heading2: {
     color: Color.white,
     textAlign: 'center',
     fontSize: moderateScale(18, 0.6),
+    // backgroundColor :'red',
+    // paddingHorizontal:moderateScale(13,.6)
   },
   mainContainer: {
     backgroundColor: Color.white,

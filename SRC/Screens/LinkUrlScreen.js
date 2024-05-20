@@ -54,6 +54,7 @@ const LinkUrlScreen = props => {
     const body = {
       type: selectedItem?.title,
       text: link,
+      qr_name :qrName,
     };
     setIsLoading(true);
     const response = await Post(url, body, apiHeader(token));
@@ -95,7 +96,9 @@ const LinkUrlScreen = props => {
         selectedItem?.title == 'image' || fromImage
           ? response?.name
           : response[0].name,
+          qr_name :qrName,
     };
+    
     // return console.log('🚀 ~ sendDocument ~ body:', body);
     for (let key in body) {
       formData.append(key, body[key]);

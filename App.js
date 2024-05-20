@@ -74,7 +74,7 @@ const MainContainer = () => {
     }
     if(Platform.OS == 'android'){
       GetPermission();
-      }
+    }
   }, []);
 
   const [isloading] = useloader(true);

@@ -85,7 +85,8 @@ const ImagePickerModal = props => {
     // }
   };
 
-  const openCamera = async () => {
+  const 
+  openCamera = async () => {
     let options = {
       mediaType: 'photo',
       maxWidth: 500,
@@ -100,29 +101,42 @@ const ImagePickerModal = props => {
       }
     }
     launchCamera(options, response => {
-      console.log(response)
-      if (Platform.OS == 'ios') {
-        setShow(false);
-      }
-      
-      else {
-        setFileObject &&
-          setFileObject({
-            uri: response?.assets[0]?.uri,
-            type: response?.assets[0]?.type,
-            name: response?.assets[0]?.fileName,
-          });
-
-        setMultiImages &&
-          setMultiImages(x => [
-            ...x,
-            {
+      // return console.log('here===============>' ,response)
+      try{
+        console.log(response)
+        if (Platform.OS == 'ios') {
+          setShow(false);
+        }
+        if (response.didCancel) {
+        } else if (response.error) {
+        } else if (response.customButton) {
+          Alert.alert(response.customButton);
+        }
+        
+        else {
+          setFileObject &&
+            setFileObject({
               uri: response?.assets[0]?.uri,
               type: response?.assets[0]?.type,
               name: response?.assets[0]?.fileName,
-            },
-          ]);
+            });
+  
+          setMultiImages &&
+            setMultiImages(x => [
+              ...x,
+              {
+                uri: response?.assets[0]?.uri,
+                type: response?.assets[0]?.type,
+                name: response?.assets[0]?.fileName,
+              },
+            ]);
+        }
+        
+      }catch(error){
+        console.log('error here ============>' ,error)
       }
+    
+
     });
   };
 

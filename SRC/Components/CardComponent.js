@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     borderColor: "#001D55",
     borderWidth:0.3,
     paddingHorizontal: moderateScale(15, 0.6),
+    // backgroundColor :'red',
   },
   imagecontainer:{
     overflow: 'hidden',
@@ -75,8 +76,9 @@ const styles = StyleSheet.create({
     // backgroundColor : 'red'
   },
   desc:{
+    // backgroundColor :'green',
     color: Color.black,
-    width: windowWidth * 0.5,
+    width: windowWidth * 0.6,
     fontSize: moderateScale(10, 0.6),
   },
   imagecontainner:{

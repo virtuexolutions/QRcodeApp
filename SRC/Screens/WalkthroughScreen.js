@@ -33,20 +33,29 @@ const WalkThroughScreen = props => {
     {
       key: '1',
       image: require('../Assets/Images/walkthrough1.png'),
-      title: 'Lorem Ipsum Dolor',
-      text: `Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Pellentesque Eu Pulvinar Metus, Fringilla Semper Enim. Etiam Viverra Porttitor Nunc Laoreet Faucibus. Fusce Accumsan Mauris At Sem Finibus Gravida. Donec Cursus Tincidunt Eros In Efficitur. Maecenas Cursus Pretium Dui, In Tristique Turpis Finibus Nec. Class Aptent. `,
+      title: 'Quick QR Code Creation : ',
+      text: `Create high-quality quickly and easily with QR-n-go You can make and manage QR codes for URLs, contact information, and WiFi access. Share your QR code instantly with email, message, or social media. Available for both iOS and Android, QR-n-go is ideal for business and personal use. 
+     
+      Give it a Try!
+      `,
     },
     {
       key: '2',
       image: require('../Assets/Images/walkthrough2.png'),
-      title: 'Lorem Ipsum Dolor',
-      text: `Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Pellentesque Eu Pulvinar Metus, Fringilla Semper Enim. Etiam Viverra Porttitor Nunc Laoreet Faucibus. Fusce Accumsan Mauris At Sem Finibus Gravida. Donec Cursus Tincidunt Eros In Efficitur. Maecenas Cursus Pretium Dui, In Tristique Turpis Finibus Nec. Class Aptent.`,
+      title: 'Customized QR Codes:',
+      text: `Our user-friendly app lets you customize your QR codes, adding details and notes. We have accessibility features to ensure the app is usable by individuals with different abilities. Our app is a fully functional mobile app for both iOS and Android. For added security, you can protect your QR codes with a password. 
+
+      Create My First QR Code!
+      `,
     },
     {
       key: '3',
       image: require('../Assets/Images/walkthrough4.png'),
-      title: 'Lorem Ipsum Dolor',
-      text: `Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Pellentesque Eu Pulvinar Metus, Fringilla Semper Enim. Etiam Viverra Porttitor Nunc Laoreet Faucibus. Fusce Accumsan Mauris At Sem Finibus Gravida. Donec Cursus Tincidunt Eros In Efficitur. Maecenas Cursus Pretium Dui, In Tristique Turpis Finibus Nec. Class Aptent.`
+      title: 'Cross-Platform Compatibility:',
+      text: `QR-n-Go saves you both time and money while providing several other benefits. Our app eliminates the need to engage developers to create QR codes, allowing you to do it in a few clicks. You can also export your QR codes in multiple formats and share them instantly. 
+
+      Start Saving Now!
+      `
     },
   ];
 

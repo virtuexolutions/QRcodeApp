@@ -328,13 +328,17 @@ const Profile = () => {
               total qr codes
             </CustomText>
             <CustomText
+            numberOfLines={1}
               isBold
               style={{
                 textAlign: 'center',
                 color: Color.white,
+                width :windowWidth *0.26,
+                // backgroundColor : 'red',
                 fontSize: moderateScale(15, 0.6),
               }}>
-              {userData?.total_document_count}
+                {/* hjkdhkjashkjdahskdjh */}
+              {userData?.totalDocumentCount}
             </CustomText>
           </LinearGradient>
         </View>
@@ -365,9 +369,12 @@ const Profile = () => {
               images
             </CustomText>
             <CustomText
+            numberOfLines={1}
               isBold
               style={{
                 textAlign: 'center',
+                width :windowWidth *0.13,
+                // backgroundColor :'red',
                 color: '#012497',
                 fontSize: moderateScale(13, 0.6),
               }}>
@@ -383,6 +390,7 @@ const Profile = () => {
               <CustomText
                 isBold
                 style={{
+                
                   textAlign: 'center',
                   color: Color.white,
                   fontSize: moderateScale(14, 0.6),
@@ -390,9 +398,13 @@ const Profile = () => {
                 link
               </CustomText>
               <CustomText
+              numberOfLines={1}
                 isBold
                 style={{
-                  textAlign: 'center',
+                
+                  width :windowWidth *0.13,
+                  // backgroundColor :'red',
+                    textAlign: 'center',
                   color: Color.white,
                   fontSize: moderateScale(13, 0.6),
                 }}>
@@ -422,8 +434,12 @@ const Profile = () => {
               pdf
             </CustomText>
             <CustomText
+            numberOfLines={1}
               isBold
               style={{
+                width :windowWidth *0.13,
+                // backgroundColor :'red',
+                
                 textAlign: 'center',
                 color: '#012497',
                 fontSize: moderateScale(13, 0.6),
@@ -450,8 +466,12 @@ const Profile = () => {
                 text
               </CustomText>
               <CustomText
+              numberOfLines={1}
                 isBold
                 style={{
+                  width :windowWidth *0.13,
+                // backgroundColor :'red',
+                
                   textAlign: 'center',
                   color: Color.white,
                   fontSize: moderateScale(13, 0.6),

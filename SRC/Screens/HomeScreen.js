@@ -45,14 +45,14 @@ const HomeScreen = () => {
       image: require('../Assets/Images/cardimage1.png'),
       title: 'QR SCAN',
       onPress: () => navigation.navigate('ScanScreen'),
-      description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
+      description: 'Decode QR codes instantly with a single tap. Scan and explore the digital world effortlessly.',
     },
     {
       id: 2,
       image: require('../Assets/Images/cardimage2.png'),
-      title: 'Create QR',
+      title: 'Create a QR',
       onPress: () => navigation.navigate('SelectCategory'),
-      description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
+      description: 'Create bespoke QR codes that are suited to your specific needs. Custom QR codes can help to empower your messaging.',
     },
     {
       id: 3,
@@ -71,7 +71,7 @@ const HomeScreen = () => {
           item: {title: 'image'},
         }),
       // onpress:()=> navigation.navigate('LinkUrlScreen', {item: item}),
-      description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
+      description: 'Each image combines creativity and functionality. QR integration transforms photos into interactive experiences. ',
     },
     // {
     //   id:5,
@@ -189,8 +189,7 @@ const HomeScreen = () => {
                 QR CODE GENERATOR
               </CustomText>
               <CustomText style={styles.carddes}>
-                Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Cras
-                Suscipit Gravida Tellus, Eu Ullamcorper.
+              Easily generate dynamic QR codes for every occasion. Our user-friendly QR code generator opens up a world of possibilities.
               </CustomText>
               <CustomButton
                 // onPres s={() => navigationService.navigate('LoginScreen')}

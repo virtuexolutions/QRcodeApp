@@ -41,7 +41,7 @@ const GenerateQr = props => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [qrCodeRef, setQrCodeRef] = useState(null);
-  // console.log('🚀 ~ GenerateQr ~ qrCodeRef:', qrCodeRef);
+  console.log('🚀 ~ GenerateQr ~ modal ========>:', isVisible);
 
   const onCapture = useCallback(async uri => {
     // console.log("do something with ", uri);

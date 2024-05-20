@@ -16,17 +16,8 @@ import {
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Zocial from 'react-native-vector-icons/Zocial';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import CountryPicker, {DARK_THEME} from 'react-native-country-picker-modal';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import navigationService from '../navigationService';
-// import CardContainer from '../Components/CardContainer';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import {useDispatch} from 'react-redux';
@@ -115,7 +106,7 @@ const Signup = () => {
     const response = await Post(url, formData, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
-    //  return  console.log("🚀 ~ registerUser ~ response:", response?.data)
+      //  return  console.log("🚀 ~ registerUser ~ response:", response?.data)
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({token: response?.data?.token}));
     }
@@ -331,23 +322,28 @@ const Signup = () => {
                 // isGradient
               />
             </View>
-            <CustomText style={styles.txt5}>
-              Already Have an account ?{' '}
+            <View
+              style={{
+                width: windowWidth * 0.5,
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: moderateScale(25, 0.3),
+              }}>
+              <CustomText style={styles.txt5}>
+                Already Have an account ?
+              </CustomText>
               <CustomText
                 onPress={() => {
                   navigation.goBack();
+                  console.log('hellooooooo');
                 }}
                 isBold
-                style={{
-                  color: Color.white,
-                  fontSize: moderateScale(13, 0.6),
-                }}>
+                style={{color: Color.white, fontSize: moderateScale(13, 0.6)}}>
                 Login
-              </CustomText>{' '}
-            </CustomText>
+              </CustomText>
+            </View>
           </View>
           <CustomText
-            onPress={() => navigationService.navigate('LoginScreen')}
             style={[
               styles.txt6,
               {
@@ -401,10 +397,12 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
   },
   txt5: {
+    // width :windowWidth *0.8,
     color: 'white',
-    marginTop: moderateScale(20, 0.3),
+    // marginTop: moderateScale(20, 0.3),
     fontSize: moderateScale(11, 0.6),
-    paddingVertical: moderateScale(10, 0.3),
+    // paddingVertical: moderateScale(10, 0.3),
+    // backgroundColor :'green'
   },
   txt6: {
     fontSize: moderateScale(10, 0.6),
@@ -423,7 +421,7 @@ const styles = ScaledSheet.create({
     position: 'absolute',
     // top: 110,
     bottom: 2,
-    right: 15,
+    right: 0,
     borderRadius: moderateScale(10, 0.3),
     elevation: 8,
     justifyContent: 'center',

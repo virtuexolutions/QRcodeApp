@@ -76,7 +76,7 @@ const LoginScreen = props => {
     setIsLoading(false);
 
     if (response?.data?.success) {
-      console.log("🚀 ~ LoginUser ~ response:", response?.data?.user_info)
+       console.log("🚀 ~ LoginUser ~ response:", response?.data?.user_info)
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({token: response?.data?.token}));
     }
@@ -90,9 +90,17 @@ const LoginScreen = props => {
         <ImageBackground
           style={styles.imageView}
           source={require('../Assets/Images/signup_bg.png')}>
-          <View
-            style={styles.container}>
-            <CustomText
+              <View style={{width: windowWidth * 0.35, height: windowHeight * 0.2,
+              overflow:"hidden"
+              }}>
+  
+              <CustomImage
+              source={require('../Assets/Images/logo.png')}
+              style={{width: "100%", height: "100%"}}
+              resizeMode={"conain"}
+              />
+              </View>
+            {/* <CustomText
               numberOfLine={3}
               isBold
               style={{
@@ -101,7 +109,9 @@ const LoginScreen = props => {
                 textAlign: 'center',
               }}>
               logo here
-            </CustomText>
+            </CustomText> */}
+            {/* <View
+              style={styles.container}>
             <CustomText
               style={{
                 fontSize: moderateScale(11, 0.6),
@@ -110,10 +120,9 @@ const LoginScreen = props => {
                 textAlign: 'center',
                 paddingVertical: moderateScale(10, 0.4),
               }}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
+              Unlocking Convenience, Simplifying Access.
             </CustomText>
-          </View>
+          </View> */}
           <View
             style={{
               alignItems: 'center',
@@ -287,9 +296,9 @@ const styles = StyleSheet.create({
   },
   container:{
     alignItems: 'center',
-    height: windowHeight * 0.13,
-    width: windowHeight * 0.13,
-    borderRadius: moderateScale((windowHeight * 0.13) / 2),
+    height: windowHeight * 0.15,
+    width: windowWidth * 0.4,
+    // borderRadius: moderateScale((windowHeight * 0.13) / 2),
   },
   imageView:{
     width: windowWidth,
