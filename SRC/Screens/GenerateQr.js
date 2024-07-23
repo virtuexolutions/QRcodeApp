@@ -26,6 +26,7 @@ import Color from '../Assets/Utilities/Color';
 import Feather from 'react-native-vector-icons/Feather';
 import RNFetchBlob from 'rn-fetch-blob';
 import VerificationModal from '../Components/VerificationModal';
+import LinearGradient from 'react-native-linear-gradient';
 
 const GenerateQr = props => {
   const navigation = useNavigation();
@@ -100,31 +101,27 @@ const GenerateQr = props => {
   //   navigation.navigate('HomeScreen');
   // };
   return (
+    <SafeAreaView>
+
     <View>
       <View style={styles.row}>
-        <CustomButton
-          iconStyle={{
-            width: windowWidth * 0.09,
-            height: windowHeight * 0.05,
-            textAlign: 'center',
-            paddingTop: moderateScale(15, 0.6),
-            fontSize: moderateScale(24, 0.6),
-            color: Color.white,
-          }}
-          iconName="chevron-left"
-          iconType={Feather}
-          iconSize={18}
-          color={Color.white}
-          marginTop={moderateScale(5, 0.3)}
-          // text={'Use'}
-          isGradient={true}
-          onPress={() => {
+      <TouchableOpacity
+           onPress={() => {
             navigation.goBack();
           }}
-          bgColor={Color.themeBgColor}
-          width={windowHeight * 0.06}
-          height={windowHeight * 0.06}
-        />
+          >
+        <LinearGradient
+        
+        colors={Color.themeBgColor}
+        style={styles.customBtn}>
+          <Icon 
+           name='left'
+           as={AntDesign}
+           size={moderateScale(20,0.6)}
+           color={'white'}
+          />
+        </LinearGradient>
+        </TouchableOpacity>
       </View>
       <View
         style={{
@@ -185,8 +182,9 @@ const GenerateQr = props => {
           isBold
         /> */}
       </View>
-      <VerificationModal data={data} type={type}  qrCodeRef={qrCodeRef}qrName={qrName} setIsVisible={setIsVisible} isVisible={isVisible} />
+      <VerificationModal data={data} type={type}  qrCodeRef={qrCodeRef} qrName={qrName} setIsVisible={setIsVisible} isVisible={isVisible} />
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -207,5 +205,14 @@ const styles = StyleSheet.create({
     //   backgroundColor:Color.red,
     paddingVertical: moderateScale(15, 0.3),
     paddingHorizontal: moderateScale(10, 0.3),
+  },
+  customBtn : { 
+    width : windowWidth * 0.13,
+    height : windowWidth * 0.13,
+    borderRadius : windowWidth * 0.13 /2,
+    justifyContent : 'center',
+    alignItems : 'center'
+    // backgroundColor : Color.themeColor,
+    
   },
 });

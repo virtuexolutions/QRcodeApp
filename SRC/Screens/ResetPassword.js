@@ -7,6 +7,8 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
+  SafeAreaView,
+  Alert
 } from 'react-native';
 import {ScaledSheet, moderateScale} from 'react-native-size-matters';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -34,6 +36,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import CustomImage from '../Components/CustomImage';
 import {CodeField} from 'react-native-confirmation-code-field';
 
+
+
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -41,6 +45,7 @@ const ResetPassword = props => {
   const email =props?.route?.params?.phoneNumber
   console.log("🚀 ~ ResetPassword ~ email:", email)
   const dispatch = useDispatch();
+  const navigation = useNavigation()
   const navigationN = useNavigation();
   const phoneNumber = props?.route?.params?.phone;
   const [password, setPassword] = useState('');
@@ -92,29 +97,30 @@ const ResetPassword = props => {
       style={{
         height: windowHeight,
         width: windowWidth,
-        justifyContent: 'center',
-        alignItems: 'center',
-        //  height: windowHeight * 0.1,
         backgroundColor: '#FEFDFC',
       }}
       >
-
-      <View
-        >
-        {/* <View
-          style={{
-            width: windowWidth * 0.7,
-            height: windowHeight * 0.2,
-            alignItems: 'center',
+   <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
           }}>
-          <CustomImage
-            source={require('../Assets/Images/user.png')}
-            resizeMode={'contain'}
-            style={{
-              height: '100%',
-            }}
-          />
-        </View> */}
+          <LinearGradient colors={Color.themeBgColor} style={styles.customBtn}>
+            <Icon
+              name="left"
+              as={AntDesign}
+              size={moderateScale(20, 0.6)}
+              color={'white'}
+            />
+          </LinearGradient>
+        </TouchableOpacity>
+      <View style={{
+        // backgroundColor :'red',
+        justifyContent: 'center',
+        alignItems: 'center',
+         height: windowHeight * 0.8,
+      }}
+        >
+     
 
         <CustomText
           style={{
@@ -129,6 +135,7 @@ const ResetPassword = props => {
           titleText={'Your new Password'}
           placeholder={'Your new Password'}
           setText={setPassword}
+          textColor={Color.black}
           // marginTop={moderateScale(10,0.3)}
           value={password}
           viewHeight={0.06}
@@ -147,6 +154,7 @@ const ResetPassword = props => {
           titleText={'Confirm Password'}
           placeholder={'Confirm Password'}
           setText={setConfirmPassword}
+          textColor={Color.black}
           // marginTop={moderateScale(10,0.3)}
           value={confirmPassword}
           viewHeight={0.06}
@@ -226,6 +234,15 @@ const styles = ScaledSheet.create({
     color: Color.themeLightGray,
     marginTop: moderateScale(10, 0.3),
     fontSize: moderateScale(12, 0.6),
+  },
+  customBtn: {
+    width: windowWidth * 0.13,
+    height: windowWidth * 0.13,
+    borderRadius: (windowWidth * 0.13) / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor : Color.themeColor,
+    marginHorizontal: moderateScale(10, 0.3),
   },
 });
 

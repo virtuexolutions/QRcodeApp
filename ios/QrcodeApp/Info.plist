@@ -31,6 +31,8 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>QrcodeApp would like to access Your apple music</string>
 	<key>NSCameraUsageDescription</key>
 	<string>QrcodeApp would like to access Your camera</string>
 	<key>NSDocumentsFolderUsageDescription</key>

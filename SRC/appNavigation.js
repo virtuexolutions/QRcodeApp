@@ -33,6 +33,7 @@ import GalleryView from './Screens/GalleryView'
 import ResetPassword from './Screens/ResetPassword';
 import EnterPhone from './Screens/EnterPhone';
 import Profile from './Screens/Profile';
+import AppGuideScreen from './Screens/AppGuideScreen';
 
 const AppNavigator = () => {
   // const isLogin = false;
@@ -85,7 +86,8 @@ const AppNavigator = () => {
           <RootNav.Screen name={"GalleryView"} component={GalleryView}/>    
           <RootNav.Screen name={"EnterPhone"} component={EnterPhone}/>    
           <RootNav.Screen name={"Profile"} component={Profile}/>  
-           
+          <RootNav.Screen name={"AppGuideScreen"} component={AppGuideScreen}/>  
+
 
 
         

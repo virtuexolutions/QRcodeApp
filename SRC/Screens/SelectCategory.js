@@ -16,29 +16,24 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const SelectCategory = () => {
   const dispatch = useDispatch();
-  // const [selectedItem ,setSelectedItem] = useState()
 
   const navigation = useNavigation();
 
   const categoryArray = [
     {
       title: 'url',
-      // onPress: () => navigation.navigate('LinkUrlScreen'),
-
       image: require('../Assets/Images/link.png'),
     },
     {
       title: 'image',
       image: require('../Assets/Images/photo.png'),
-      // onPress: () => navigation.navigate('LinkUrlScreen'),
-    },
+       },
     {
       title: 'pdf',
       image: require('../Assets/Images/pdf.png'),
     },
     {
       title: 'text',
-      // onPress: () => navigation.navigate('LinkUrlScreen'),
       image: require('../Assets/Images/text.png'),
     },
   ];
@@ -54,32 +49,18 @@ const SelectCategory = () => {
       end={{x: 1, y: 1}}
       colors={['#001D55', '#012497']}>
       <View style={styles.row}>
-        <CustomButton
-          iconStyle={{
-            width: windowWidth * 0.09,
-            height: windowHeight * 0.05,
-            textAlign: 'center',
-            paddingTop: moderateScale(15, 0.6),
-            fontSize: moderateScale(24, 0.6),
-            color: Color.themeblue,
-          }}
-          iconName="chevron-left"
-          iconType={Feather}
-          iconSize={moderateScale(23, 0.6)}
-          // color={Color.red}
-          // color={Color.red}
-          marginTop={moderateScale(5, 0.3)}
-          // textColor={Color.red}
-          // text={'Use'}
-          // isGradient={true}
-          onPress={() => {
+      <TouchableOpacity style={styles.customBtn}
+           onPress={() => {
             navigation.goBack();
           }}
-          bgColor={'white'}
-          width={windowHeight * 0.06}
-          height={windowHeight * 0.06}
-          borderRadius={(windowHeight * 0.06) / 2}
-        />
+          >
+            <Icon 
+           name='left'
+           as={AntDesign}
+           size={moderateScale(20,0.6)}
+           color={Color.themeblue}
+          />
+        </TouchableOpacity>
         <CustomText isBold style={styles.text1}>
           Generate Qr
         </CustomText>
@@ -89,7 +70,6 @@ const SelectCategory = () => {
         nestedScrollEnabled={true}
         scrollEnabled={false}
         data={categoryArray}
-        // numColumns={2}
         numColumns={2}
         contentContainerStyle={{
           marginHorizontal: moderateScale(10, 0.3),
@@ -99,8 +79,6 @@ const SelectCategory = () => {
           paddingVertical: moderateScale(70, 0.6),
           height: windowHeight,
           alignItems: 'center',
-          // justifyContent:'center',
-          // backgroundColor:'red'
         }}
         renderItem={({item, index}) => {
           return <CategoryComponent item={item} />;
@@ -129,5 +107,14 @@ const styles = StyleSheet.create({
     // backgroundColor:Color.red,
     paddingVertical: moderateScale(20, 0.3),
     paddingHorizontal: moderateScale(15, 0.3),
+  },
+  customBtn : { 
+    width : windowWidth * 0.13,
+    height : windowWidth * 0.13,
+    borderRadius : windowWidth * 0.13 /2,
+    justifyContent : 'center',
+    alignItems : 'center',
+    backgroundColor : Color.white,
+    
   },
 });

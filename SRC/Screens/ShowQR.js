@@ -27,10 +27,13 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import QRCode from 'react-native-qrcode-svg';
 
 const ShowQR = props => {
+  const data = props?.route?.params?.data;
+  
   const focused = useIsFocused()
   const navigation = useNavigation()
-  const data = props?.route?.params?.data;
+  
   const [textOrNot , setTextORNot] = useState(false)
+
   const copyToClipboard = () => {
     Clipboard.setString(data);
     Platform.OS == 'android'
@@ -78,14 +81,11 @@ const ShowQR = props => {
           paddingVertical: moderateScale(20, 0.6),
           paddingHorizontal: moderateScale(15.6),
           justifyContent: 'space-between',
-          // backgroundColor: Color.themeblue,
         }}>
         <Icon name={'link'} as={Entypo} size={28} color={Color.themeblue} />
         <View
           style={{
             alignItems: 'left',
-            // backgroundColor:'green',
-            // width:windowWidth*0.3,
             position: 'absolute',
             left: 40,
             top: 20,

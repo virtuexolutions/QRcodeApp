@@ -31,6 +31,7 @@ import ImagePickerModal from '../Components/ImagePickerModal';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {useNavigation} from '@react-navigation/native';
 import {source} from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Signup = () => {
   const navigation = useNavigation();
@@ -113,6 +114,7 @@ const Signup = () => {
   };
 
   return (
+
     <ScreenBoiler
       statusBarBackgroundColor={'white'}
       statusBarContentStyle={'dark-content'}>
@@ -349,7 +351,7 @@ const Signup = () => {
               {
                 width: windowWidth * 0.7,
                 position: 'absolute',
-                bottom: 50,
+                bottom: 100,
               },
             ]}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -363,6 +365,7 @@ const Signup = () => {
         />
       </ScrollView>
     </ScreenBoiler>
+
   );
 };
 
@@ -420,8 +423,8 @@ const styles = ScaledSheet.create({
     height: moderateScale(20, 0.3),
     position: 'absolute',
     // top: 110,
-    bottom: 2,
-    right: 0,
+    bottom: 17,
+    right: 12,
     borderRadius: moderateScale(10, 0.3),
     elevation: 8,
     justifyContent: 'center',

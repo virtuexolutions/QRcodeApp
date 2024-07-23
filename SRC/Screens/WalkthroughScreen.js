@@ -149,7 +149,10 @@ const WalkThroughScreen = props => {
   };
   const RenderDoneBtn = () => {
     return (
-      <View style={[styles.doneBtn, styles.btnRight,{
+      <TouchableOpacity 
+      onPress={()=>{
+        dispatch(setWalkThrough(true));
+      }} style={[styles.doneBtn, styles.btnRight,{
     // top: moderateScale(-610, 0.6),
 
       }]}>
@@ -165,12 +168,16 @@ const WalkThroughScreen = props => {
         >
         Done
       </CustomText>
-        </View>
+        </TouchableOpacity>
     );
   };
   const RenderSkipBtn = () => {
     return (
-      <View style={[styles.doneBtn, styles.skip]}>
+      <TouchableOpacity 
+      onPress={()=>{
+        dispatch(setWalkThrough(true));
+      }}
+      style={[styles.doneBtn, styles.skip]}>
 
       <CustomText
         onPress={() => {
@@ -182,7 +189,7 @@ const WalkThroughScreen = props => {
         Skip
       </CustomText>
 
-          </View>
+          </TouchableOpacity>
     );
   };
 const RenderBackBtn = () => {
@@ -302,13 +309,13 @@ const styles = StyleSheet.create({
     position:'absolute',
     paddingHorizontal: moderateScale(7, 0.2),
     paddingVertical: moderateScale(7, 0.2),
-    top: moderateScale(-520, 0.7),
+    // top: moderateScale(20, 0.7),
     // right: moderateScale(20,0.1),
     zIndex:1,
   },
   skip: {
  
-    top: moderateScale(-520, 0.7),
+    // top: moderateScale(20, 0.7),
     // width:windowWidth * 0.18,
     // height: windowHeight * 0.09,
     alignItems:'center',
@@ -326,7 +333,7 @@ const styles = StyleSheet.create({
     // paddingVertical: moderateScale(8, 0.4),
     position:'absolute',
     // opacity:0.34,
-    top: moderateScale(-520, 0.6),
+    // top: moderateScale(20, 0.6),
     right: moderateScale(11,0.6),
     zIndex:1,
   },

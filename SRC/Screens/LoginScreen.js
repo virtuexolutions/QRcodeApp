@@ -97,7 +97,7 @@ const LoginScreen = props => {
               <CustomImage
               source={require('../Assets/Images/logo.png')}
               style={{width: "100%", height: "100%"}}
-              resizeMode={"conain"}
+              resizeMode={"contain"}
               />
               </View>
             {/* <CustomText
@@ -171,7 +171,7 @@ const LoginScreen = props => {
             <CustomText
               onPress={() => {
                 console.log('====================> verify number screen');
-                navigation.navigate('EnterPhone');
+                navigation.navigate('EnterPhone' ,{fromforgotpassword :true});
               }}
               style={{
                 color: Color.white,

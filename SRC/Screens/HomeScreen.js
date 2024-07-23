@@ -59,20 +59,20 @@ const HomeScreen = () => {
       image: require('../Assets/Images/cardimage3.png'),
       title: 'my gallery',
       onPress: () => navigation.navigate('GalleryView'),
-      description: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit.',
+      description: 'View and explore your generated QR codes, seamlessly blending creativity with functionality',
     },
-    {
-      id: 4,
-      image: require('../Assets/Images/cardimage4.png'),
-      title: 'Generate image QR',
-      onPress: () =>
-        navigation.navigate('LinkUrlScreen', {
-          fromGenerateimage: true,
-          item: {title: 'image'},
-        }),
-      // onpress:()=> navigation.navigate('LinkUrlScreen', {item: item}),
-      description: 'Each image combines creativity and functionality. QR integration transforms photos into interactive experiences. ',
-    },
+    // {
+    //   id: 4,
+    //   image: require('../Assets/Images/cardimage4.png'),
+    //   title: 'Generate image QR',
+    //   onPress: () =>
+    //     navigation.navigate('LinkUrlScreen', {
+    //       fromGenerateimage: true,
+    //       item: {title: 'image'},
+    //     }),
+    //   // onpress:()=> navigation.navigate('LinkUrlScreen', {item: item}),
+    //   description: 'Each image combines creativity and functionality. QR integration transforms photos into interactive experiences. ',
+    // },
     // {
     //   id:5,
     //   image:require('../Assets/Images/cardimage.png'),
@@ -162,7 +162,7 @@ const HomeScreen = () => {
             </LinearGradient>
           </TouchableOpacity>
         </View>
-        <View
+        {/* <View
           style={{
             paddingVertical: moderateScale(20, 0.6),
           }}>
@@ -177,8 +177,12 @@ const HomeScreen = () => {
               // borderColor:Color.themeblue
             }}
           />
-        </View>
-        <View>
+        </View> */}
+        <View
+          style={{
+            paddingVertical: moderateScale(20, 0.6),
+          }}
+        >
           <LinearGradient
             colors={['#001D55', '#012497']}
             start={{x: 0, y: 0.5}}

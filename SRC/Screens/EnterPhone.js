@@ -23,6 +23,8 @@ import {Post} from '../Axios/AxiosInterceptorFunction';
 import { useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import ScreenBoiler from '../Components/ScreenBoiler';
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import { Icon } from 'native-base';
 
 
 
@@ -30,7 +32,7 @@ const EnterPhone = props => {
   const SelecteduserRole = useSelector(
     state => state.commonReducer.selectedRole,
   );
-  const fromForgot = props?.route?.params?.fromForgot;
+  const fromForgot = props?.route?.params?.fromforgotpassword;
   console.log('here=>', fromForgot);
   const [phone, setPhone] = useState('');
   console.log("🚀 ~ EnterPhone ~ phone:", phone)
@@ -47,7 +49,8 @@ const EnterPhone = props => {
     const response = await Post(url, {email: phone}, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
-      console.log('response data =>', response?.data);
+     console.log('response data =>', response?.data?.data);
+     alert(response?.data?.data[0]?.code)
       Platform.OS == 'android'
         ? ToastAndroid.show(`OTP sent to ${phone}`, ToastAndroid.SHORT)
         : alert(`OTP sent to ${phone}`);
@@ -65,22 +68,26 @@ const EnterPhone = props => {
   return (
     <>
      <ScreenBoiler
-      statusBarBackgroundColor={Color.themeBgColor}
-      statusBarContentStyle={'light-content'}
-      showBack
-      showHeader
+      // statusBarBackgroundColor={Color.themeBgColor}
+      statusBarContentStyle={'dark-content'}
+      // showBack
+      // showHeader
       >
+          <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <LinearGradient colors={Color.themeBgColor} style={styles.customBtn}>
+            <Icon
+              name="left"
+              as={AntDesign}
+              size={moderateScale(20, 0.6)}
+              color={'white'}
+            />
+          </LinearGradient>
+        </TouchableOpacity>
       
-      {/* <LinearGradient
-        style={{
-          width: windowWidth,
-          height: windowHeight,
-        }}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y:1}}
-         colors={[Color.themeColor2,Color.themeColor2]}
-        // locations ={[0, 0.5, 0.6]}
-        > */}
+    
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
@@ -115,25 +122,27 @@ const EnterPhone = props => {
             placeholderColor={Color.themeLightGray}
             elevation
           />
-          <CustomButton
-            text={
-              isLoading ? (
-                <ActivityIndicator color={'#FFFFFF'} size={'small'} />
-              ) : (
-                'Submit'
-              )
-            }
-            textColor={Color.white}
-            width={windowWidth * 0.4}
-            height={windowHeight * 0.06}
-            marginTop={moderateScale(20, 0.3)}
-            onPress={() => {
-              sendOTP()
-          //  navigationService.navigate('VerifyNumber', {phoneNumber : phone})
-             }}
-            bgColor={ Color.themeblue}
-           
-          />
+        
+            <CustomButton
+                text={
+                  isLoading ? (
+                    <ActivityIndicator color={'#FFFFFF'} size={'small'} />
+                  ) : (
+                    'submit'
+                  )
+                }
+                textColor={Color.white}
+                fontSize={moderateScale(16, 0.6)}
+                width={windowWidth * 0.6}
+                height={windowHeight * 0.07}
+                marginTop={moderateScale(30, 0.3)}
+                onPress={() => {
+                sendOTP()
+                }}
+                bgColor={Color.themeBgColor}
+                borderRadius={moderateScale(30, 0.3)}
+                isGradient
+              />
 
        
           {/* </CardContainer> */}
@@ -182,6 +191,15 @@ const styles = ScaledSheet.create({
     color: Color.themeLightGray,
     marginTop: moderateScale(10, 0.3),
     fontSize: moderateScale(12, 0.6),
+  },
+  customBtn: {
+    width: windowWidth * 0.13,
+    height: windowWidth * 0.13,
+    borderRadius: (windowWidth * 0.13) / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor : Color.themeColor,
+    marginHorizontal: moderateScale(10, 0.3),
   },
 });
 

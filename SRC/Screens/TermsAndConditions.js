@@ -1,5 +1,6 @@
 import {
   ImageBackground,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -16,46 +17,27 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Color from '../Assets/Utilities/Color';
 import CustomButton from '../Components/CustomButton';
 import Feather from 'react-native-vector-icons/Feather';
+import LinearGradient from 'react-native-linear-gradient';
 
 const TermsAndConditions = () => {
   const navigation = useNavigation();
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={
-        {
-          // backgroundColor:'white'
-          // marginTop : windowHeight * 0.1,
-        }
-      }
-      contentContainerStyle={{
-        paddingBottom: moderateScale(20, 0.6),
-      }}>
+    <SafeAreaView>
       <View style={styles.row}>
-        <CustomButton
-          iconStyle={{
-            width: windowWidth * 0.09,
-            height: windowHeight * 0.05,
-            textAlign: 'center',
-            paddingTop: moderateScale(15, 0.6),
-            fontSize: moderateScale(24, 0.6),
-            color: Color.white,
-          }}
-          iconName="chevron-left"
-          iconType={Feather}
-          iconSize={18}
-          color={Color.white}
-          marginTop={moderateScale(5, 0.3)}
+        <TouchableOpacity
           onPress={() => {
             navigation.goBack();
-          }}
-          isGradient={true}
-          bgColor={Color.themeBgColor}
-          borderRadius={(windowHeight * 0.06) / 2}
-          width={windowHeight * 0.06}
-          height={windowHeight * 0.06}
-        />
+          }}>
+          <LinearGradient colors={Color.themeBgColor} style={styles.customBtn}>
+            <Icon
+              name="left"
+              as={AntDesign}
+              size={moderateScale(20, 0.6)}
+              color={'white'}
+            />
+          </LinearGradient>
+        </TouchableOpacity>
 
         <CustomText
           isBold
@@ -68,21 +50,263 @@ const TermsAndConditions = () => {
           Terms & Conditions
         </CustomText>
       </View>
-
-      <CustomText
-        style={{
-          marginTop: moderateScale(30, 0.3),
-          marginHorizontal: moderateScale(10, 0.3),
-          color: Color.themeblue,
-          // width : windowWidth ,
-          textAlign: 'justify',
-          fontSize: moderateScale(12, 0.6),
-        }}>
-        {
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum \n\n t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for lorem ipsum will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like). \n \n Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32 f fsd fsdf s asasaaaaaaaaaaaa'
+      <ImageBackground 
+      style={{
+        height :windowHeight,
+        width :windowWidth ,
+        // backgroundColor :'red'
+      }}
+      source={require('../Assets/Images/mg.png')}
+      >
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={
+          {
+            // backgroundColor:'white'
+            // marginTop : windowHeight * 0.1,
+          }
         }
-      </CustomText>
-    </ScrollView>
+        contentContainerStyle={{
+          paddingBottom: moderateScale(120, 0.6),
+        }}>
+        <CustomText
+          style={{
+            marginTop: moderateScale(30, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(12, 0.6),
+          }}>
+          QR n Go is committed to providing you with secure privacy. While you
+          use this app, it is presumed that you have read and accepted the
+          following terms and conditions, if you do not agree to them, please
+          don’t use this app.
+        </CustomText>
+        <CustomText
+          isBold
+          style={{
+            marginTop: moderateScale(30, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'center',
+            fontSize: moderateScale(18, 0.6),
+          }}>
+          App Usage
+        </CustomText>
+        <CustomText
+          isBold
+          style={{
+            marginTop: moderateScale(30, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(14, 0.6),
+          }}>
+          Licensing:
+        </CustomText>
+        <CustomText
+          style={{
+            marginTop: moderateScale(10, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(12, 0.6),
+          }}>
+          You are granted a limited, non-exclusive, non-transferable, revocable
+          license to use the App for personal, and business purposes.
+        </CustomText>
+        <CustomText
+          isBold
+          style={{
+            marginTop: moderateScale(30, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(14, 0.6),
+          }}>
+          Prohibited Uses:
+        </CustomText>
+        <CustomText
+          style={{
+            marginTop: moderateScale(10, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(12, 0.6),
+          }}>
+          {
+            'You agree not to use the App for any illegal or forbidden activity, including, but not limited to: \n\n\u29BF Scanning QR codes that you are not authorized to scan. \n\u29BF Trying to gain unauthorized access to the Apps systems or networks.\n\u29BF Interfere with or disturb the App integrity or functioning.'
+          }
+        </CustomText>
+        <CustomText
+          isBold
+          style={{
+            marginTop: moderateScale(30, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(14, 0.6),
+          }}>
+          Camera Permission:
+        </CustomText>
+        <CustomText
+          style={{
+            marginTop: moderateScale(10, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(12, 0.6),
+          }}>
+          The app needs permission to access your device’s camera to scan QR
+          codes. This permission is mandatory for the basic functionality of the
+          app. We don’t take photos or record videos with our camera.
+        </CustomText>
+        <CustomText
+          isBold
+          style={{
+            marginTop: moderateScale(30, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(14, 0.6),
+          }}>
+          Third-Party Links:
+        </CustomText>
+        <CustomText
+          style={{
+            marginTop: moderateScale(10, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(12, 0.6),
+          }}>
+          The App may include connections to third-party websites or services.
+          We accept no responsibility for the content or practices of any
+          third-party websites or services.
+        </CustomText>
+        <CustomText
+          isBold
+          style={{
+            marginTop: moderateScale(30, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(14, 0.6),
+          }}>
+          Governing Law:
+        </CustomText>
+        <CustomText
+          style={{
+            marginTop: moderateScale(10, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(12, 0.6),
+          }}>
+          These Terms are regulated and construed in compliance with worldwide
+          laws.
+        </CustomText>
+        <CustomText
+          isBold
+          style={{
+            marginTop: moderateScale(30, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'center',
+            fontSize: moderateScale(18, 0.6),
+          }}>
+          Disclaimers and Limitations of Liability
+        </CustomText>
+        <CustomText
+          isBold
+          style={{
+            marginTop: moderateScale(30, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(14, 0.6),
+          }}>
+          Disclaimer:
+        </CustomText>
+        <CustomText
+          style={{
+            marginTop: moderateScale(10, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(12, 0.6),
+          }}>
+          The App is supplied "as is" and "as available", with no explicit or
+          implied guarantees.
+        </CustomText>
+        <CustomText
+          isBold
+          style={{
+            marginTop: moderateScale(30, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(14, 0.6),
+          }}>
+          Limitation of Liability:
+        </CustomText>
+        <CustomText
+          style={{
+            marginTop: moderateScale(10, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(12, 0.6),
+          }}>
+          QR n Go will not be liable for any indirect, incidental, special,
+          consequential, or punitive damages, or any loss of profits or
+          revenues.
+        </CustomText>
+        <CustomText
+          isBold
+          style={{
+            marginTop: moderateScale(30, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(14, 0.6),
+          }}>
+          Changes in the Terms
+        </CustomText>
+        <CustomText
+          style={{
+            marginTop: moderateScale(10, 0.3),
+            marginHorizontal: moderateScale(10, 0.3),
+            color: Color.black,
+            // width : windowWidth ,
+            textAlign: 'justify',
+            fontSize: moderateScale(12, 0.6),
+          }}>
+          We retain the right to alter these Terms at any time. Any
+          modifications will take effect immediately following publication. You
+          agree to the changes if you keep using the app after they are posted.
+        </CustomText>
+      </ScrollView>
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 
@@ -109,5 +333,13 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  customBtn: {
+    width: windowWidth * 0.13,
+    height: windowWidth * 0.13,
+    borderRadius: (windowWidth * 0.13) / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor : Color.themeColor,
   },
 });

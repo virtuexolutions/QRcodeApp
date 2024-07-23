@@ -87,6 +87,14 @@ const Drawer = () => {
         navigation.navigate('TermsAndConditions');
       },
     },
+    {
+      name: 'App Guide',
+      iconName: 'file-text',
+      iconType: Feather,
+      onPress: () => {
+        navigation.navigate('AppGuideScreen');
+      },
+    },
 
     // {
     //   name: 'Settings',

@@ -24,6 +24,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather';
 import {apiHeader} from '../Utillity/utils';
 import ImagePickerModal from '../Components/ImagePickerModal';
+import AntDesign from 'react-native-vector-icons/AntDesign'
+// import Feather from 'react-native-vector-icons/Feather';
+import LinearGradient from 'react-native-linear-gradient';
+
+
 
 const LinkUrlScreen = props => {
   const fromImage = props?.route?.params?.fromGenerateimage;
@@ -150,29 +155,23 @@ const LinkUrlScreen = props => {
           // backgroundColor:'red',
           width: windowWidth * 0.2,
         }}>
-        <CustomButton
-          iconStyle={{
-            width: windowWidth * 0.09,
-            height: windowHeight * 0.05,
-            textAlign: 'center',
-            paddingTop: moderateScale(15, 0.6),
-            fontSize: moderateScale(24, 0.6),
-            color: Color.white,
-          }}
-          iconName="chevron-left"
-          iconType={Feather}
-          iconSize={18}
-          color={Color.white}
-          marginTop={moderateScale(5, 0.3)}
-          // text={'Use'}
-          isGradient={true}
-          onPress={() => {
+       <TouchableOpacity
+           onPress={() => {
             navigation.goBack();
           }}
-          bgColor={Color.themeBgColor}
-          width={windowHeight * 0.06}
-          height={windowHeight * 0.06}
-        />
+          >
+        <LinearGradient
+        
+        colors={Color.themeBgColor}
+        style={styles.customBtn}>
+          <Icon 
+           name='left'
+           as={AntDesign}
+           size={moderateScale(20,0.6)}
+           color={'white'}
+          />
+        </LinearGradient>
+        </TouchableOpacity>
       </View>
       {/* </View> */}
 
@@ -252,7 +251,7 @@ const LinkUrlScreen = props => {
           <TextInputWithTitle
             rightIcon={false}
             placeholder={
-              selectedItem?.title == 'url' ? 'put your link url' : ' your text'
+              selectedItem?.title == 'url' ? 'Put Your Link Url' : ' Your Text'
             }
             // border={1}
             setText={setLink}
@@ -271,7 +270,7 @@ const LinkUrlScreen = props => {
         )}
         <TextInputWithTitle
           // titleText={'Username'}
-          placeholder={'name your Qr '}
+          placeholder={'Name Your Qr '}
           border={1}
           setText={setQrName}
           value={qrName}
@@ -324,7 +323,7 @@ const LinkUrlScreen = props => {
                   }
                 }
               }}
-              text={'generate  code'}
+              text={ isLoading ? <ActivityIndicator size={'small'} color={'white'}/> :'generate  code'}
               fontSize={moderateScale(12, 0.3)}
               textColor={Color.white}
               borderRadius={moderateScale(30, 0.3)}
@@ -404,5 +403,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1,
+  },
+  customBtn : { 
+    width : windowWidth * 0.13,
+    height : windowWidth * 0.13,
+    borderRadius : windowWidth * 0.13 /2,
+    justifyContent : 'center',
+    alignItems : 'center',
+    // backgroundColor : Color.white,
+    marginHorizontal :moderateScale(15,.3)
+    
   },
 });

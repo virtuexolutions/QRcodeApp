@@ -117,28 +117,18 @@ const Profile = () => {
             left: 0,
             top: 10,
           }}>
-          <CustomButton
-            iconStyle={{
-              width: windowWidth * 0.09,
-              height: windowHeight * 0.05,
-              textAlign: 'center',
-              paddingTop: moderateScale(15, 0.6),
-              fontSize: moderateScale(24, 0.6),
-              color: Color.themeblue,
-            }}
-            iconName="chevron-left"
-            iconType={Feather}
-            iconSize={19}
-            color={Color.white}
-            marginTop={moderateScale(5, 0.3)}
-            onPress={() => {
-              navigation.goBack();
-            }}
-            borderRadius={(windowHeight * 0.06) / 2}
-            bgColor={Color.white}
-            width={windowHeight * 0.06}
-            height={windowHeight * 0.06}
+       <TouchableOpacity style={styles.customBtn}
+           onPress={() => {
+            navigation.goBack();
+          }}
+          >
+            <Icon 
+           name='left'
+           as={AntDesign}
+           size={moderateScale(20,0.6)}
+           color={Color.themeblue}
           />
+        </TouchableOpacity>
         </View>
 
         <View
@@ -158,8 +148,6 @@ const Profile = () => {
             style={{
               width: '100%',
               height: '100%',
-              // backgroundColor: 'blue',
-
               borderRadius: moderateScale((windowHeight * 0.13) / 2),
             }}
           />
@@ -541,21 +529,11 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: windowWidth * 0.18,
-    // backgroundColor:Color.themeBgColor,
     height: windowHeight * 0.08,
     borderRadius: moderateScale(10, 0.6),
     borderColor: Color.themeblue,
     borderWidth: 1,
     marginHorizontal: moderateScale(10, 0.6),
-
-    // backgroundColor: Color.white,
-    // flexDirection: 'row',
-    // borderRadius: moderateScale(18, 0.6),
-    // // height: windowHeight * 0.23,
-    // width: windowWidth * 0.9,
-    // alignItems: 'center',
-    // paddingVertical: moderateScale(20, 0.6),
-    // paddingHorizontal: moderateScale(10, 0.6),
   },
 
   edit: {
@@ -563,8 +541,8 @@ const styles = ScaledSheet.create({
     width: moderateScale(20, 0.3),
     height: moderateScale(20, 0.3),
     position: 'absolute',
-    bottom: -2,
-    right: 5,
+    bottom: 8,
+    right: 10,
     borderRadius: moderateScale(10, 0.3),
     elevation: 8,
     justifyContent: 'center',
@@ -586,5 +564,14 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: moderateScale(10, 0.6),
+  },
+  customBtn : { 
+    width : windowWidth * 0.13,
+    height : windowWidth * 0.13,
+    borderRadius : windowWidth * 0.13 /2,
+    justifyContent : 'center',
+    alignItems : 'center',
+    backgroundColor : Color.white,
+    marginHorizontal :moderateScale(15,.3)
   },
 });

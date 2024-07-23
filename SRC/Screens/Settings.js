@@ -50,6 +50,7 @@ useEffect(()=>{
         navigationService.navigate('TermsAndConditions');
       },
     },
+    
     {
       id: 3,
       name: 'About',

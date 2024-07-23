@@ -35,14 +35,14 @@ setup_permissions([
   'Camera',
   # 'Contacts',
   # 'FaceID',
-  'LocationAccuracy',
-  'LocationAlways',
+  # 'LocationAccuracy',
+  # 'LocationAlways',
   'LocationWhenInUse',
-  'MediaLibrary',
+  # 'MediaLibrary',
   # 'Microphone',
   # 'Motion',
   # 'Notifications',
-   'PhotoLibrary',
+  #  'PhotoLibrary',
   # 'PhotoLibraryAddOnly',
   # 'Reminders',
   # 'Siri',
@@ -60,7 +60,7 @@ setup_permissions([
 #   dependencies: {
 #     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
 # ```
-flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
+# flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
@@ -79,7 +79,7 @@ target 'QrcodeApp' do
     #
     # Note that if you have use_frameworks! enabled, Flipper will not work and
     # you should disable the next line.
-    :flipper_configuration => flipper_config,
+    # :flipper_configuration => flipper_config,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
@@ -93,11 +93,31 @@ target 'QrcodeApp' do
 
   
 
+  # post_install do |installer|
+  #   installer.pods_project.targets.each do |target|
+  #     if target.name == 'React'
+  #     target.remove_from_project
+  #     end
+  #     if target.name == 'react-native-config'
+  #       phase = target.project.new(Xcodeproj::Project::Object::PBXShellScriptBuildPhase)
+  #       phase.shell_script = 'cd ../../'\
+  #       '&& RNC_ROOT=./node_modules/react-native-config/'\
+  #       '&& export SYMROOT=$RNC_ROOT/ios/ReactNativeConfig'\
+  #       '&& export BUILD_DIR=$RNC_ROOT/ios/ReactNativeConfig'\
+  #       '&& ruby $RNC_ROOT/ios/ReactNativeConfig/BuildDotenvConfig.ruby'
+  #       target.build_phases << phase
+  #       target.build_phases.move(phase,0)
+  #     end
+  #    end
+  #   end
+  
+
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+       
       end
      end
       react_native_post_install(

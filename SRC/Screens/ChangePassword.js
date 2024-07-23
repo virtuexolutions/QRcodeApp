@@ -4,6 +4,7 @@ import Color from '../Assets/Utilities/Color';
 import CustomImage from '../Components/CustomImage';
 import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 import ScreenBoiler from '../Components/ScreenBoiler';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {
   ActivityIndicator,
@@ -79,38 +80,28 @@ const Profile = () => {
 
   return (
     <SafeAreaView
-      style={{
-        height: windowHeight,
-        width: windowWidth,
-        paddingTop: moderateScale(20, 0.3),
-      }}>
+      >
       <View
         style={{
           width: windowWidth * 0.2,
         }}>
-        <CustomButton
-          iconStyle={{
-            width: windowWidth * 0.09,
-            height: windowHeight * 0.05,
-            textAlign: 'center',
-            paddingTop: moderateScale(15, 0.6),
-            fontSize: moderateScale(24, 0.6),
-            color: Color.white,
-          }}
-          iconName="chevron-left"
-          iconType={Feather}
-          iconSize={18}
-          color={Color.white}
-          marginTop={moderateScale(5, 0.3)}
-          // text={'Use'}
-          isGradient={true}
-          onPress={() => {
+      <TouchableOpacity
+           onPress={() => {
             navigation.goBack();
           }}
-          bgColor={Color.themeBgColor}
-          width={windowHeight * 0.06}
-          height={windowHeight * 0.06}
-        />
+          >
+        <LinearGradient
+        
+        colors={Color.themeBgColor}
+        style={styles.customBtn}>
+          <Icon 
+           name='left'
+           as={AntDesign}
+           size={moderateScale(20,0.6)}
+           color={'white'}
+          />
+        </LinearGradient>
+        </TouchableOpacity>
       </View>
 
       <CustomText style={styles.txt5}>Change Password</CustomText>
@@ -243,5 +234,16 @@ const styles = ScaledSheet.create({
     margin: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  customBtn : { 
+    width : windowWidth * 0.13,
+    height : windowWidth * 0.13,
+    borderRadius : windowWidth * 0.13 /2,
+    justifyContent : 'center',
+    alignItems : 'center',
+    marginHorizontal :moderateScale(15,.3),
+    marginTop :moderateScale(10,.3)
+    // backgroundColor : Color.themeColor,
+    
   },
 });

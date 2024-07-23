@@ -88,7 +88,7 @@ const MainContainer = () => {
 
 const useloader = value => {
   const [isloading, setIsloading] = useState(value);
-  const [loadingTime] = useState(10000);
+  const [loadingTime] = useState(4000);
   useEffect(() => {
     setTimeout(() => setIsloading(false), loadingTime);
   }, []);
