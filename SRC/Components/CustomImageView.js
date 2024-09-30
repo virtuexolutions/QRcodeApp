@@ -6,7 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef, useEffect, useState, useCallback } from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -15,12 +15,14 @@ import Color from '../Assets/Utilities/Color';
 import QRCode from 'react-native-qrcode-svg';
 import CustomText from './CustomText';
 import {Icon} from 'native-base';
+import ViewShot from 'react-native-view-shot';
 import {SafeAreaView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
 import VerificationModal from './VerificationModal';
+import RNPrint from 'react-native-print';
 
 const CustomImageView = ({
   isVisible,
@@ -31,10 +33,36 @@ const CustomImageView = ({
 }) => {
   console.log('===========>', galleryImages);
   const flatListRef = useRef(null);
+  // const qrCodeRef = useRef(null);
   const navigation = useNavigation();
 
-  const [modalVisible ,setModalVisible] =useState(false)
 
+
+  const [modalVisible ,setModalVisible] =useState(false)
+  const [isMenuVisible ,setIsMenuVisible] =useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
+  const onCapture = useCallback(async uri => {
+    // navigation.navigate('PrintQr', {
+    //   qrImage: uri })
+    console.log('log ===========> ', uri)
+    setSelectedImage(uri);
+  }, []);
+
+  const printImage = async () => {
+    try {
+      if (selectedImage) {
+        await RNPrint.print({
+          filePath: selectedImage,
+        });
+      } else {
+        Alert.alert('No Image', 'No image found to print');
+      }
+    } catch (error) {
+      Alert.alert('Print Error', 'An error occurred while trying to print the image.');
+      console.error('Print error: ', error); // Log the error for debugging
+    }
+  };
+  console.log('Selected View Shot ',selectedImage)
   useEffect(() => {
     if (isVisible && flatListRef.current && selectedImageIndex !== undefined) {
       scrollToIndex(selectedImageIndex);
@@ -44,8 +72,11 @@ const CustomImageView = ({
   const scrollToIndex = index => {
     flatListRef.current.scrollToOffset({offset: index * windowWidth});
   };
+  selectedImageIndex,
+  selectedImageIndex,
+  console.log('🚀 ~ CustomImageView ~ selectedItem:', selectedImageIndex);
 
-  console.log('🚀 ~ CustomImageView ~ selectedItem:', selectedItem);
+  console.log('🚀 ~ CustomImageView ~ selectedItem:', selectedImage);
   return (
     <Modal visible={isVisible}>
       <SafeAreaView>
@@ -77,6 +108,83 @@ const CustomImageView = ({
                 fontSize: moderateScale(24, 0.6),
                 color: Color.black,
               }}
+              iconName="dots-three-vertical"
+              iconType={Entypo}
+              iconSize={18}
+              // color={Color.white}
+              marginTop={moderateScale(5, 0.3)}
+              // text={'Use'}
+              isGradient={true}
+              onPress={() => {
+                setIsMenuVisible(true)
+              }}
+              bgColor={['white', 'white']}
+              width={windowHeight * 0.06}
+              height={windowHeight * 0.06}
+            />
+{/* <Modal> */}
+{isMenuVisible &&  <TouchableOpacity
+        style={{
+          width: windowWidth * 0.25,
+          top: 53,
+
+          right:29,
+          position: 'absolute',
+          alignSelf: 'flex-end',
+          alignItems: 'center',
+          borderRadius: moderateScale(5, 0.6),
+          // backgroundColor: 'red',
+          borderWidth: moderateScale(1,0.3),
+          borderColor:'grey',
+          backgroundColor: 'white',
+          
+        }}
+        onPress={
+          () =>{
+            printImage()
+            setIsMenuVisible(false);
+
+          // setIsVisible(false);
+          //   navigation.navigate('PrintQr',{
+          //     qrImage: selectedImage
+          //   })
+          // setIsMenuVisible(false);
+
+          }
+        }>
+        
+            <CustomText
+                isBold
+                style={{
+                  fontSize: moderateScale(9, 0.6),
+                  color: 'black',
+                  paddingVertical: moderateScale(5, 0.6),
+                }}
+                onPress={() =>{
+                  // setIsVisible(false);
+                  // navigation.navigate('PrintQr',{
+                  //   qrImage: selectedImage
+                  // })
+                  printImage()
+                  setIsMenuVisible(false);
+      
+                }}>
+                {"Print"}
+              </CustomText>
+  
+      </TouchableOpacity>}
+{/* </Modal> */}
+
+             {/* <CustomButton
+              iconStyle={{
+                width: windowWidth * 0.09,
+                height: windowHeight * 0.05,
+                textAlign: 'center',
+                paddingHorizontal: moderateScale(12, 0.2),
+                paddingTop: moderateScale(15, 0.6),
+                fontSize: moderateScale(24, 0.6),
+                color: Color.black,
+              }}
               iconName="cross"
               iconType={Entypo}
               iconSize={18}
@@ -90,7 +198,7 @@ const CustomImageView = ({
               bgColor={['white', 'white']}
               width={windowHeight * 0.06}
               height={windowHeight * 0.06}
-            />
+            /> */}
           </View>
 
           <FlatList
@@ -126,7 +234,10 @@ const CustomImageView = ({
                     overflow: 'hidden',
                   }}>
                   {/* <CustomText style={{color: Color.white}} isBold>{index}</CustomText> */}
+        <ViewShot onCapture={onCapture} captureMode="mount">
+                  
                   <QRCode
+                    
                     value={
                       selectedItem == 'image'
                         ? item?.path
@@ -141,6 +252,7 @@ const CustomImageView = ({
 
                     // getRef={(ref)=>setQrCodeRef(ref)}
                   />
+                  </ViewShot>
                 </TouchableOpacity>
               );
             }}
@@ -150,9 +262,12 @@ const CustomImageView = ({
               index,
             })}
           />
+
+   
         </View>
-     
+
       </SafeAreaView>
+
     </Modal>
   );
 };

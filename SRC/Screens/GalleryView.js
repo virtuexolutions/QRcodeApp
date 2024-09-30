@@ -344,7 +344,7 @@ const GalleryView = () => {
                               }}
                               style={styles.btn}>
                               <Icon
-                                name={'checkbox-marked'}
+                               name={'checkbox-marked'}
                                 as={MaterialCommunityIcons}
                                 color={Color.blue}
                                 size={moderateScale(30, 0.2)}

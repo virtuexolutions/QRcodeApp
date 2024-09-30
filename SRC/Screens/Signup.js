@@ -102,12 +102,12 @@ const Signup = () => {
     if (Object.keys(image).length > 0) formData.append('photo', image);
 
     const url = 'register';
+    console.log("🚀 ~ registerUser ~ response:", JSON.stringify(formData, null, 2))
 
     setIsLoading(true);
     const response = await Post(url, formData, apiHeader());
     setIsLoading(false);
     if (response != undefined) {
-      //  return  console.log("🚀 ~ registerUser ~ response:", response?.data)
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({token: response?.data?.token}));
     }

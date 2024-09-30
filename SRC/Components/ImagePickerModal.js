@@ -85,8 +85,7 @@ const ImagePickerModal = props => {
     // }
   };
 
-  const 
-  openCamera = async () => {
+  const openCamera = async () => {
     let options = {
       mediaType: 'photo',
       maxWidth: 500,
@@ -96,6 +95,7 @@ const ImagePickerModal = props => {
     };
     if (Platform.OS === 'android') {
       if (PermissionsAndroid.PERMISSIONS.CAMERA) {
+      
       } else {
         await requestCameraPermission();
       }
@@ -138,7 +138,7 @@ const ImagePickerModal = props => {
     
 
     });
-  };
+  }
 
   return (
     <Modal

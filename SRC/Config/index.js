@@ -1,5 +1,6 @@
 
-export const baseUrl="https://qrcode.ad-wize.net";
+export const baseUrl="https://qrcode.cstmpanel.com";
+// export const baseUrl="https://64fe-103-125-71-58.ngrok-free.app";
 export const imageUrl = `${baseUrl}/api/images/`;
 export const profilePicUrl = `${baseUrl}/uploads`
 
@@ -8,4 +9,4 @@ export const validateEmail = (email) => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
-};
+}; 
