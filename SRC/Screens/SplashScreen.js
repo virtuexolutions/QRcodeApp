@@ -31,8 +31,8 @@ const styles = ScaledSheet.create({
     width: windowWidth,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Color.white,
-    // backgroundColor :'rgba(0,0,0,0.1)'
+    backgroundColor: Color.themesplashblack,
+    // backgroundColor : 
   },
   bottomImage: {
     width: windowWidth * 0.4,

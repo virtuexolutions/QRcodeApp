@@ -25,6 +25,7 @@ export default Color = {
   darkBlue:'#033B55',
  themeblue: '#002F58',
   theme2 :'#FF000A',
+ themesplashblack: '#111111',
   
   purple: '#0D668E',
 

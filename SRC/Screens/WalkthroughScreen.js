@@ -25,6 +25,8 @@ import { setWalkThrough } from '../Store/slices/auth';
 import LinearGradient from 'react-native-linear-gradient';
 import { color } from 'native-base/lib/typescript/theme/styled-system';
 import { RadialGradient } from 'react-native-svg';
+import { height } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
+import { transform } from 'typescript';
 
 const WalkThroughScreen = props => {
   const dispatch = useDispatch();
@@ -32,30 +34,23 @@ const WalkThroughScreen = props => {
   const slides = [
     {
       key: '1',
-      image: require('../Assets/Images/walkthrough1.png'),
-      title: 'Quick QR Code Creation : ',
-      text: `Create high-quality quickly and easily with QR-n-go You can make and manage QR codes for URLs, contact information, and WiFi access. Share your QR code instantly with email, message, or social media. Available for both iOS and Android, QR-n-go is ideal for business and personal use. 
-     
-      Give it a Try!
-      `,
+      image: require('../Assets/Images/walkthroughblack1.png'),
+      title: 'LOREM IPSUM',
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tempor lorem consequat egestas placerat. Integer eu lorem ullamcorper, volutpat ligula ac, ultrices neque. Integer sit amet velit consequat, auctor nulla sit amet, egestas ex. Nulla ut velit consequat, dapibus urna u.",
+      sidetext: 'Lorem Ipsum Dolor Sit Amet, Consectetur',
     },
     {
       key: '2',
-      image: require('../Assets/Images/walkthrough2.png'),
-      title: 'Customized QR Codes:',
-      text: `Our user-friendly app lets you customize your QR codes, adding details and notes. We have accessibility features to ensure the app is usable by individuals with different abilities. Our app is a fully functional mobile app for both iOS and Android. For added security, you can protect your QR codes with a password. 
-
-      Create My First QR Code!
-      `,
+      image: require('../Assets/Images/walkthroughblack2.png'),
+      title: 'LOREM IPSUM',
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tempor lorem consequat egestas placerat. Integer eu lorem ullamcorper, volutpat ligula ac, ultrices neque. Integer sit amet velit consequat, auctor nulla sit amet, egestas ex. Nulla ut velit consequat, dapibus urna u.",
+      sidetext: 'Lorem Ipsum Dolor Sit Amet, Consectetur',
     },
     {
       key: '3',
-      image: require('../Assets/Images/walkthrough4.png'),
-      title: 'Cross-Platform Compatibility:',
-      text: `QR-n-Go saves you both time and money while providing several other benefits. Our app eliminates the need to engage developers to create QR codes, allowing you to do it in a few clicks. You can also export your QR codes in multiple formats and share them instantly. 
-
-      Start Saving Now!
-      `
+      image: require('../Assets/Images/walkthroughblack3.png'),
+      title: 'LOREM IPSUM',
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tempor lorem consequat egestas placerat. Integer eu lorem ullamcorper, volutpat ligula ac, ultrices neque. Integer sit amet velit consequat, auctor nulla sit amet, egestas ex. Nulla ut velit consequat, dapibus urna u."
     },
   ];
 
@@ -74,21 +69,96 @@ const WalkThroughScreen = props => {
             alignItems: 'center',
           }}
           source={item.image}>
-  
-                  <View
+        {/* <View style={{backgroundColor:'red'}}> */}
+        <CustomText
+              style={{
+                color: Color.white,
+                fontSize
+                    : moderateScale(10, 0.6),
+                width: windowWidth * 0.65,
+                // backgroundColor:'green',
+                padding: moderateScale(5, 0.6),
+                // lineHeight: moderateScale(44, 0.6),
+                // position: 'absolute',
+                bottom: item?.key == 1 ? moderateScale(50,0.6) : moderateScale(-155),
+                marginLeft:item?.key ==1 ? moderateScale(340,0.6) : moderateScale(-340),
+                // top: item?.key == 1 ? moderateScale(0,0.6) : moderateScale(50,0.6),
+                transform: [{rotate:'-90deg'}],
+                // right: item?.key != 1 ? 150 : 55,
+                letterSpacing: 0.6,
+                textTransform: 'upperCase',
+                
+              }}
+              // numberOfLines={2}
+              >
+              {item?.sidetext}
+            </CustomText>
+            {/* </View> */}
+        <LinearGradient
+              style={{height:windowHeight *0.07,justifyContent:'center', marginTop: item.key === '1'? moderateScale(-420,0.3) : moderateScale(290,0.6)}}
+              colors={[ "#FFFFFF00" ,Color.white,]}
+                start={ item.key!== '3'?{x: 1, y: 1}:{x: 0, y:0.9}} end={item.key!== '3'?{x:0.1, y:1} :{x: 1, y: 0.4}}
+              >
+
+            <CustomText
+              style={{
+                // backgroundColor:Color.white,
+                color:Color.black,
+                // fontWeight:'bold',
+                fontSize: moderateScale(30, 0.6),
+                width: windowWidth,
+                paddingHorizontal: moderateScale(16, 0.6),
+                textAlign: item.key=='3'? 'right': 'left',
+                // paddingVertical: moderateScale(5, 0.6),
+              }}
+              // numberOfLines={2}
+              isBold>
+              {item?.title}
+            </CustomText>
+                </LinearGradient>
+                <View
             style={[{
               
-              width: windowWidth * 0.9,
-              height: item.key== '2'? windowHeight * 0.4: windowHeight * 0.8,
+              width: windowWidth * 0.95,
+              // lineHeight:20,
+              height: item.key== '2'? windowHeight * 0.24: windowHeight * 0.73,
+              
               borderRadius: moderateScale(20, 0.6),
               // paddingVertical: moderateScale(26, 0.6),
               // backgroundColor: Color.themeColor2,
               alignItems: 'center',
               position: 'absolute',
               bottom: 0,
+              // backgroundColor:'green'
+            }, item.key== '3' ? {height: windowHeight * 0.24} :null]}>
+              <CustomText
+              style={{
+                color: Color.white,
+                fontSize: moderateScale(11, 0.6),
+                width: windowWidth * 0.9,
+                lineHeight: moderateScale(19, .3),
+                textAlign: item.key=='3'? 'right': 'left',
+                paddingVertical: moderateScale(5, 0.6),
+              }}
+              numberOfLines={15}>
+              {item?.text}
+            </CustomText>
+              </View>
+             
+                  {/* <View
+            style={[{
+              
+              width: windowWidth * 0.9,
+              height: item.key== '2'? windowHeight * 0.4: windowHeight * 0.8,
+              borderRadius: moderateScale(20, 0.6),
+              // paddingVertical: moderateScale(26, 0.6),
+              backgroundColor: Color.themeColor2,
+              alignItems: 'center',
+              position: 'absolute',
+              bottom: 0,
             }, item.key== '3' ? {height: windowHeight * 0.35} :null]}>
               <LinearGradient
-              style={{marginTop: item.key === '2'? moderateScale(15,0.3) : 0,}}
+              style={{marginTop: item.key === '2'? moderateScale(15,0.3) : windowHeight*0.1}}
               colors={[ "#FFFFFF00" ,Color.white,]}
                 start={ item.key!== '3'?{x: 1.5, y: 1}:{x: 0, y:0.9}} end={item.key!== '3'?{x:0.15, y:1.5} :{x: 1, y: 0.4}}
               >
@@ -101,9 +171,9 @@ const WalkThroughScreen = props => {
                 width: windowWidth,
                 paddingHorizontal: moderateScale(25, 0.6),
                 textAlign: item.key=='3'? 'right': 'left',
-                paddingVertical: moderateScale(5, 0.6),
+                // paddingVertical: moderateScale(5, 0.6),
               }}
-              numberOfLines={2}
+              // numberOfLines={2}
               isBold>
               {item?.title}
             </CustomText>
@@ -121,7 +191,7 @@ const WalkThroughScreen = props => {
               {item?.text}
             </CustomText>
             
-          </View>
+          </View> */}
         </ImageBackground>
       </SafeAreaView>
     );
@@ -152,64 +222,60 @@ const WalkThroughScreen = props => {
       <TouchableOpacity 
       onPress={()=>{
         dispatch(setWalkThrough(true));
-      }} style={[styles.doneBtn, styles.btnRight,{
+      }} style={[styles.generalBtn, styles.btnRight
     // top: moderateScale(-610, 0.6),
 
-      }]}>
-
-      <CustomText
-        onPress={() => {
-          dispatch(setWalkThrough(true));
-        }}
-        isBold
-        style={{color:Color.white,overflow:'hidden' , 
-        position :'absolute',
-        fontSize:moderateScale(12, 0.9)}}
-        >
-        Done
-      </CustomText>
-        </TouchableOpacity>
-    );
-  };
-  const RenderSkipBtn = () => {
-    return (
-      <TouchableOpacity 
-      onPress={()=>{
-        dispatch(setWalkThrough(true));
-      }}
-      style={[styles.doneBtn, styles.skip]}>
-
-      <CustomText
-        onPress={() => {
-          dispatch(setWalkThrough(true));
-        }}
-        isBold
-        style={{color:Color.white,overflow:'hidden' ,fontSize:moderateScale(12, 0.9)}}
-        >
-        Skip
-      </CustomText>
-
-          </TouchableOpacity>
-    );
-  };
-const RenderBackBtn = () => {
-    return (
-      <View style={[styles.generalBtn, styles.btnLeft]}>
-      {/* <RadialGradient
-      
-      colors={[Color.lightBlue, Color.darkBlue]}
-      > */}
-
-      <Icon
-      name='arrowleft'
+      ]}>
+<Icon
+      name='arrowright'
       size={moderateScale(24, 0.6)}
       color={Color.white}
       as={AntDesign}
       
       />
-      {/* </RadialGradient> */}
-      </View>    );
+     
+        </TouchableOpacity>
+    );
   };
+  // const RenderSkipBtn = () => {
+  //   return (
+  //     <TouchableOpacity 
+  //     onPress={()=>{
+  //       dispatch(setWalkThrough(true));
+  //     }}
+  //     style={[styles.doneBtn, styles.skip]}>
+
+  //     <CustomText
+  //       onPress={() => {
+  //         dispatch(setWalkThrough(true));
+  //       }}
+  //       isBold
+  //       style={{color:Color.white,overflow:'hidden' ,fontSize:moderateScale(12, 0.9)}}
+  //       >
+  //       Skip
+  //     </CustomText>
+
+  //         </TouchableOpacity>
+  //   );
+  // };
+// const RenderBackBtn = () => {
+//     return (
+//       <View style={[styles.generalBtn, styles.btnLeft]}>
+//       {/* <RadialGradient
+      
+//       colors={[Color.lightBlue, Color.darkBlue]}
+//       > */}
+
+//       <Icon
+//       name='arrowleft'
+//       size={moderateScale(24, 0.6)}
+//       color={Color.white}
+//       as={AntDesign}
+      
+//       />
+//       {/* </RadialGradient> */}
+//       </View>    );
+//   };
   return (
     <ScreenBoiler
       showHeader={false}
@@ -220,16 +286,16 @@ const RenderBackBtn = () => {
         <AppIntroSlider
           renderItem={RenderSlider}
           data={slides}
-          showSkipButton={true}
-          showPrevButton={true}
+          // showSkipButton={true}
+          // showPrevButton={true}
           showDoneButton={true}
          
           dotStyle={{display:'none'}}
           activeDotStyle={{display:'none' }}
           renderNextButton={RenderNextBtn}
-          renderPrevButton={RenderBackBtn}
+          // renderPrevButton={RenderBackBtn}
           renderDoneButton={RenderDoneBtn}
-          renderSkipButton={RenderSkipBtn}
+          // renderSkipButton={RenderSkipBtn}
         />
       {/* </View> */}
     </ScreenBoiler>
@@ -275,68 +341,78 @@ const styles = StyleSheet.create({
     marginTop: moderateScale(10, 0.3),
   },
   generalBtn: {
-    backgroundColor: "#001D56",
+    // backgroundColor: "#001D56",
     borderColor: Color.white,
     // opacity:0.34,
     width: windowWidth * 0.14,
     height:windowWidth * 0.14,
-    borderWidth: moderateScale(1.5,0.7),
+    borderWidth: moderateScale(1,0.6),
     alignItems:'center',
     justifyContent:'center',
     borderRadius: moderateScale(100, 0.9),
     // paddingVertical: moderateScale(15, 0.5),
     textAlign: 'center',
     fontWeight: '400',
+    position:'absolute',
+    top:moderateScale(-600,0.6),
+    zIndex:1
+    // top:moderateScale(50,0.6)
     // fontSize: moderateScale(15, 0.3),
   },
-  doneBtn:{
-    width:windowWidth * 0.14,
-    height: windowHeight * 0.07,
-    alignItems:'center',
-    overflow:"hidden",
-    justifyContent:'center',
-    // marginTop: moderateScale(18, 0.3),
-    borderRadius: moderateScale(100, 0.6),
-    borderColor:Color.white,
-    backgroundColor: "#001D56",
-    // opacity: 0.5,
-    borderWidth: 1,
+  // doneBtn:{
+  //   width:windowWidth * 0.14,
+  //   height: windowHeight * 0.07,
+  //   alignItems:'center',
+  //   overflow:"hidden",
+  //   justifyContent:'center',
+  //   // marginTop: moderateScale(18, 0.3),
+  //   borderRadius: moderateScale(100, 0.6),
+  //   borderColor:Color.white,
+  //   backgroundColor: "#001D56",
+  //   // opacity: 0.5,
+  //   borderWidth: 1,
     
    
-  },
-  btnLeft: {
-    backgroundColor: "#001D56",
-    position:'absolute',
-    paddingHorizontal: moderateScale(7, 0.2),
-    paddingVertical: moderateScale(7, 0.2),
-    // top: moderateScale(20, 0.7),
-    // right: moderateScale(20,0.1),
-    zIndex:1,
-  },
-  skip: {
+  // },
+  // btnLeft: {
+  //   backgroundColor: "#001D56",
+  //   position:'absolute',
+  //   paddingHorizontal: moderateScale(7, 0.2),
+  //   paddingVertical: moderateScale(7, 0.2),
+  //   // top: moderateScale(20, 0.7),
+  //   // right: moderateScale(20,0.1),
+  //   zIndex:1,
+  // },
+  // skip: {
  
-    // top: moderateScale(20, 0.7),
-    // width:windowWidth * 0.18,
-    // height: windowHeight * 0.09,
-    alignItems:'center',
-    justifyContent:'center',
-    borderRadius: moderateScale(100, 0.9),
-    // borderColor:Color.white,
-    backgroundColor: "#001D56",
-    // opacity: 0.5,
-    // borderWidth:  moderateScale(3,0.1),
-    zIndex:1
-  },
+  //   // top: moderateScale(20, 0.7),
+  //   // width:windowWidth * 0.18,
+  //   // height: windowHeight * 0.09,
+  //   alignItems:'center',
+  //   justifyContent:'center',
+  //   borderRadius: moderateScale(100, 0.9),
+  //   // borderColor:Color.white,
+  //   backgroundColor: "#001D56",
+  //   // opacity: 0.5,
+  //   // borderWidth:  moderateScale(3,0.1),
+  //   zIndex:1
+  // },
   btnRight: {
-    backgroundColor: "#001D56",
+    backgroundColor: Color.themesplashblack,
     paddingHorizontal: moderateScale(8, 0.4),
     // paddingVertical: moderateScale(8, 0.4),
-    position:'absolute',
+    // position:'absolute',
+    // bottom:'100%',
     // opacity:0.34,
     // top: moderateScale(20, 0.6),
     right: moderateScale(11,0.6),
-    zIndex:1,
+    // zIndex:1,
+    
   },
+  maintextBox:{
+    height:windowHeight *0.1,
+    width:windowWidth
+  }
 });
 
 export default WalkThroughScreen;

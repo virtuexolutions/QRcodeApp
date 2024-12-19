@@ -67,6 +67,7 @@ const AppNavigator = () => {
       <NavigationContainer ref={navigationService.navigationRef}>
         <RootNav.Navigator
           initialRouteName={firstScreen}
+          // initialRouteName={Splashscreen}
           screenOptions={{ headerShown: false }}> 
           <RootNav.Screen name='drawer' component={MyDrawer}/>    
           <RootNav.Screen name="LoginScreen" component={LoginScreen} />

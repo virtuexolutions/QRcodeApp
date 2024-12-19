@@ -26,7 +26,7 @@ import TextInputWithTitle from '../Components/TextInputWithTitle';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import navigationService from '../navigationService';
+// import navigationService from '../navigationService';
 import {useDispatch} from 'react-redux';
 // import CardContainer from '../Components/CardContainer';
 import {SetUserRole, setUserToken} from '../Store/slices/auth';
@@ -34,7 +34,7 @@ import {Post} from '../Axios/AxiosInterceptorFunction';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {setUserData} from '../Store/slices/common';
 import DropDownSingleSelect from '../Components/DropDownSingleSelect';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 import {Icon} from 'native-base';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ImagePickerModal from '../Components/ImagePickerModal';
@@ -46,7 +46,7 @@ const LoginScreen = props => {
   const [password, setPassword] = useState('');
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
@@ -83,15 +83,15 @@ const LoginScreen = props => {
   };
 
   return (
-    <ScreenBoiler
-      statusBarBackgroundColor={'white'}
-      statusBarContentStyle={'dark-content'}>
+    // <ScreenBoiler
+    //   statusBarBackgroundColor={'white'}
+    //   statusBarContentStyle={'dark-content'}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ImageBackground
-          style={styles.imageView}
-          source={require('../Assets/Images/signup_bg.png')}>
+        <View style={styles.mainContainer}>
+          
+          {/* source={require('../Assets/Images/signup_bg.png')}> */}
               <View style={{width: windowWidth * 0.35, height: windowHeight * 0.2,
-              overflow:"hidden"
+              overflow:"hidden",
               }}>
   
               <CustomImage
@@ -165,6 +165,7 @@ const LoginScreen = props => {
               marginTop={moderateScale(10, 0.3)}
               color={Color.white}
               placeholderColor={Color.white}
+              
               // elevation
             />
           
@@ -192,6 +193,7 @@ const LoginScreen = props => {
                 gap: 12,
                 justifyContent: 'space-around',
                 paddingHorizontal: moderateScale(15, 0.3),
+                
               }}></View>
             <CustomButton
               onPress={
@@ -234,30 +236,35 @@ const LoginScreen = props => {
               Sign up
             </CustomText>
           </View>
+          <View style={{
+            position:'absolute',bottom:moderateScale(35,0.6),
+            // backgroundColor:'red',
+            width:windowWidth*0.75
+          }}>
           <CustomText
             // isBold
             style={{
               fontSize: moderateScale(11, 0.6),
               color: Color.white,
-              width: windowWidth * 0.6,
-              marginTop : moderateScale(40,0.3),
+              // width: windowWidth * 0.6,
+              
               // backgroundColor:'red',
               // position: 'absolute',
               // bottom: moderateScale(50,0.6),
               textAlign: 'center',
               // paddingVertical: moderateScale(10, 0.4),
             }}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras suscipit gravida tellus, eu ullamcorper.
           </CustomText>
-        </ImageBackground>
+          </View>
+        </View>
         <ImagePickerModal
           show={imagePicker}
           setShow={setImagePicker}
           setFileObject={setImage}
         />
       </ScrollView>
-    </ScreenBoiler>
+    // </ScreenBoiler>
   );
 };
 
@@ -306,6 +313,13 @@ const styles = StyleSheet.create({
     paddingBottom: moderateScale(40, 0.6),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  mainContainer:{
+    width:windowWidth,
+    height:windowHeight,
+    backgroundColor:Color.themesplashblack,
+    alignItems:'center',
+    justifyContent:'center'
   }
 });
 
