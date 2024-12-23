@@ -15,16 +15,11 @@ const CardComponent = ({item}) => {
     <TouchableOpacity 
     onPress={item?.onPress}
     activeOpacity={0.6}
-    style={styles.container}>
-      <View>
-        <CustomText isBold style={styles.title}>
-          {item?.title}
-        </CustomText>
-        <CustomText
-          style={styles.desc}>
-          {item?.description}
-        </CustomText>
-      </View>
+    
+    >
+      <LinearGradient style={styles.container} 
+      colors={[ "#594524" ,"#3A3C31",]} 
+      start={{x:3 ,y:2 }} end={{x:1,y:0}} >
       <View
         style={styles.imagecontainner}>
         <CustomImage
@@ -37,7 +32,16 @@ const CardComponent = ({item}) => {
           source={item?.image}
         />
       </View>
-    </TouchableOpacity>
+      
+      <View>
+        <CustomText style={styles.title}>
+          {item?.title}
+        </CustomText>
+        
+      </View>
+      
+      </LinearGradient>
+  </TouchableOpacity>
   );
 };
 
@@ -47,42 +51,38 @@ const styles = StyleSheet.create({
   container: {
     // overflow:'hidden',
     backgroundColor: Color.white,
-    flexDirection: 'row',
+    // flexDirection: 'row',
     borderRadius: moderateScale(20, 0.6),
-    height: windowHeight * 0.13,
+    height: windowHeight * 0.2,
     marginBottom: moderateScale(10, 0.6),
-    width: windowWidth * 0.9,
+    width: windowWidth * 0.35,
     alignItems: 'center',
-    elevation: 6,
-    borderColor: "#001D55",
-    borderWidth:0.3,
-    paddingHorizontal: moderateScale(15, 0.6),
+    justifyContent:'center',
+    // elevation: 6,
+    borderColor: Color.white,
+    borderWidth:0.99,
+    // paddingHorizontal: moderateScale(15, 0.6),
     // backgroundColor :'red',
   },
-  imagecontainer:{
-    overflow: 'hidden',
-      flexDirection: 'row',
-      justifyContent:"flex-end",
-  width:windowWidth * 1.2,
-  marginright:100,
-   paddingHorizontal:  moderateScale(15, 0.6),
+  // imagecontainer:{
+  //   overflow: 'hidden',
+  //     flexDirection: 'row',
+  //     justifyContent:"flex-end",
+  // width:windowWidth * 1.2,
+  // // marginright:100,
+  //  paddingHorizontal:  moderateScale(15, 0.6),
  
-  },
+  // },
   title: {
-    fontSize: moderateScale(18, 0.6),
-    color: '#1F1D2B',
-    width: windowWidth * 0.6,
+    fontSize: moderateScale(17, 0.6),
+    color: Color.white,
+    // width: windowWidth * 0.25,
     textTransform : 'uppercase',
     // backgroundColor : 'red'
   },
-  desc:{
-    // backgroundColor :'green',
-    color: Color.black,
-    width: windowWidth * 0.6,
-    fontSize: moderateScale(10, 0.6),
-  },
+
   imagecontainner:{
-    height: windowHeight * 0.11,
+    height: windowHeight * 0.1,
     width: windowWidth * 0.2,
     // backgroundColor:'red',
     padding: moderateScale(10, 0.6),

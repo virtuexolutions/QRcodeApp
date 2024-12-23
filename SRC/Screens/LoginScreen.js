@@ -68,7 +68,6 @@ const LoginScreen = props => {
         : alert('password is required');
     }
 
-
     const url = 'login';
     const body = {email: email.trim(), password: password};
     setIsLoading(true);
@@ -76,195 +75,155 @@ const LoginScreen = props => {
     setIsLoading(false);
 
     if (response?.data?.success) {
-       console.log("🚀 ~ LoginUser ~ response:", response?.data?.user_info)
+      console.log('🚀 ~ LoginUser ~ response:', response?.data?.user_info);
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({token: response?.data?.token}));
     }
   };
 
   return (
-    // <ScreenBoiler
-    //   statusBarBackgroundColor={'white'}
-    //   statusBarContentStyle={'dark-content'}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.mainContainer}>
-          
-          {/* source={require('../Assets/Images/signup_bg.png')}> */}
-              <View style={{width: windowWidth * 0.35, height: windowHeight * 0.2,
-              overflow:"hidden",
-              }}>
-  
-              <CustomImage
-              source={require('../Assets/Images/logo.png')}
-              style={{width: "100%", height: "100%"}}
-              resizeMode={"contain"}
-              />
-              </View>
-            {/* <CustomText
-              numberOfLine={3}
-              isBold
-              style={{
-                fontSize: moderateScale(20, 0.6),
-                color: Color.white,
-                textAlign: 'center',
-              }}>
-              logo here
-            </CustomText> */}
-            {/* <View
-              style={styles.container}>
-            <CustomText
-              style={{
-                fontSize: moderateScale(11, 0.6),
-                color: Color.white,
-                width: windowWidth * 0.6,
-                textAlign: 'center',
-                paddingVertical: moderateScale(10, 0.4),
-              }}>
-              Unlocking Convenience, Simplifying Access.
-            </CustomText>
-          </View> */}
-          <View
-            style={{
-              alignItems: 'center',
-            }}>
-            <TextInputWithTitle
-              iconName={'user'}
-              iconType={FontAwesome}
-              LeftIcon={true}
-              titleText={'User name'}
-              placeholder={'User email'}
-              setText={setEmail}
-              value={email}
-              viewHeight={0.06}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              borderBottomWidth={1}
-              borderColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              marginBottom={moderateScale(10, 0.3)}
-              inputColor={Color.white}
-              placeholderColor={Color.white}
-              // elevation
-            />
-
-            <TextInputWithTitle
-              iconName={'key'}
-              iconType={Entypo}
-              LeftIcon={true}
-              titleText={'Password'}
-              placeholder={'Password'}
-              setText={setPassword}
-              value={password}
-              secureText={true}
-              viewHeight={0.06}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              borderBottomWidth={1}
-              marginBottom={moderateScale(10, 0.3)}
-              borderColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.white}
-              placeholderColor={Color.white}
-              
-              // elevation
-            />
-          
-            <CustomText
-              onPress={() => {
-                console.log('====================> verify number screen');
-                navigation.navigate('EnterPhone' ,{fromforgotpassword :true});
-              }}
-              style={{
-                color: Color.white,
-                position: 'absolute',
-                right: 0,
-                bottom: 145,
-                paddingLeft: moderateScale(20, 0.6),
-                fontSize: moderateScale(11, 0.6),
-              }}>
-              Forgot password?
-            </CustomText>
-
-            <View
-              style={{
-                // marginTop:moderateScale(10,.3),
-                width: windowWidth * 0.75,
-                flexDirection: 'row',
-                gap: 12,
-                justifyContent: 'space-around',
-                paddingHorizontal: moderateScale(15, 0.3),
-                
-              }}></View>
-            <CustomButton
-              onPress={
-                () => LoginUser()
-                // dispatch(setUserToken({token: 'meerab'}))
-              }
-              text={
-                isLoading ? (
-                  <ActivityIndicator color={Color.white} size={'small'} />
-                ) : (
-                  'log in'
-                )
-              }
-              fontSize={moderateScale(12, 0.3)}
-              textColor={Color.white}
-              borderRadius={moderateScale(30, 0.3)}
-              width={windowWidth * 0.3}
-              height={windowHeight * 0.06}
-              marginTop={moderateScale(40, 0.3)}
-              // bgColor={Color.themeColor2}
-              borderWidth={1}
-              borderColor={Color.white}
-              isBold
-              // isGradient
-            />
-
-            <CustomText style={styles.txt5}>
-              do you have an account ?{' '}
-            </CustomText>
-            <CustomText
-              onPress={() => {
-                navigationService.navigate('Signup');
-              }}
-              isBold
-              style={{
-                fontSize: moderateScale(15, 0.6),
-                color: Color.white,
-                // paddingVertical: moderateScale(0, 0.6 ),
-              }}>
-              Sign up
-            </CustomText>
-          </View>
-          <View style={{
-            position:'absolute',bottom:moderateScale(35,0.6),
-            // backgroundColor:'red',
-            width:windowWidth*0.75
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={styles.mainContainer}>
+        <View
+          style={{
+            width: windowWidth * 0.35,
+            height: windowHeight * 0.2,
+            overflow: 'hidden',
+          }}>
+          <CustomImage
+            source={require('../Assets/Images/logo.png')}
+            style={{width: '100%', height: '100%'}}
+            resizeMode={'contain'}
+          />
+        </View>
+        <View
+          style={{
+            width: windowWidth * 0.78,
           }}>
           <CustomText
-            // isBold
             style={{
               fontSize: moderateScale(11, 0.6),
               color: Color.white,
-              // width: windowWidth * 0.6,
-              
-              // backgroundColor:'red',
-              // position: 'absolute',
-              // bottom: moderateScale(50,0.6),
               textAlign: 'center',
-              // paddingVertical: moderateScale(10, 0.4),
             }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras suscipit gravida tellus, eu ullamcorper.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+            suscipit gravida tellus, eu ullamcorper.
           </CustomText>
-          </View>
         </View>
-        <ImagePickerModal
-          show={imagePicker}
-          setShow={setImagePicker}
-          setFileObject={setImage}
-        />
-      </ScrollView>
-    // </ScreenBoiler>
+        <View
+          style={{
+            alignItems: 'center',
+            marginTop: moderateScale(18, 0.6),
+          }}>
+          <TextInputWithTitle
+            iconName={'user'}
+            iconType={FontAwesome}
+            LeftIcon={true}
+            titleText={'User name'}
+            placeholder={'User email'}
+            setText={setEmail}
+            value={email}
+            viewHeight={0.06}
+            viewWidth={0.75}
+            inputWidth={0.55}
+            borderBottomWidth={1}
+            borderColor={Color.white}
+            marginTop={moderateScale(10, 0.3)}
+            marginBottom={moderateScale(10, 0.3)}
+            inputColor={Color.white}
+            placeholderColor={Color.white}
+          />
+
+          <TextInputWithTitle
+            iconName={'key'}
+            iconType={Entypo}
+            LeftIcon={true}
+            titleText={'Password'}
+            placeholder={'Password'}
+            setText={setPassword}
+            value={password}
+            secureText={true}
+            viewHeight={0.06}
+            viewWidth={0.75}
+            inputWidth={0.55}
+            borderBottomWidth={1}
+            marginBottom={moderateScale(10, 0.3)}
+            borderColor={Color.white}
+            marginTop={moderateScale(10, 0.3)}
+            color={Color.white}
+            placeholderColor={Color.white}
+          />
+
+          <CustomText
+            onPress={() => {
+              console.log('====================> verify number screen');
+              navigation.navigate('EnterPhone', {fromforgotpassword: true});
+            }}
+            style={{
+              color: Color.white,
+              position: 'absolute',
+              right: 0,
+              bottom: 145,
+              paddingLeft: moderateScale(20, 0.6),
+              fontSize: moderateScale(11, 0.6),
+            }}>
+            Forgot password?
+          </CustomText>
+          <CustomButton
+            onPress={
+              () => LoginUser()
+            }
+            text={
+              isLoading ? (
+                <ActivityIndicator color={Color.white} size={'small'} />
+              ) : (
+                'log in'
+              )
+            }
+            fontSize={moderateScale(12, 0.3)}
+            textColor={Color.white}
+            borderRadius={moderateScale(30, 0.3)}
+            width={windowWidth * 0.3}
+            height={windowHeight * 0.06}
+            marginTop={moderateScale(40, 0.3)}
+            borderWidth={1}
+            borderColor={Color.white}
+            isBold
+          />
+
+          <CustomText style={styles.txt5}>do you have an account ? </CustomText>
+          <CustomText
+            onPress={() => {
+              navigationService.navigate('Signup');
+            }}
+            isBold
+            style={{
+              fontSize: moderateScale(15, 0.6),
+              color: Color.white,
+              bottom:moderateScale(10,0.6)
+            }}>
+            Sign up
+          </CustomText>
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: moderateScale(35, 0.6),
+            width: windowWidth * 0.75,
+          }}>
+          <CustomText
+     
+            style={{
+              fontSize: moderateScale(11, 0.6),
+              color: Color.white,
+              textAlign: 'center',
+            }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+            suscipit gravida tellus, eu ullamcorper.
+          </CustomText>
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -301,26 +260,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  container:{
+  container: {
     alignItems: 'center',
     height: windowHeight * 0.15,
     width: windowWidth * 0.4,
     // borderRadius: moderateScale((windowHeight * 0.13) / 2),
   },
-  imageView:{
+  imageView: {
     width: windowWidth,
     minHeight: windowHeight,
     paddingBottom: moderateScale(40, 0.6),
     justifyContent: 'center',
     alignItems: 'center',
   },
-  mainContainer:{
-    width:windowWidth,
-    height:windowHeight,
-    backgroundColor:Color.themesplashblack,
-    alignItems:'center',
-    justifyContent:'center'
-  }
+  mainContainer: {
+    width: windowWidth,
+    height: windowHeight,
+    backgroundColor: Color.themesplashblack,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default LoginScreen;

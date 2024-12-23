@@ -31,6 +31,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDrawerStatus} from '@react-navigation/drawer';
 import {useSelector} from 'react-redux';
 import {useEffect} from 'react';
+import { height, resizeMode, width } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -42,24 +43,24 @@ const HomeScreen = () => {
   const dataArray = [
     {
       id: 1,
-      image: require('../Assets/Images/cardimage1.png'),
-      title: 'QR SCAN',
+      image: require('../Assets/Images/Qrscan1.png'),
+      title: 'QRCODE SCANNER',
       onPress: () => navigation.navigate('ScanScreen'),
-      description: 'Decode QR codes instantly with a single tap. Scan and explore the digital world effortlessly.',
+      // description: 'Decode QR codes instantly with a single tap. Scan and explore the digital world effortlessly.',
     },
     {
       id: 2,
-      image: require('../Assets/Images/cardimage2.png'),
-      title: 'Create a QR',
-      onPress: () => navigation.navigate('SelectCategory'),
-      description: 'Create bespoke QR codes that are suited to your specific needs. Custom QR codes can help to empower your messaging.',
+      image: require('../Assets/Images/Qrscan2.png'),
+      title: 'GENERATE QRCODE',
+      // onPress: () => navigation.navigate('SelectCategory'),
+      // description: 'Create bespoke QR codes that are suited to your specific needs. Custom QR codes can help to empower your messaging.',
     },
     {
       id: 3,
-      image: require('../Assets/Images/cardimage3.png'),
-      title: 'my gallery',
-      onPress: () => navigation.navigate('GalleryView'),
-      description: 'View and explore your generated QR codes, seamlessly blending creativity with functionality',
+      image: require('../Assets/Images/Qrscan3.png'),
+      title: 'BARCODE SCANNER',
+      // onPress: () => navigation.navigate('GalleryView'),
+      // description: 'View and explore your generated QR codes, seamlessly blending creativity with functionality',
     },
     // {
     //   id: 4,
@@ -94,13 +95,13 @@ const HomeScreen = () => {
     //   style={styles.mainContainer}>
     <SafeAreaView style={styles.mainContainer}>
 
-      <ScrollView
+      {/* <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingBottom: moderateScale(20, 0.6),
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
+          // paddingBottom: moderateScale(20, 0.6),
+          // justifyContent: 'center',
+          // alignItems: 'center',
+        }}> */}
         <View style={styles.container}>
           <View style={styles.mainView}>
             <TouchableOpacity
@@ -109,9 +110,9 @@ const HomeScreen = () => {
               }}
               style={styles.imagecontainer}>
               <CustomImage
-                onPress={() => {
-                  navigation.navigate('Profile');
-                }}
+                // onPress={() => {
+                //   navigation.navigate('Profile');
+                // }}
                 style={{
                   height: '100%',
                   width: '100%',
@@ -126,14 +127,14 @@ const HomeScreen = () => {
 
             <View
               style={{
-                paddingHorizontal: moderateScale(10, 0.6),
+                paddingHorizontal: moderateScale(15, 0.6),
               }}>
               <CustomText
                 style={[
                   styles.text1,
                   {
                     fontSize: moderateScale(18, 0.6),
-                    color: Color.black,
+                    color: Color.white,
                     fontWeight: 'bold',
                     // backgroundColor:'red',
                     width: windowWidth * 0.35,
@@ -145,21 +146,19 @@ const HomeScreen = () => {
           </View>
 
           <TouchableOpacity
-            onPress={() => {
-              navigation.toggleDrawer();
-            }}>
-            <LinearGradient
-              style={styles.icon}
-              colors={['#001D56', '#012496']}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 1}}>
+            // onPress={() => {
+            //   navigation.toggleDrawer();}}
+            >
+            <View
+              style={styles.generalBtn}
+              >
               <Icon
                 name="menu"
                 as={Entypo}
                 size={moderateScale(20, 0.6)}
                 color={Color.white}
               />
-            </LinearGradient>
+            </View>
           </TouchableOpacity>
         </View>
         {/* <View
@@ -178,7 +177,7 @@ const HomeScreen = () => {
             }}
           />
         </View> */}
-        <View
+        {/* <View
           style={{
             paddingVertical: moderateScale(20, 0.6),
           }}
@@ -220,8 +219,20 @@ const HomeScreen = () => {
               />
             </View>
           </LinearGradient>
-        </View>
-        <FlatList
+        </View> */}
+        <View style={{flexDirection:'row',
+        alignItems:'center',marginTop:moderateScale(20,0.6)
+
+
+        }}>
+        {/* <View> */}
+        <View style={{alignSelf:'flex-start',
+          // marginTop:moderateScale(25,0.6),
+          // backgroundColor:'red'
+          // paddingVertical:moderateScale(40,0.6)
+          // justifyContent:'center'
+        }}>
+        <FlatList 
           showsVerticalScrollIndicator={true}
           nestedScrollEnabled={true}
           scrollEnabled={true}
@@ -229,16 +240,46 @@ const HomeScreen = () => {
           keyExtractor={item => item.id}
           numColumns={1}
           contentContainerStyle={{
-            marginHorizontal: moderateScale(10, 0.3),
-            marginVertical: moderateScale(10, 0.3),
-            padding: moderateScale(10, 0.6),
-            paddingBottom: moderateScale(50, 0.6),
+            gap:moderateScale(15,0.6),
+            // marginHorizontal: moderateScale(10, 0.3),
+            // marginVertical: moderateScale(10, 0.3),
+            padding: moderateScale(20, 0.6),
+            // paddingHorizontal:moderateScale(10,0.6),
+            // marginLeft:moderateScale(15,0.6),
+            // paddingBottom: moderateScale(50, 0.6),
+            // backgroundColor:'green'
           }}
           renderItem={({item, index}) => {
             return <CardComponent item={item} />;
           }}
         />
-      </ScrollView>
+        </View>
+       
+        <View style={styles.scanImageStyle}>
+          <CustomImage style={{
+            height:'100%' , width: '100%',
+          }} resizeMode={'contain'} source={require('../Assets/Images/Qrscan.png')}/>
+        </View>
+        {/* </View> */}
+        </View>
+        <View
+          style={{
+            width: windowWidth * 0.78,
+            position: 'absolute',
+            bottom: moderateScale(35, 0.6),
+            alignSelf:'center'
+          }}>
+          <CustomText
+            style={{
+              fontSize: moderateScale(11, 0.6),
+              color: Color.white,
+              textAlign: 'center',
+            }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+            suscipit gravida tellus, eu ullamcorper.
+          </CustomText>
+        </View>
+      {/* </ScrollView> */}
       </SafeAreaView>
    //</LinearGradient>
     // </ImageBackground>
@@ -249,14 +290,14 @@ export default HomeScreen;
 const styles = ScaledSheet.create({
   text1: {
     fontSize: moderateScale(10, 0.6),
-    color: Color.white,
+    // color: Color.white,
   },
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // backgroundColor:'red',s
+    // backgroundColor:'green',
     width: windowWidth,
-    paddingHorizontal: moderateScale(10, 0.6),
+    paddingHorizontal: moderateScale(14, 0.6),
     // marginHorizontal: moderateScale(15, 0.3),
     paddingVertical: moderateScale(5, 0.6),
     alignItems: 'center',
@@ -266,6 +307,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    // backgroundColor: 'red'
   },
   imagecontainer: {
     width: windowHeight * 0.065,
@@ -276,16 +318,17 @@ const styles = ScaledSheet.create({
   mainContainer: {
     height: windowHeight,
     width: windowWidth,
-    backgroundColor: Color.white,
+    // alignItems:'center',
+    backgroundColor: Color.themesplashblack,
   },
-  icon: {
-    height: windowHeight * 0.042,
-    width: windowHeight * 0.06,
-    borderRadius: moderateScale(25.05),
-    // backgroundColor: Color.white,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  // icon: {
+  //   height: windowHeight * 0.042,
+  //   width: windowHeight * 0.06,
+  //   // borderRadius: moderateScale(25.05),
+  //   // backgroundColor: Color.white,
+  //   alignItems: 'center',
+  //   // justifyContent: 'center',
+  // },
   cardtitle: {
     fontSize: moderateScale(22, 0.6),
     // color: '#1F1D2B',
@@ -314,4 +357,22 @@ const styles = ScaledSheet.create({
     paddingVertical: moderateScale(20, 0.6),
     paddingHorizontal: moderateScale(10, 0.6),
   },
+  generalBtn: {
+      borderColor: Color.white,
+      width: windowWidth * 0.09,
+      height:windowWidth * 0.09,
+      borderWidth: moderateScale(1,0.6),
+      alignItems:'center',
+      justifyContent:'center',
+      borderRadius: moderateScale(100, 0.9),
+    },
+    scanImageStyle:{
+      width:windowWidth*0.93,
+      height:windowHeight *0.45,
+      // overflow:'hidden'
+      // top:moderateScale(15,0.6),
+      // borderRadius:moderateScale(30,0.6),
+      // backgroundColor:'green',
+      // left:moderateScale(20,0.6)
+    }
 });

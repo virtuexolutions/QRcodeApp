@@ -1,5 +1,6 @@
 import {
   Alert,
+  ImageBackground,
   Linking,
   SafeAreaView,
   StyleSheet,
@@ -23,6 +24,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
 import VerificationModal from '../Components/VerificationModal';
 import LinearGradient from 'react-native-linear-gradient';
+import { height, width } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 const ScanScreen = () => {
   const navigation = useNavigation();
   const [modalIsVisible, setModalIsVisble] = useState(false);
@@ -72,43 +74,45 @@ const ScanScreen = () => {
         height: windowHeight,
         width: windowWidth,
       }}>
+        <ImageBackground imageStyle={{
+          width:windowWidth,height:windowHeight 
+        }} resizeMode='cover' style={{height:'100%',width:'100%'}}
+         source={require('../Assets/Images/Qrfullimage.png')}>
       <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          // backgroundColor:Color.red,
-          paddingVertical: moderateScale(15, 0.3),
-          paddingHorizontal: moderateScale(10, 0.3),
-        }}>
-          <TouchableOpacity
+        style={{flexDirection:'row',alignItems:'center',
+          paddingHorizontal:moderateScale(15,0.6),
+          paddingVertical:moderateScale(10,0.6)
+        }} >
+          <TouchableOpacity style={styles.generalBtn}
            onPress={() => {
             navigation.goBack();
           }}
           >
-        <LinearGradient 
+        {/* <LinearGradient 
         
         colors={Color.themeBgColor}
-        style={styles.customBtn}>
+        style={styles.customBtn}> */}
           <Icon 
            name='left'
            as={AntDesign}
            size={moderateScale(20,0.6)}
-           color={'white'}
+           color={Color.white}
           />
-        </LinearGradient>
+        {/* </LinearGradient> */}
         </TouchableOpacity>
         
-        <CustomText isBold style={styles.text1}>
+        <CustomText  style={styles.text1}>
           Qr Scan
         </CustomText>
       </View>
       {(!path || path == '') && (
         <QRCodeScanner
+        
           onRead={
             ({data}) =>
               checkIfImageExists(data).then(result => {
                 if (result) {
-                  console.log('here with iamge', result);
+                  console.log('here with image', result);
                   setQrData(data);
                   setModalIsVisble(true);
                 } else {
@@ -125,7 +129,9 @@ const ScanScreen = () => {
           showMarker={true}
         />
       )}
-      <VerificationModal
+      </ImageBackground>
+      
+      {/* <VerificationModal
         isVisible={modalIsVisible}
         setIsVisible={setModalIsVisble}
         // type={path?.type}
@@ -153,7 +159,7 @@ const ScanScreen = () => {
             height: windowHeight * 0.85,
           }}
         />
-      )}
+      )} */}
     </SafeAreaView>
   );
 };
@@ -163,7 +169,7 @@ export default ScanScreen;
 const styles = ScaledSheet.create({
   text1: {
     fontSize: moderateScale(25, 0.6),
-    color: '#002F58',
+    color: Color.white,
     width: windowWidth * 0.75,
     // backgroundColor:'red',
     textAlign: 'center',
@@ -177,13 +183,37 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  customBtn : { 
-    width : windowWidth * 0.13,
-    height : windowWidth * 0.13,
-    borderRadius : windowWidth * 0.13 /2,
-    justifyContent : 'center',
-    alignItems : 'center'
-    // backgroundColor : Color.themeColor,
+  // customBtn : { 
+  //   width : windowWidth * 0.13,
+  //   height : windowWidth * 0.13,
+  //   borderRadius : windowWidth * 0.13 /2,
+  //   justifyContent : 'center',
+  //   alignItems : 'center'
+  //   // backgroundColor : Color.themeColor,
     
-  },
+  // },
+  generalBtn: {
+      backgroundColor: Color.themesplashblack,
+      // borderColor: Color.themesplashblack,
+      flexDirection:'row',
+      opacity:0.7,
+      width: windowWidth * 0.1,
+      height:windowWidth * 0.1,
+      // borderWidth: moderateScale(1,0.6),
+      alignItems:'center',
+      justifyContent:'center',
+      borderRadius: moderateScale(100, 0.9),
+      // paddingVertical: moderateScale(15, 0.5),
+      // textAlign: 'center',
+      // fontWeight: '400',
+      // position:'absolute',
+      // top:moderateScale(-600,0.6),
+      // zIndex:1
+      // top:moderateScale(50,0.6)
+      // fontSize: moderateScale(15, 0.3),
+    },
+    mainImage:{
+      width:windowWidth,
+      height:windowHeight
+    }
 });

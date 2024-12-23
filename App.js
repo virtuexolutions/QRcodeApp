@@ -31,6 +31,7 @@ import Help from './SRC/Screens/Help';
 import GalleryView from './SRC/Screens/GalleryView';
 import { LogBox } from 'react-native';
 import LoginScreen from './SRC/Screens/LoginScreen';
+import Signup from './SRC/Screens/Signup';
 
 const App = () => {
   const [publishableKey, setPublishableKey] = useState('');
@@ -83,8 +84,8 @@ const MainContainer = () => {
     return <SplashScreen/>;
   }
   return( 
-    // <AppNavigator />
-    <LoginScreen/>
+    <AppNavigator />
+    // <HomeScreen/>
    ) 
  };
 
