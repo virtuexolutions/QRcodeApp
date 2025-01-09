@@ -1,60 +1,46 @@
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-  Touchable,
-  ActivityIndicator,
-  SafeAreaView,
-  Modal,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import ScreenBoiler from '../Components/ScreenBoiler';
-import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
-import {moderateScale} from 'react-native-size-matters';
-import CustomText from '../Components/CustomText';
-import ImageView from 'react-native-image-viewing';
-import CustomButton from '../Components/CustomButton';
-import Color from '../Assets/Utilities/Color';
-import Header from '../Components/Header';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useNavigation} from '@react-navigation/native';
 import {Icon} from 'native-base';
-import Feather from 'react-native-vector-icons/Feather';
-import {Get, Post} from '../Axios/AxiosInterceptorFunction';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import {useFocus} from 'native-base/lib/typescript/components/primitives';
-import CustomImage from '../Components/CustomImage';
-import {baseUrl} from '../Config';
-import QRCode from 'react-native-qrcode-svg';
-import {Button} from 'react-native-share';
-import CustomImageView from '../Components/CustomImageView';
+import React, {useEffect, useState} from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import QRCode from 'react-native-qrcode-svg';
+import {moderateScale} from 'react-native-size-matters';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
+import Color from '../Assets/Utilities/Color';
+import {Get, Post} from '../Axios/AxiosInterceptorFunction';
+import CustomImage from '../Components/CustomImage';
+import CustomImageView from '../Components/CustomImageView';
+import CustomText from '../Components/CustomText';
 import VerificationModal from '../Components/VerificationModal';
-
-
+import {apiHeader, windowHeight, windowWidth} from '../Utillity/utils';
 
 const GalleryView = () => {
   const navigation = useNavigation();
   const token = useSelector(state => state.authReducer.token);
 
   const [selectedItem, setSelectedItem] = useState('image');
-  const [modalVisible ,setModalVisible] =useState(false)
+  const [modalVisible, setModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState([]);
-  console.log('selectedImage' , selectedImage)
+  console.log('selectedImage', selectedImage);
   const [visible, setIsVisible] = useState(false);
   const [yestImageIsVisible, setYestImageVisible] = useState(false);
   const [galleryImages, setGalleryImages] = useState([]);
-  console.log('========= >>>>>>>>' ,galleryImages)
+  console.log('========= >>>>>>>>', galleryImages);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [imageUrls, setImageUrls] = useState([]);
+
   function showModalAndSetIndex(index) {
     setIsVisible(true);
     setSelectedImageIndex(index);
@@ -63,8 +49,8 @@ const GalleryView = () => {
     const url = 'auth/document-delete';
     const body = {
       type: selectedItem,
-      id: selectedImage?.map(item=>{
-        return item?.id
+      id: selectedImage?.map(item => {
+        return item?.id;
       }),
     };
     console.log('🚀 ~ DeleteImages ~ body:', body);
@@ -78,8 +64,8 @@ const GalleryView = () => {
       setGalleryImages(prevImages => {
         return {
           ...prevImages,
-          [selectedItem]: prevImages[selectedItem].filter(
-            item => selectedImage.map(item2=>item2?.id !=item?.id),
+          [selectedItem]: prevImages[selectedItem].filter(item =>
+            selectedImage.map(item2 => item2?.id != item?.id),
           ),
         };
       });
@@ -171,24 +157,22 @@ const GalleryView = () => {
                 }}>
                 {selectedImage?.length} Selected items
               </CustomText>
-              {selectedImage?.length == 1 &&
-
-              
-              <Icon
-              style={{
-                with :windowWidth*0.3,
-                marginRight :moderateScale(10,.6),
-                // backgroundColor :'red'
-              }}
-                name={'info-with-circle'}
-                as={Entypo}
-                size={5}
-                color={Color.themeBgColor}
-                onPress={() => {
-                 setModalVisible(true)
-                }}
-              />
-}
+              {selectedImage?.length == 1 && (
+                <Icon
+                  style={{
+                    with: windowWidth * 0.3,
+                    marginRight: moderateScale(10, 0.6),
+                    // backgroundColor :'red'
+                  }}
+                  name={'info-with-circle'}
+                  as={Entypo}
+                  size={5}
+                  color={Color.themeBgColor}
+                  onPress={() => {
+                    setModalVisible(true);
+                  }}
+                />
+              )}
               <Icon
                 name={'delete'}
                 as={AntDesign}
@@ -317,7 +301,7 @@ const GalleryView = () => {
                           onLongPress={() => {
                             setSelectedImage(prev => [...prev, item]);
                           }}>
-                       <QRCode
+                          <QRCode
                             value={
                               selectedItem == 'image'
                                 ? item?.path
@@ -333,7 +317,9 @@ const GalleryView = () => {
                         </TouchableOpacity>
 
                         {selectedImage.length > 0 &&
-                          selectedImage.some(item3=>item3?.id == item?.id) && (
+                          selectedImage.some(
+                            item3 => item3?.id == item?.id,
+                          ) && (
                             <TouchableOpacity
                               onPress={() => {
                                 setSelectedImage(
@@ -344,7 +330,7 @@ const GalleryView = () => {
                               }}
                               style={styles.btn}>
                               <Icon
-                               name={'checkbox-marked'}
+                                name={'checkbox-marked'}
                                 as={MaterialCommunityIcons}
                                 color={Color.blue}
                                 size={moderateScale(30, 0.2)}
@@ -352,7 +338,9 @@ const GalleryView = () => {
                             </TouchableOpacity>
                           )}
                         {selectedImage.length > 0 &&
-                          selectedImage.some(item4=>item4?.id !=item?.id) && (
+                          selectedImage.some(
+                            item4 => item4?.id != item?.id,
+                          ) && (
                             <TouchableOpacity
                               onPress={() => {
                                 setSelectedImage(prev => [...prev, item]);
@@ -393,7 +381,6 @@ const GalleryView = () => {
                 }}
               />
             )}
-
             <CustomImageView
               isVisible={visible}
               selectedItem={selectedItem}
@@ -408,21 +395,24 @@ const GalleryView = () => {
                   ? galleryImages?.pdf
                   : galleryImages?.url
               }
+              onPressInfo={() => {
+                setModalVisible(true), setIsVisible(false);
+              }}
             />
           </View>
         </View>
-           <VerificationModal
+        <VerificationModal
           setModalVisible={setModalVisible}
           modalVisible={modalVisible}
           fromGallery={true}
           galleryImages={galleryImages}
           content={
-            selectedImage[0]?.type == 'image' ?
-            selectedImage[0]?.path  :
-            selectedImage[0]?.type == 'pdf' ?
-            selectedImage[0]?.filename :
-            selectedImage[0]?.text
-            }
+            selectedImage[0]?.type == 'image'
+              ? selectedImage[0]?.path
+              : selectedImage[0]?.type == 'pdf'
+              ? selectedImage[0]?.filename
+              : selectedImage[0]?.text
+          }
           type={selectedImage[0]?.type}
           name={selectedImage[0]?.qr_name}
         />
@@ -538,4 +528,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-

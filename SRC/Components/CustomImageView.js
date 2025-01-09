@@ -6,7 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import React, {useRef, useEffect, useState, useCallback } from 'react';
+import React, {useRef, useEffect, useState, useCallback} from 'react';
 import {moderateScale} from 'react-native-size-matters';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -30,21 +30,20 @@ const CustomImageView = ({
   galleryImages,
   setIsVisible,
   selectedItem,
+  onPressInfo,
 }) => {
   console.log('===========>', galleryImages);
   const flatListRef = useRef(null);
   // const qrCodeRef = useRef(null);
   const navigation = useNavigation();
 
-
-
-  const [modalVisible ,setModalVisible] =useState(false)
-  const [isMenuVisible ,setIsMenuVisible] =useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const onCapture = useCallback(async uri => {
     // navigation.navigate('PrintQr', {
     //   qrImage: uri })
-    console.log('log ===========> ', uri)
+    console.log('log ===========> ', uri);
     setSelectedImage(uri);
   }, []);
 
@@ -58,11 +57,14 @@ const CustomImageView = ({
         Alert.alert('No Image', 'No image found to print');
       }
     } catch (error) {
-      Alert.alert('Print Error', 'An error occurred while trying to print the image.');
+      Alert.alert(
+        'Print Error',
+        'An error occurred while trying to print the image.',
+      );
       console.error('Print error: ', error); // Log the error for debugging
     }
   };
-  console.log('Selected View Shot ',selectedImage)
+  console.log('Selected View Shot ', selectedImage);
   useEffect(() => {
     if (isVisible && flatListRef.current && selectedImageIndex !== undefined) {
       scrollToIndex(selectedImageIndex);
@@ -73,8 +75,8 @@ const CustomImageView = ({
     flatListRef.current.scrollToOffset({offset: index * windowWidth});
   };
   selectedImageIndex,
-  selectedImageIndex,
-  console.log('🚀 ~ CustomImageView ~ selectedItem:', selectedImageIndex);
+    selectedImageIndex,
+    console.log('🚀 ~ CustomImageView ~ selectedItem:', selectedImageIndex);
 
   console.log('🚀 ~ CustomImageView ~ selectedItem:', selectedImage);
   return (
@@ -84,7 +86,7 @@ const CustomImageView = ({
           <View style={styles.row}>
             <TouchableOpacity
               onPress={() => {
-                setIsVisible(false)
+                setIsVisible(false);
               }}>
               <LinearGradient
                 colors={Color.themeBgColor}
@@ -116,66 +118,79 @@ const CustomImageView = ({
               // text={'Use'}
               isGradient={true}
               onPress={() => {
-                setIsMenuVisible(true)
+                setIsMenuVisible(true);
               }}
               bgColor={['white', 'white']}
               width={windowHeight * 0.06}
               height={windowHeight * 0.06}
             />
-{/* <Modal> */}
-{isMenuVisible &&  <TouchableOpacity
-        style={{
-          width: windowWidth * 0.25,
-          top: 53,
-
-          right:29,
-          position: 'absolute',
-          alignSelf: 'flex-end',
-          alignItems: 'center',
-          borderRadius: moderateScale(5, 0.6),
-          // backgroundColor: 'red',
-          borderWidth: moderateScale(1,0.3),
-          borderColor:'grey',
-          backgroundColor: 'white',
-          
-        }}
-        onPress={
-          () =>{
-            printImage()
-            setIsMenuVisible(false);
-
-          // setIsVisible(false);
-          //   navigation.navigate('PrintQr',{
-          //     qrImage: selectedImage
-          //   })
-          // setIsMenuVisible(false);
-
-          }
-        }>
-        
-            <CustomText
-                isBold
+            {/* <Modal> */}
+            {isMenuVisible && (
+              <TouchableOpacity
                 style={{
-                  fontSize: moderateScale(9, 0.6),
-                  color: 'black',
-                  paddingVertical: moderateScale(5, 0.6),
+                  width: windowWidth * 0.25,
+                  top: 53,
+                  right: 29,
+                  position: 'absolute',
+                  alignSelf: 'flex-end',
+                  alignItems: 'center',
+                  borderRadius: moderateScale(5, 0.6),
+                  // backgroundColor: 'red',
+                  borderWidth: moderateScale(1, 0.3),
+                  borderColor: 'grey',
+                  backgroundColor: 'white',
                 }}
-                onPress={() =>{
-                  // setIsVisible(false);
-                  // navigation.navigate('PrintQr',{
-                  //   qrImage: selectedImage
-                  // })
-                  printImage()
+                onPress={() => {
+                  printImage();
                   setIsMenuVisible(false);
-      
-                }}>
-                {"Print"}
-              </CustomText>
-  
-      </TouchableOpacity>}
-{/* </Modal> */}
 
-             {/* <CustomButton
+                  // setIsVisible(false);
+                  //   navigation.navigate('PrintQr',{
+                  //     qrImage: selectedImage
+                  //   })
+                  // setIsMenuVisible(false);
+                }}>
+                <CustomText
+                  isBold
+                  style={{
+                    fontSize: moderateScale(9, 0.6),
+                    color: 'black',
+                    paddingVertical: moderateScale(5, 0.6),
+                  }}
+                  onPress={() => {
+                    // setIsVisible(false);
+                    // navigation.navigate('PrintQr',{
+                    //   qrImage: selectedImage
+                    // })
+                    printImage();
+                    setIsMenuVisible(false);
+                  }}>
+                  {'Print'}
+                </CustomText>
+                <CustomText
+                  isBold
+                  style={{
+                    fontSize: moderateScale(9, 0.6),
+                    color: 'black',
+                    paddingVertical: moderateScale(5, 0.6),
+                  }}
+                  onPress={onPressInfo}
+                  // onPress={() => {
+                  //   // setIsVisible(false);
+                  //   // navigation.navigate('PrintQr',{
+                  //   //   qrImage: selectedImage
+                  //   // })
+                  //   // printImage();
+                  //   // setIsMenuVisible(false);
+                  // }}
+                >
+                  {'Info'}
+                </CustomText>
+              </TouchableOpacity>
+            )}
+            {/* </Modal> */}
+
+            {/* <CustomButton
               iconStyle={{
                 width: windowWidth * 0.09,
                 height: windowHeight * 0.05,
@@ -234,24 +249,22 @@ const CustomImageView = ({
                     overflow: 'hidden',
                   }}>
                   {/* <CustomText style={{color: Color.white}} isBold>{index}</CustomText> */}
-        <ViewShot onCapture={onCapture} captureMode="mount">
-                  
-                  <QRCode
-                    
-                    value={
-                      selectedItem == 'image'
-                        ? item?.path
-                        : selectedItem == 'text'
-                        ? item?.text
-                        : selectedItem == 'pdf'
-                        ? item?.path
-                        : item?.text
-                    }
-                    logo={require('../Assets/Images/cardimage.png')}
-                    size={350}
+                  <ViewShot onCapture={onCapture} captureMode="mount">
+                    <QRCode
+                      value={
+                        selectedItem == 'image'
+                          ? item?.path
+                          : selectedItem == 'text'
+                          ? item?.text
+                          : selectedItem == 'pdf'
+                          ? item?.path
+                          : item?.text
+                      }
+                      logo={require('../Assets/Images/cardimage.png')}
+                      size={350}
 
-                    // getRef={(ref)=>setQrCodeRef(ref)}
-                  />
+                      // getRef={(ref)=>setQrCodeRef(ref)}
+                    />
                   </ViewShot>
                 </TouchableOpacity>
               );
@@ -262,12 +275,8 @@ const CustomImageView = ({
               index,
             })}
           />
-
-   
         </View>
-
       </SafeAreaView>
-
     </Modal>
   );
 };

@@ -1,30 +1,27 @@
+import Clipboard from '@react-native-clipboard/clipboard';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { Icon } from 'native-base';
+import React, { useState } from 'react';
 import {
   Linking,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   ToastAndroid,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import CustomText from '../Components/CustomText';
-import {Icon} from 'native-base';
-import Color from '../Assets/Utilities/Color';
+import QRCode from 'react-native-qrcode-svg';
+import Share from 'react-native-share';
+import { moderateScale } from 'react-native-size-matters';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {moderateScale} from 'react-native-size-matters';
-import {windowHeight, windowWidth} from '../Utillity/utils';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Color from '../Assets/Utilities/Color';
 import CustomButton from '../Components/CustomButton';
+import CustomText from '../Components/CustomText';
 import Header from '../Components/Header';
-import CustomImage from '../Components/CustomImage';
-import Clipboard from '@react-native-clipboard/clipboard';
-import Share from 'react-native-share';
-import navigationService from '../navigationService';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import QRCode from 'react-native-qrcode-svg';
+import { windowHeight, windowWidth } from '../Utillity/utils';
 
 const ShowQR = props => {
   const data = props?.route?.params?.data;

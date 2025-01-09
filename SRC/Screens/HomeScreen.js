@@ -31,14 +31,18 @@ import {useNavigation} from '@react-navigation/native';
 import {useDrawerStatus} from '@react-navigation/drawer';
 import {useSelector} from 'react-redux';
 import {useEffect} from 'react';
-import { height, resizeMode, width } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
+import {
+  height,
+  resizeMode,
+  width,
+} from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const userData = useSelector(state => state.commonReducer.userData);
   console.log('🚀 ~ HomeScreen ~ userData:============>', userData);
   const token = useSelector(state => state.authReducer.token);
-  console.log("🚀 ~ HomeScreen ~ token============>:", token)
+  console.log('🚀 ~ HomeScreen ~ token============>:', token);
   const [search, setSearch] = useState('');
   const dataArray = [
     {
@@ -52,14 +56,14 @@ const HomeScreen = () => {
       id: 2,
       image: require('../Assets/Images/Qrscan2.png'),
       title: 'GENERATE QRCODE',
-      // onPress: () => navigation.navigate('SelectCategory'),
+      onPress: () => navigation.navigate('SelectCategory'),
       // description: 'Create bespoke QR codes that are suited to your specific needs. Custom QR codes can help to empower your messaging.',
     },
     {
       id: 3,
       image: require('../Assets/Images/Qrscan3.png'),
       title: 'BARCODE SCANNER',
-      // onPress: () => navigation.navigate('GalleryView'),
+      onPress: () => navigation.navigate('GalleryView'),
       // description: 'View and explore your generated QR codes, seamlessly blending creativity with functionality',
     },
     // {
@@ -94,7 +98,6 @@ const HomeScreen = () => {
     //   colors={['#49C3E9', '#0066FF']}
     //   style={styles.mainContainer}>
     <SafeAreaView style={styles.mainContainer}>
-
       {/* <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -102,66 +105,64 @@ const HomeScreen = () => {
           // justifyContent: 'center',
           // alignItems: 'center',
         }}> */}
-        <View style={styles.container}>
-          <View style={styles.mainView}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Profile');
-              }}
-              style={styles.imagecontainer}>
-              <CustomImage
-                // onPress={() => {
-                //   navigation.navigate('Profile');
-                // }}
-                style={{
-                  height: '100%',
-                  width: '100%',
-                }}
-                source={
-                  userData?.photo
-                    ? {uri: userData?.photo}
-                    : require('../Assets/Images/user.png')
-                }
-              />
-            </TouchableOpacity>
-
-            <View
-              style={{
-                paddingHorizontal: moderateScale(15, 0.6),
-              }}>
-              <CustomText
-                style={[
-                  styles.text1,
-                  {
-                    fontSize: moderateScale(18, 0.6),
-                    color: Color.white,
-                    fontWeight: 'bold',
-                    // backgroundColor:'red',
-                    width: windowWidth * 0.35,
-                  },
-                ]}>
-                {userData?.first_name}
-              </CustomText>
-            </View>
-          </View>
-
+      <View style={styles.container}>
+        <View style={styles.mainView}>
           <TouchableOpacity
-            // onPress={() => {
-            //   navigation.toggleDrawer();}}
-            >
-            <View
-              style={styles.generalBtn}
-              >
-              <Icon
-                name="menu"
-                as={Entypo}
-                size={moderateScale(20, 0.6)}
-                color={Color.white}
-              />
-            </View>
+            onPress={() => {
+              navigation.navigate('Profile');
+            }}
+            style={styles.imagecontainer}>
+            <CustomImage
+              // onPress={() => {
+              //   navigation.navigate('Profile');
+              // }}
+              style={{
+                height: '100%',
+                width: '100%',
+              }}
+              source={
+                userData?.photo
+                  ? {uri: userData?.photo}
+                  : require('../Assets/Images/user.png')
+              }
+            />
           </TouchableOpacity>
+
+          <View
+            style={{
+              paddingHorizontal: moderateScale(15, 0.6),
+            }}>
+            <CustomText
+              style={[
+                styles.text1,
+                {
+                  fontSize: moderateScale(18, 0.6),
+                  color: Color.white,
+                  fontWeight: 'bold',
+                  // backgroundColor:'red',
+                  width: windowWidth * 0.35,
+                },
+              ]}>
+              {userData?.first_name}
+            </CustomText>
+          </View>
         </View>
-        {/* <View
+
+        <TouchableOpacity
+        // onPress={() => {
+        //   navigation.toggleDrawer();}}
+        >
+          <View style={styles.generalBtn}>
+            <Icon
+              name="menu"
+              as={Entypo}
+              size={moderateScale(20, 0.6)}
+              color={Color.white}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+      {/* <View
           style={{
             paddingVertical: moderateScale(20, 0.6),
           }}>
@@ -177,7 +178,7 @@ const HomeScreen = () => {
             }}
           />
         </View> */}
-        {/* <View
+      {/* <View
           style={{
             paddingVertical: moderateScale(20, 0.6),
           }}
@@ -220,68 +221,76 @@ const HomeScreen = () => {
             </View>
           </LinearGradient>
         </View> */}
-        <View style={{flexDirection:'row',
-        alignItems:'center',marginTop:moderateScale(20,0.6)
-
-
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginTop: moderateScale(20, 0.6),
         }}>
         {/* <View> */}
-        <View style={{alignSelf:'flex-start',
-          // marginTop:moderateScale(25,0.6),
-          // backgroundColor:'red'
-          // paddingVertical:moderateScale(40,0.6)
-          // justifyContent:'center'
-        }}>
-        <FlatList 
-          showsVerticalScrollIndicator={true}
-          nestedScrollEnabled={true}
-          scrollEnabled={true}
-          data={dataArray}
-          keyExtractor={item => item.id}
-          numColumns={1}
-          contentContainerStyle={{
-            gap:moderateScale(15,0.6),
-            // marginHorizontal: moderateScale(10, 0.3),
-            // marginVertical: moderateScale(10, 0.3),
-            padding: moderateScale(20, 0.6),
-            // paddingHorizontal:moderateScale(10,0.6),
-            // marginLeft:moderateScale(15,0.6),
-            // paddingBottom: moderateScale(50, 0.6),
-            // backgroundColor:'green'
-          }}
-          renderItem={({item, index}) => {
-            return <CardComponent item={item} />;
-          }}
-        />
-        </View>
-       
-        <View style={styles.scanImageStyle}>
-          <CustomImage style={{
-            height:'100%' , width: '100%',
-          }} resizeMode={'contain'} source={require('../Assets/Images/Qrscan.png')}/>
-        </View>
-        {/* </View> */}
-        </View>
         <View
           style={{
-            width: windowWidth * 0.78,
-            position: 'absolute',
-            bottom: moderateScale(35, 0.6),
-            alignSelf:'center'
+            alignSelf: 'flex-start',
+            // marginTop:moderateScale(25,0.6),
+            // backgroundColor:'red'
+            // paddingVertical:moderateScale(40,0.6)
+            // justifyContent:'center'
           }}>
-          <CustomText
-            style={{
-              fontSize: moderateScale(11, 0.6),
-              color: Color.white,
-              textAlign: 'center',
-            }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-            suscipit gravida tellus, eu ullamcorper.
-          </CustomText>
+          <FlatList
+            showsVerticalScrollIndicator={true}
+            nestedScrollEnabled={true}
+            scrollEnabled={true}
+            data={dataArray}
+            keyExtractor={item => item.id}
+            numColumns={1}
+            contentContainerStyle={{
+              gap: moderateScale(15, 0.6),
+              // marginHorizontal: moderateScale(10, 0.3),
+              // marginVertical: moderateScale(10, 0.3),
+              padding: moderateScale(20, 0.6),
+              // paddingHorizontal:moderateScale(10,0.6),
+              // marginLeft:moderateScale(15,0.6),
+              // paddingBottom: moderateScale(50, 0.6),
+              // backgroundColor:'green'
+            }}
+            renderItem={({item, index}) => {
+              return <CardComponent item={item} />;
+            }}
+          />
         </View>
+
+        <View style={styles.scanImageStyle}>
+          <CustomImage
+            style={{
+              height: '100%',
+              width: '100%',
+            }}
+            resizeMode={'contain'}
+            source={require('../Assets/Images/Qrscan.png')}
+          />
+        </View>
+        {/* </View> */}
+      </View>
+      <View
+        style={{
+          width: windowWidth * 0.78,
+          position: 'absolute',
+          bottom: moderateScale(35, 0.6),
+          alignSelf: 'center',
+        }}>
+        <CustomText
+          style={{
+            fontSize: moderateScale(11, 0.6),
+            color: Color.white,
+            textAlign: 'center',
+          }}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras suscipit
+          gravida tellus, eu ullamcorper.
+        </CustomText>
+      </View>
       {/* </ScrollView> */}
-      </SafeAreaView>
-   //</LinearGradient>
+    </SafeAreaView>
+    //</LinearGradient>
     // </ImageBackground>
   );
 };
@@ -358,21 +367,21 @@ const styles = ScaledSheet.create({
     paddingHorizontal: moderateScale(10, 0.6),
   },
   generalBtn: {
-      borderColor: Color.white,
-      width: windowWidth * 0.09,
-      height:windowWidth * 0.09,
-      borderWidth: moderateScale(1,0.6),
-      alignItems:'center',
-      justifyContent:'center',
-      borderRadius: moderateScale(100, 0.9),
-    },
-    scanImageStyle:{
-      width:windowWidth*0.93,
-      height:windowHeight *0.45,
-      // overflow:'hidden'
-      // top:moderateScale(15,0.6),
-      // borderRadius:moderateScale(30,0.6),
-      // backgroundColor:'green',
-      // left:moderateScale(20,0.6)
-    }
+    borderColor: Color.white,
+    width: windowWidth * 0.09,
+    height: windowWidth * 0.09,
+    borderWidth: moderateScale(1, 0.6),
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: moderateScale(100, 0.9),
+  },
+  scanImageStyle: {
+    width: windowWidth * 0.93,
+    height: windowHeight * 0.45,
+    // overflow:'hidden'
+    // top:moderateScale(15,0.6),
+    // borderRadius:moderateScale(30,0.6),
+    // backgroundColor:'green',
+    // left:moderateScale(20,0.6)
+  },
 });

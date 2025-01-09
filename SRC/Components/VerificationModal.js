@@ -37,8 +37,6 @@ const VerificationModal = ({
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
 
-
-  
   const DownloadQr = () => {
     try {
       qrCodeRef.toDataURL(async data => {
@@ -49,7 +47,7 @@ const VerificationModal = ({
             .replace('://', 'a')
             .replace('.', '_')
             .slice(0, 20)}.png`;
-         console.log('fdffdfsfds', qrCodeRef);
+        console.log('fdffdfsfds', qrCodeRef);
         await RNFetchBlob.fs.writeFile(path, data, 'base64');
 
         alert('Download Successfully');
@@ -85,7 +83,6 @@ const VerificationModal = ({
     });
   };
 
-
   return (
     <Modal
       hasBackdrop={true}
@@ -116,8 +113,7 @@ const VerificationModal = ({
               source={{uri: data}}
             />
           </View>
-        ) : 
-        (fromGallery && type == 'image') ||  data?.type == 'image' ? (
+        ) : (fromGallery && type == 'image') || data?.type == 'image' ? (
           data?.path != '' && (
             <View style={styles.imagecontainer}>
               <CustomImage
@@ -126,12 +122,7 @@ const VerificationModal = ({
                   width: '100%',
                 }}
                 // source={require('../Assets/Images/dummyUser1.png')}
-
-                source={
-                  fromGallery
-                    ? {uri : content}
-                    : {uri: data?.path}
-                }
+                source={fromGallery ? {uri: content} : {uri: data?.path}}
               />
             </View>
           )
@@ -146,7 +137,11 @@ const VerificationModal = ({
               fontSize: moderateScale(15, 0.6),
             }}
             isBold>
-            {fromGallery ? content :  data?.type == 'pdf' ? data?.filename :data }
+            {fromGallery
+              ? content
+              : data?.type == 'pdf'
+              ? data?.filename
+              : data}
           </CustomText>
         )}
 
@@ -161,9 +156,14 @@ const VerificationModal = ({
             isBold>
             type :
           </CustomText>
-          <CustomText style={[styles.codename, {
-            color :Color.black
-          }]} isBold>
+          <CustomText
+            style={[
+              styles.codename,
+              {
+                color: Color.black,
+              },
+            ]}
+            isBold>
             {type}
           </CustomText>
         </View>
@@ -173,9 +173,15 @@ const VerificationModal = ({
               qr code name :
             </CustomText>
 
-            <CustomText numberOfLines={1} style={[styles.codename ,{
-              color :Color.black
-            }]} isBold>
+            <CustomText
+              numberOfLines={1}
+              style={[
+                styles.codename,
+                {
+                  color: Color.black,
+                },
+              ]}
+              isBold>
               {fromGallery ? name : qrName}
             </CustomText>
           </View>
