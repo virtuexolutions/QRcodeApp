@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Image, ActivityIndicator} from 'react-native';
+import {StyleSheet, Text, View, Image, ActivityIndicator, Platform, ToastAndroid, Alert} from 'react-native';
 import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import {windowHeight, windowWidth} from '../Utillity/utils';
@@ -79,7 +79,9 @@ const VerificationModal = ({
           setIsLoading(false);
           // this.setState({ busy: false, imageSaved: true  })
           // ToastAndroid.show('Saved to gallery !!', ToastAndroid.SHORT)
-          alert('saved');
+          Platform.OS == 'android' ?
+          ToastAndroid.show('QR COde saved to gallery' , ToastAndroid.SHORT) :
+          Alert.alert('QR COde saved to gallery');
           navigation.navigate('HomeScreen');
         });
     });

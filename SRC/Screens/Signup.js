@@ -18,7 +18,6 @@ import CustomButton from '../Components/CustomButton';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import DropDownSingleSelect from '../Components/DropDownSingleSelect';
 import {Post} from '../Axios/AxiosInterceptorFunction';
 import {useDispatch} from 'react-redux';
 import {setUserData} from '../Store/slices/common';
@@ -27,28 +26,20 @@ import {ToastAndroid} from 'react-native';
 import {Platform} from 'react-native';
 import {validateEmail} from '../Config';
 import {Icon} from 'native-base';
-import ImagePickerModal from '../Components/ImagePickerModal';
 import Entypo from 'react-native-vector-icons/Entypo';
-// import {useNavigation} from '@react-navigation/native';
-import {source} from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
+import ImagePickerModal from '../Components/ImagePickerModal';
 
 const Signup = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [confirmPass, setconfirmPass] = useState('');
-  const [showNumberModal, setShowNumberModal] = useState(false);
-  console.log(
-    '🚀 ~ file: Signup.js:48 ~ Signup ~ showNumberModal:',
-    showNumberModal,
-  );
   const [countryCode, setCountryCode] = useState('US');
   const [imagePicker, setImagePicker] = useState(false);
-  // console.log('🚀 ~ file: Signup.js:50 ~ Signup ~ imagePicker:', imagePicker);
   const [image, setImage] = useState({});
   console.log('🚀 ~ Signup ~ image:', image);
 
@@ -268,7 +259,7 @@ const Signup = () => {
               isLoading ? (
                 <ActivityIndicator color={Color.white} size={'small'} />
               ) : (
-                'SIGN IN'
+                'SIGN Up'
               )
             }
             fontSize={moderateScale(12, 0.3)}
@@ -320,6 +311,11 @@ const Signup = () => {
           </CustomText>
         </View>
       </View>
+      <ImagePickerModal
+          show={imagePicker}
+          setShow={setImagePicker}
+          setFileObject={setImage}
+        />
     </ScrollView>
   );
 };

@@ -23,6 +23,7 @@ const CardComponent = ({item}) => {
       <View
         style={styles.imagecontainner}>
         <CustomImage
+         onPress={item?.onPress}
         resizeMode={'stretch'}
           style={{
             height: '100%',

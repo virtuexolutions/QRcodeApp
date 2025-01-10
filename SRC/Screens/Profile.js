@@ -39,13 +39,10 @@ const Profile = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const userData = useSelector(state => state.commonReducer.userData);
-  console.log('🚀 ~ Profile ~ userData=========>:', userData);
-  const token = useSelector(state => state.authReducer.token);
+  const totalQrcodes = useSelector(state=>state.commonReducer.totalQrcodes)
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUserName] = useState(userData?.first_name);
   const [email, setEmail] = useState(userData?.email);
-  const [showNumberModal, setShowNumberModal] = useState(false);
-  const [countryCode, setCountryCode] = useState('US');
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
   console.log('🚀 ~ Profile ~ image:', image);
@@ -59,14 +56,9 @@ const Profile = () => {
     region: 'Americas',
     subregion: 'North America',
   });
-  const [withCallingCode, setWithCallingCode] = useState(true);
-  const [withFilter, setFilter] = useState(true);
-  const [phone, setPhone] = useState('');
 
-  const onSelect = country => {
-    setCountryCode(country.cca2);
-    setCountry(country);
-  };
+
+ 
 
   const profileUpdate = async () => {
     const formData = new FormData();
@@ -216,75 +208,7 @@ const Profile = () => {
           keyboardType={'email-address'}
           disable={true}
         />
-        {/* <TouchableOpacity
-              onPress={() => {
-                setShowNumberModal(true);
-                console.log('first');
-              }}
-              activeOpacity={0.9}
-              style={[
-                styles.birthday,
-                {
-                  justifyContent: 'flex-start',
-                  // backgroundColor: 'red',
-                  borderRadius: moderateScale(25, 0.6),
-                },
-              ]}>
-              <CountryPicker
-                {...{
-                  countryCode,
-                  withCallingCode,
-                  onSelect,
-                  withFilter,
-                }}
-                visible={showNumberModal}
-                onClose={() => {
-                  setShowNumberModal(false);
-                }}
-              />
-
-              {country && (
-                <CustomText
-                  style={{
-                    fontSize: moderateScale(15, 0.6),
-                    color: '#5E5E5E',
-                  }}>{`${countryCode}(+${country?.callingCode})`}</CustomText>
-              )}
-
-              <Icon
-                name={'angle-down'}
-                as={FontAwesome}
-                size={moderateScale(20, 0.6)}
-                color={Color.themeDarkGray}
-                onPress={() => {
-                  setShowNumberModal(true);
-                }}
-                style={{
-                  position: 'absolute',
-                  right: moderateScale(5, 0.3),
-                }}
-              />
-            </TouchableOpacity>
-            <TextInputWithTitle
-              iconName={'phone'}
-              iconType={FontAwesome}
-              LeftIcon={true}
-              titleText={'Phone'}
-              placeholder={'Phone'}
-              setText={setPhone}
-              value={phone}
-              viewHeight={0.06}
-              viewWidth={0.75}
-              inputWidth={0.55}
-              border={1}
-              borderRadius={moderateScale(30, 0.3)}
-              borderColor={Color.black}
-              backgroundColor={Color.white}
-              marginTop={moderateScale(10, 0.3)}
-              color={Color.black}
-              placeholderColor={Color.veryLightGray}
-              elevation
-            /> */}
+      
         <View
           style={{
             width: windowWidth * 0.78,
@@ -294,7 +218,7 @@ const Profile = () => {
             // paddingHorizontal:moderateScale(15.6)
           }}>
           <LinearGradient
-            colors={['#001D55', '#012497']}
+            colors={['#000000', '#000000']}
             start={{x: 0, y: 0.5}}
             end={{x: 1, y: 0.5}}
             style={{
@@ -326,11 +250,12 @@ const Profile = () => {
                 fontSize: moderateScale(15, 0.6),
               }}>
                 {/* hjkdhkjashkjdahskdjh */}
-              {userData?.totalDocumentCount}
+              {/* {userData?.document_image_count} */}
+              {totalQrcodes}
             </CustomText>
           </LinearGradient>
         </View>
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             // width:windowWidth*0.6,
@@ -351,7 +276,7 @@ const Profile = () => {
               isBold
               style={{
                 textAlign: 'center',
-                color: '#012497',
+                color: '#000000',
                 fontSize: moderateScale(14, 0.6),
               }}>
               images
@@ -363,14 +288,14 @@ const Profile = () => {
                 textAlign: 'center',
                 width :windowWidth *0.13,
                 // backgroundColor :'red',
-                color: '#012497',
+                color: '#000000',
                 fontSize: moderateScale(13, 0.6),
               }}>
               {userData?.document_image_count}
             </CustomText>
           </View>
           <LinearGradient
-            colors={['#001D55', '#012497']}
+            colors={['#000000', '#000000']}
             start={{x: 0, y: 0.5}}
             end={{x: 1, y: 0.5}}
             style={styles.cardContainner}>
@@ -416,7 +341,7 @@ const Profile = () => {
               isBold
               style={{
                 textAlign: 'center',
-                color: '#012497',
+                color: '#000000',
                 fontSize: moderateScale(15, 0.6),
               }}>
               pdf
@@ -429,7 +354,7 @@ const Profile = () => {
                 // backgroundColor :'red',
                 
                 textAlign: 'center',
-                color: '#012497',
+                color: '#000000',
                 fontSize: moderateScale(13, 0.6),
                 // backgroundColor: 'red',
               }}>
@@ -438,7 +363,7 @@ const Profile = () => {
           </View>
 
           <LinearGradient
-            colors={['#001D55', '#012497']}
+            colors={['#000000', '#000000']}
             start={{x: 0, y: 0.5}}
             end={{x: 1, y: 0.5}}
             style={styles.cardContainner}>
@@ -469,7 +394,7 @@ const Profile = () => {
               </CustomText>
             </View>
           </LinearGradient>
-        </View>
+        </View> */}
 
         <CustomButton
           onPress={() => profileUpdate()}

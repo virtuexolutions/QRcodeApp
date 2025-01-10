@@ -203,7 +203,7 @@ const GalleryView = () => {
           )}
         </View>
         <View>
-          <View style={styles.container}>
+          {/* <View style={styles.container}>
             <TouchableOpacity
               style={{
                 borderBottomWidth: selectedItem == 'image' ? 1 : 0,
@@ -259,7 +259,7 @@ const GalleryView = () => {
                 <CustomText isBold>pdf</CustomText>
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           <View style={styles.todaySection}>
             {isLoading ? (
@@ -274,13 +274,14 @@ const GalleryView = () => {
                 nestedScrollEnabled={true}
                 numColumns={3}
                 data={
-                  selectedItem == 'image'
-                    ? galleryImages?.image
-                    : selectedItem == 'text'
-                    ? galleryImages?.text
-                    : selectedItem == 'pdf'
-                    ? galleryImages?.pdf
-                    : galleryImages?.url
+                  // selectedItem == 'image'
+                  //   ?
+                     galleryImages?.image
+                    // : selectedItem == 'text'
+                    // ? galleryImages?.text
+                    // : selectedItem == 'pdf'
+                    // ? galleryImages?.pdf
+                    // : galleryImages?.url
                 }
                 keyExtractor={item => item.id}
                 contentContainerStyle={{

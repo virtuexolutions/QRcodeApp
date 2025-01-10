@@ -58,7 +58,7 @@ const Profile = () => {
       }
     }
     if (newPassword !== confirmNewPassword) {
-      Platform.OS == 'android'
+      return Platform.OS == 'android'
         ? ToastAndroid.show('Passwords do not match', ToastAndroid.SHORT)
         : alert('Passwords do not match');
     }

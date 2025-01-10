@@ -18,9 +18,9 @@ import {
   requestWritePermission,
 } from './SRC/Utillity/utils';
 import SplashScreen from './SRC/Screens/SplashScreen';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import AppNavigator from './SRC/appNavigation';
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import WalkThroughScreen from './SRC/Screens/WalkthroughScreen';
 import HomeScreen from './SRC/Screens/HomeScreen';
 import Settings from './SRC/Screens/Settings';
@@ -29,7 +29,7 @@ import PrivacyPolicy from './SRC/Screens/PrivacyPolicy';
 import TermsAndConditions from './SRC/Screens/TermsAndConditions';
 import Help from './SRC/Screens/Help';
 import GalleryView from './SRC/Screens/GalleryView';
-import { LogBox } from 'react-native';
+import {LogBox} from 'react-native';
 import LoginScreen from './SRC/Screens/LoginScreen';
 import Signup from './SRC/Screens/Signup';
 
@@ -42,17 +42,18 @@ const App = () => {
   };
 
   useEffect(() => {
-    LogBox.ignoreLogs(['In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.']);
+    LogBox.ignoreLogs([
+      'In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.',
+    ]);
   }, []);
-
 
   console.reportErrorsAsExceptions = false;
   return (
-  //   <StripeProvider 
-  //   publishableKey={"pk_test_51NjQZRBqyObuQCkVVZujGGQ9w7PjZegPiZvL9MEH12KsxQmTsLpBxsXdeyN8Tu3mYkN8YZt8WutsTCEexDwIOxaB00a6zjjE12"}
-  //   // merchantIdentifier="merchant.identifier" // required for Apple Pay
-  //   // urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
-  // >
+    //   <StripeProvider
+    //   publishableKey={"pk_test_51NjQZRBqyObuQCkVVZujGGQ9w7PjZegPiZvL9MEH12KsxQmTsLpBxsXdeyN8Tu3mYkN8YZt8WutsTCEexDwIOxaB00a6zjjE12"}
+    //   // merchantIdentifier="merchant.identifier" // required for Apple Pay
+    //   // urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+    // >
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NativeBaseProvider>
@@ -67,27 +68,26 @@ const App = () => {
 const MainContainer = () => {
   const dispatch = useDispatch();
 
- 
   useEffect(() => {
     async function GetPermission() {
       await requestCameraPermission();
       await requestWritePermission();
       await requestLocationPermission();
     }
-    if(Platform.OS == 'android'){
+    if (Platform.OS == 'android') {
       GetPermission();
     }
   }, []);
 
   const [isloading] = useloader(true);
   if (isloading == true) {
-    return <SplashScreen/>;
+    return <SplashScreen />;
   }
-  return( 
+  return (
     <AppNavigator />
     // <HomeScreen/>
-   ) 
- };
+  );
+};
 
 const useloader = value => {
   const [isloading, setIsloading] = useState(value);
@@ -98,4 +98,3 @@ const useloader = value => {
   return [isloading];
 };
 export default App;
-                                                          

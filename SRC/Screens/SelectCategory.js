@@ -9,7 +9,7 @@ import CategoryComponent from '../Components/CategoryComponent';
 import {useNavigation} from '@react-navigation/core';
 import Color from '../Assets/Utilities/Color';
 import {useDispatch} from 'react-redux';
-import {setSelectedItem} from '../Store/slices/common';
+
 import CustomButton from '../Components/CustomButton';
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
@@ -26,7 +26,7 @@ const SelectCategory = () => {
     },
     {
       title: 'image',
-      image: require('../Assets/Images/photo.png'),
+      image: require('../Assets/Images/image.png'),
        },
     {
       title: 'pdf',
@@ -47,7 +47,7 @@ const SelectCategory = () => {
       }}
       start={{x: 0, y: 0}}
       end={{x: 1, y: 1}}
-      colors={['#001D55', '#012497']}>
+      colors={['#000000', '#000000']}>
       <View style={styles.row}>
       <TouchableOpacity style={styles.customBtn}
            onPress={() => {

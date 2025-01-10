@@ -102,69 +102,66 @@ const GenerateQr = props => {
   // };
   return (
     <SafeAreaView>
-
-    <View>
-      <View style={styles.row}>
-      <TouchableOpacity
-           onPress={() => {
-            navigation.goBack();
-          }}
-          >
-        <LinearGradient
-        
-        colors={Color.themeBgColor}
-        style={styles.customBtn}>
-          <Icon 
-           name='left'
-           as={AntDesign}
-           size={moderateScale(20,0.6)}
-           color={'white'}
+      <View>
+        <View style={styles.row}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}>
+            <LinearGradient
+              colors={Color.themeBgColor}
+              style={styles.customBtn}>
+              <Icon
+                name="left"
+                as={AntDesign}
+                size={moderateScale(20, 0.6)}
+                color={'white'}
+              />
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            height: windowHeight * 0.75,
+            // backgroundColor:'red',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <ViewShot onCapture={onCapture} captureMode="mount">
+            <QRCode
+              value={type == 'url' || type == 'text' ? data : data?.path}
+              // getRef={c => (this.save=c)}
+              // value="Just some string value"
+              logo={require('../Assets/Images/cardimage.png')}
+              size={230}
+              getRef={ref => setQrCodeRef(ref)}
+            />
+          </ViewShot>
+          <CustomButton
+            onPress={() => {
+              setIsVisible(true);
+              // DownloadQr()
+            }}
+            text={
+              isLoading ? (
+                <ActivityIndicator size={'small'} color={'white'} />
+              ) : (
+                'save'
+              )
+            }
+            fontSize={moderateScale(14, 0.3)}
+            textColor={Color.white}
+            borderRadius={moderateScale(30, 0.3)}
+            width={windowWidth * 0.4}
+            height={windowHeight * 0.06}
+            marginTop={moderateScale(40, 0.3)}
+            borderWidth={1}
+            isGradient={true}
+            bgColor={Color.themeBgColor}
+            borderColor={Color.white}
+            isBold
           />
-        </LinearGradient>
-        </TouchableOpacity>
-      </View>
-      <View
-        style={{
-          height: windowHeight * 0.75,
-          // backgroundColor:'red',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <ViewShot onCapture={onCapture} captureMode="mount">
-          <QRCode
-            value={type == 'url' || type == 'text' ? data : data?.path}
-            // getRef={c => (this.save=c)}
-            // value="Just some string value"
-            logo={require('../Assets/Images/cardimage.png')}
-            size={230}
-            getRef={ref => setQrCodeRef(ref)}
-          />
-        </ViewShot>
-        <CustomButton
-          onPress={() => {
-            setIsVisible(true);
-            // DownloadQr()
-          }}
-          text={
-            isLoading ? (
-              <ActivityIndicator size={'small'} color={'white'} />
-            ) : (
-              'save'
-            )
-          }
-          fontSize={moderateScale(14, 0.3)}
-          textColor={Color.white}
-          borderRadius={moderateScale(30, 0.3)}
-          width={windowWidth * 0.4}
-          height={windowHeight * 0.06}
-          marginTop={moderateScale(40, 0.3)}
-          borderWidth={1}
-          isGradient={true}
-          bgColor={Color.themeBgColor}
-          borderColor={Color.white}
-          isBold
-        />
-        {/* <CustomButton
+          {/* <CustomButton
           onPress={() => {
             navigation.navigate('HomeScreen');
           }}
@@ -181,9 +178,16 @@ const GenerateQr = props => {
           borderColor={Color.white}
           isBold
         /> */}
+        </View>
+        <VerificationModal
+          data={data}
+          type={type}
+          qrCodeRef={qrCodeRef}
+          qrName={qrName}
+          setIsVisible={setIsVisible}
+          isVisible={isVisible}
+        />
       </View>
-      <VerificationModal data={data} type={type}  qrCodeRef={qrCodeRef} qrName={qrName} setIsVisible={setIsVisible} isVisible={isVisible} />
-    </View>
     </SafeAreaView>
   );
 };
@@ -206,13 +210,12 @@ const styles = StyleSheet.create({
     paddingVertical: moderateScale(15, 0.3),
     paddingHorizontal: moderateScale(10, 0.3),
   },
-  customBtn : { 
-    width : windowWidth * 0.13,
-    height : windowWidth * 0.13,
-    borderRadius : windowWidth * 0.13 /2,
-    justifyContent : 'center',
-    alignItems : 'center'
+  customBtn: {
+    width: windowWidth * 0.13,
+    height: windowWidth * 0.13,
+    borderRadius: (windowWidth * 0.13) / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
     // backgroundColor : Color.themeColor,
-    
   },
 });

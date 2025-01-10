@@ -22,6 +22,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CustomText from '../Components/CustomText';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import Color from '../Assets/Utilities/Color';
+import { color } from 'native-base/lib/typescript/theme/styled-system';
 
 const requestCameraPermission = async () => {
   try {
@@ -274,7 +275,7 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(15, 0.3),
     fontWeight: 'bold',
     marginBottom: moderateScale(7.5, 0.3),
-    color:Color.themeblue
+    color:Color.black
   },
   modalContentContianer: {
     flexDirection: 'row',
@@ -282,13 +283,13 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     height: windowHeight * 0.21,
-    borderBottomColor: Color.themeblue,
+    borderBottomColor: Color.black,
     borderBottomWidth: 2,
-    borderTopColor: Color.themeblue,
+    borderTopColor: Color.black,
     borderTopWidth: 2,
   },
   modalContentBtn: {
-    backgroundColor: Color.themeblue,
+    backgroundColor: Color.black,
     alignItems: 'center',
     paddingHorizontal: windowWidth * 0.08,
     paddingVertical: windowHeight * 0.02,
@@ -300,7 +301,7 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(12, 0.3),
   },
   modalCancelBtn: {
-    backgroundColor: '#002F58',
+    backgroundColor: Color.black,
     paddingVertical: windowHeight * 0.008,
     width: windowWidth * 0.2,
     alignItems: 'center',

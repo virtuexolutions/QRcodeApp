@@ -6,7 +6,7 @@ import CustomText from './CustomText';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {setSelectedItem} from '../Store/slices/common';
+
 
 const CategoryComponent = ({item}) => {
   console.log('🚀 ~ CategoryComponent ~ item:', item);

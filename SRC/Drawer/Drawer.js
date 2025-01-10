@@ -11,26 +11,19 @@ import CustomImage from '../Components/CustomImage';
 import {windowHeight, windowWidth} from '../Utillity/utils';
 import {moderateScale, ScaledSheet} from 'react-native-size-matters';
 import ScreenBoiler from '../Components/ScreenBoiler';
-import LinearGradient from 'react-native-linear-gradient';
 import CustomText from '../Components/CustomText';
 import {Icon} from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  SetUserRole,
-  setIsVerifed,
   setUserLogoutAuth,
 } from '../Store/slices/auth';
 import {setUserLogOut} from '../Store/slices/common';
-import navigationService from '../navigationService';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import CustomButton from '../Components/CustomButton';
-import {color} from 'native-base/lib/typescript/theme/styled-system';
 
 const Drawer = () => {
   const userData = useSelector(state => state.commonReducer.userData);
@@ -150,7 +143,7 @@ const Drawer = () => {
                   name={item?.iconName}
                   as={item?.iconType}
                   size={moderateScale(20, 0.3)}
-                  color={'#1F1D2B'}
+                  color={Color.black}
                   onPress={item?.onPress}
                 />
                 <CustomText isBold style={styles.text}>
@@ -171,7 +164,7 @@ const Drawer = () => {
               name={'logout'}
               as={AntDesign}
               style={styles.icon2}
-              color={'#1F1D2B'}
+              color={Color.black}
               size={moderateScale(20, 0.3)}
             />
 
@@ -215,7 +208,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: moderateScale(14, 0.6),
-    color: '#1F1D2B',
+    color: Color.black,
     marginLeft: moderateScale(10, 0.3),
   },
   imageContainer: {

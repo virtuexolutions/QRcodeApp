@@ -52,14 +52,14 @@ const HomeScreen = () => {
       id: 2,
       image: require('../Assets/Images/Qrscan2.png'),
       title: 'GENERATE QRCODE',
-      // onPress: () => navigation.navigate('SelectCategory'),
+      onPress: () => navigation.navigate('LinkUrlScreen'),
       // description: 'Create bespoke QR codes that are suited to your specific needs. Custom QR codes can help to empower your messaging.',
     },
     {
       id: 3,
-      image: require('../Assets/Images/Qrscan3.png'),
-      title: 'BARCODE SCANNER',
-      // onPress: () => navigation.navigate('GalleryView'),
+      image: require('../Assets/Images/photo.png'),
+      title: 'Qr Gallery',
+      onPress: () => navigation.navigate('GalleryView'),
       // description: 'View and explore your generated QR codes, seamlessly blending creativity with functionality',
     },
     // {
@@ -110,9 +110,9 @@ const HomeScreen = () => {
               }}
               style={styles.imagecontainer}>
               <CustomImage
-                // onPress={() => {
-                //   navigation.navigate('Profile');
-                // }}
+                onPress={() => {
+                  navigation.navigate('Profile');
+                }}
                 style={{
                   height: '100%',
                   width: '100%',
@@ -146,8 +146,8 @@ const HomeScreen = () => {
           </View>
 
           <TouchableOpacity
-            // onPress={() => {
-            //   navigation.toggleDrawer();}}
+            onPress={() => {
+              navigation.toggleDrawer();}}
             >
             <View
               style={styles.generalBtn}
@@ -183,7 +183,7 @@ const HomeScreen = () => {
           }}
         >
           <LinearGradient
-            colors={['#001D55', '#012497']}
+            colors={['#000000', '#000000']}
             start={{x: 0, y: 0.5}}
             end={{x: 1, y: 0.5}}
             style={styles.cardContainner}>
@@ -275,8 +275,7 @@ const HomeScreen = () => {
               color: Color.white,
               textAlign: 'center',
             }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-            suscipit gravida tellus, eu ullamcorper.
+          Easily scan, generate, and share QR codes to simplify your digital experience—quick, secure, and always ready when you are.
           </CustomText>
         </View>
       {/* </ScrollView> */}

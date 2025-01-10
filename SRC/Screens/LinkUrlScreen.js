@@ -24,57 +24,56 @@ import {useDispatch, useSelector} from 'react-redux';
 import Feather from 'react-native-vector-icons/Feather';
 import {apiHeader} from '../Utillity/utils';
 import ImagePickerModal from '../Components/ImagePickerModal';
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import AntDesign from 'react-native-vector-icons/AntDesign';
 // import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
-
-
+import { setTotalQRcodes } from '../Store/slices/common';
 
 const LinkUrlScreen = props => {
-  const fromImage = props?.route?.params?.fromGenerateimage;
-  console.log('🚀 ~ LinkUrlScreen ~ fromImage:', fromImage);
   const navigation = useNavigation();
+  const dispatch = useDispatch()
   const token = useSelector(state => state.authReducer.token);
-  const selectedItem = props?.route?.params?.item;
-  console.log('🚀 ~ LinkUrlScreen ~ selectedItem:', selectedItem);
+  const totalQrcodes = useSelector(state => state.commonReducer.totalQrcodes);
+
+  // const selectedItem = props?.route?.params?.item;
+  // console.log('🚀 ~ LinkUrlScreen ~ selectedItem:', selectedItem);
   const [imagePicker, setImagePicker] = useState(false);
   const [image, setImage] = useState({});
-  // console.log("🚀 ~ LinkUrlScreen ~ image:", image)
+ 
   const [link, setLink] = useState('');
   const [qrName, setQrName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [qrimage, setQrimage] = useState({});
   const [pdfData, setPdfData] = useState({});
-  // const data = link;
-
-  const isURL = text => {
+  
+ const isURL = text => {
     // Regular expression for a simple URL pattern
     const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
     return urlRegex.test(text);
   };
 
-  const sendTextAndUrl = async () => {
-    const url = 'auth/url';
-    const body = {
-      type: selectedItem?.title,
-      text: link,
-      qr_name :qrName,
-    };
-    setIsLoading(true);
-    const response = await Post(url, body, apiHeader(token));
-    setIsLoading(false);
-    if (response != undefined) {
-      console.log('🚀 ~ sendTextAndUrl ~ response:', response?.data);
-      navigation.navigate('GenerateQr', {
-        data: link,
-        item: selectedItem?.title,
-        qrName: qrName,
-      });
-      setLink('');
-      setQrName('');
-    }
-  };
+  // const sendTextAndUrl = async () => {
+  //   const url = 'auth/url';
+  //   const body = {
+  //     type: selectedItem?.title,
+  //     text: link,
+  //     qr_name: qrName,
+  //   };
+  //   setIsLoading(true);
+  //   const response = await Post(url, body, apiHeader(token));
+  //   setIsLoading(false);
+  //   if (response != undefined) {
+  //     console.log('🚀 ~ sendTextAndUrl ~ response:', response?.data);
+  //     navigation.navigate('GenerateQr', {
+  //       data: link,
+  //       item: selectedItem?.title,
+  //       qrName: qrName,
+  //     });
+  //     setLink('');
+  //     setQrName('');
+  //   }
+  // };
 
   const sendDocument = async response => {
     console.log('🚀 ~ sendDocument ~ response==========>:', response);
@@ -82,28 +81,16 @@ const LinkUrlScreen = props => {
 
     const url = 'auth/pdf';
     const body = {
-      type: selectedItem?.title,
+      type: 'image',
       file: {
-        name:
-          selectedItem?.title == 'image' || fromImage
-            ? response?.name
-            : response[0].name,
-        type:
-          selectedItem?.title == 'image' || fromImage
-            ? response?.type
-            : response[0].type,
-        uri:
-          selectedItem?.title == 'image' || fromImage
-            ? response?.uri
-            : response[0].uri,
+        name: response?.name,
+        type: response?.type,
+        uri: response?.uri,
       },
-      name:
-        selectedItem?.title == 'image' || fromImage
-          ? response?.name
-          : response[0].name,
-          qr_name :qrName,
+      name:response?.name,
+      qr_name: qrName,
     };
-    
+
     // return console.log('🚀 ~ sendDocument ~ body:', body);
     for (let key in body) {
       formData.append(key, body[key]);
@@ -114,31 +101,32 @@ const LinkUrlScreen = props => {
 
     if (resposne != undefined) {
       console.log('🚀 ~ sendDocument ~ resposne:', resposne?.data);
+      dispatch(setTotalQRcodes(parseInt(totalQrcodes)+1))
       // setQrimage(resposne?.data?.pdf_info);
       navigation.navigate('GenerateQr', {
         data: resposne?.data?.pdf_info,
-        item: selectedItem?.title,
+        item: 'image',
         qrName: qrName,
       });
 
       // console.log('sending document', resposne?.data);
     }
   };
-  const handleDocumentSelection = useCallback(async () => {
-    // dispatch(setInTheApp(true))
-    try {
-      const response = await DocumentPicker.pick({
-        presentationStyle: 'fullScreen',
-        type: [DocumentPicker.types.pdf, DocumentPicker.types.docx],
-      });
-      console.log('🚀 ~ handleDocumentSelection ~ response:', response);
-      // console.log('This is document Response==========================>>>>>>>>',response)
-      setPdfData(response);
-      // sendDocument(response);
-    } catch (err) {
-      console.warn(err);
-    }
-  }, []);
+  // const handleDocumentSelection = useCallback(async () => {
+  //   // dispatch(setInTheApp(true))
+  //   try {
+  //     const response = await DocumentPicker.pick({
+  //       presentationStyle: 'fullScreen',
+  //       type: [DocumentPicker.types.pdf, DocumentPicker.types.docx],
+  //     });
+  //     console.log('🚀 ~ handleDocumentSelection ~ response:', response);
+  //     // console.log('This is document Response==========================>>>>>>>>',response)
+  //     setPdfData(response);
+  //     // sendDocument(response);
+  //   } catch (err) {
+  //     console.warn(err);
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   if (Object.keys(image).length > 0) {
@@ -155,39 +143,37 @@ const LinkUrlScreen = props => {
           // backgroundColor:'red',
           width: windowWidth * 0.2,
         }}>
-       <TouchableOpacity
-           onPress={() => {
+        <TouchableOpacity
+          onPress={() => {
             navigation.goBack();
-          }}
-          >
-        <LinearGradient
-        
-        colors={Color.themeBgColor}
-        style={styles.customBtn}>
-          <Icon 
-           name='left'
-           as={AntDesign}
-           size={moderateScale(20,0.6)}
-           color={'white'}
-          />
-        </LinearGradient>
+          }}>
+          <LinearGradient colors={Color.themeBgColor} style={styles.customBtn}>
+            <Icon
+              name="left"
+              as={AntDesign}
+              size={moderateScale(20, 0.6)}
+              color={'white'}
+            />
+          </LinearGradient>
         </TouchableOpacity>
       </View>
       {/* </View> */}
 
       <View style={styles.inputContainer}>
-        {(selectedItem?.title == 'pdf' ||
-          selectedItem?.title == 'image' ||
-          fromImage == true) && (
+        {/* {(selectedItem?.title == 'pdf' ||
+          selectedItem?.title == 'image') && ( */}
           <TouchableOpacity
             onPress={() => {
-              selectedItem?.title == 'pdf'
-                ? handleDocumentSelection()
-                : setImagePicker(true);
+              // selectedItem?.title == 'pdf'
+              //   ? handleDocumentSelection()
+              //   : 
+                setImagePicker(true);
             }}
             style={styles.input2}>
-            {Object.keys(image).length > 0 ||
-            Object.keys(pdfData).length > 0 ? (
+            {Object.keys(image).length > 0 
+            // ||
+            // Object.keys(pdfData).length > 0
+             ? (
               <>
                 <CustomText
                   isBold
@@ -200,8 +186,10 @@ const LinkUrlScreen = props => {
                   {/* {selectedItem?.title == 'pdf'
                     ? qrimage?.filename
                     : selectedItem?.title == 'image' ||
-                      (fromImage == true && image?.name)} */}
-                  {pdfData[0]?.name || image?.name}
+                      )} */}
+                  {
+                  // pdfData[0]?.name || 
+                  image?.name}
                 </CustomText>
                 <Icon
                   name="close"
@@ -225,29 +213,33 @@ const LinkUrlScreen = props => {
                   color={Color.themeblue}
                   size={moderateScale(20, 0.3)}
                   onPress={() => {
-                    selectedItem?.title !== 'image'
-                      ? handleDocumentSelection()
-                      : setImagePicker(true);
+                    // selectedItem?.title !== 'image'
+                    //   ? handleDocumentSelection()
+                      // : 
+                      setImagePicker(true);
                   }}
                 />
                 {/* </TouchableOpacity> */}
                 <CustomText
                   onPress={() => {
-                    fromImage != true && selectedItem?.title != 'image'
-                      ? handleDocumentSelection()
-                      : setImagePicker(true);
+                    //selectedItem?.title != 'image'
+                    //   ? handleDocumentSelection()
+                    //   :
+                       setImagePicker(true);
                   }}
                   style={styles.text2}>
-                  {fromImage != true && selectedItem?.title != 'image'
+                  {
+                  /* {selectedItem?.title != 'image'
                     ? 'upload your  pdf file'
-                    : 'upload your image'}
+                    :  */}
+                    {'upload your image'}
                 </CustomText>
               </>
             )}
           </TouchableOpacity>
-        )}
+        {/* )} */}
 
-        {(selectedItem?.title == 'url' || selectedItem?.title == 'text') && (
+        {/* {(selectedItem?.title == 'url' || selectedItem?.title == 'text') && (
           <TextInputWithTitle
             rightIcon={false}
             placeholder={
@@ -267,7 +259,7 @@ const LinkUrlScreen = props => {
             color={Color.themeblue}
             placeholderColor={Color.themeblue}
           />
-        )}
+        )} */}
         <TextInputWithTitle
           // titleText={'Username'}
           placeholder={'Name Your Qr '}
@@ -284,46 +276,54 @@ const LinkUrlScreen = props => {
           placeholderColor={Color.themeblue}
         />
 
-        {(!link == '' ||
-          Object.keys(image).length > 0 ||
-          Object.keys(pdfData).length > 0) &&
+        {
+          Object.keys(image).length > 0 &&
+          // !link == '' ||
+          // Object.keys(pdfData).length > 0) &&
           qrName != '' && (
             <CustomButton
               onPress={() => {
-                if (link != '') {
-                  if (selectedItem?.title == 'url' && isURL(link)) {
-                    sendTextAndUrl();
-                    // navigation.navigate('GenerateQr', {
-                    //   data: link,
-                    //   item: selectedItem?.title,
-                    //   qrName: qrName,
-                    // });
-                  } else if (
-                    selectedItem?.title == 'url' &&
-                    isURL(link) == false
-                  ) {
-                    Platform.OS == 'android'
-                      ? ToastAndroid.show('Invalid URL', ToastAndroid.SHORT)
-                      : alert('Invalid URL');
-                  } else {
-                    sendTextAndUrl();
-                    // navigation.navigate('GenerateQr', {
-                    //   data: link,
-                    //   item: selectedItem?.title,
-                    //   qrName: qrName,
-                    // });
-                    // setLink('');
-                    // setQrName('');
-                  }
-                } else {
-                  if (selectedItem?.title == 'image') {
-                    sendDocument(image);
-                  } else {
-                    sendDocument(pdfData);
-                  }
-                }
+                sendDocument(image);
+                // if (link != '') {
+                //   if (selectedItem?.title == 'url' && isURL(link)) {
+                //     sendTextAndUrl();
+                //     // navigation.navigate('GenerateQr', {
+                //     //   data: link,
+                //     //   item: selectedItem?.title,
+                //     //   qrName: qrName,
+                //     // });
+                //   } else if (
+                //     selectedItem?.title == 'url' &&
+                //     isURL(link) == false
+                //   ) {
+                //     Platform.OS == 'android'
+                //       ? ToastAndroid.show('Invalid URL', ToastAndroid.SHORT)
+                //       : alert('Invalid URL');
+                //   } else {
+                //     sendTextAndUrl();
+                //     // navigation.navigate('GenerateQr', {
+                //     //   data: link,
+                //     //   item: selectedItem?.title,
+                //     //   qrName: qrName,
+                //     // });
+                //     // setLink('');
+                //     // setQrName('');
+                //   }
+                // } else {
+                //   if (selectedItem?.title == 'image') {
+                //     sendDocument(image);
+                //   } else {
+                //     sendDocument(pdfData);
+                //   }
+                // }
               }}
-              text={ isLoading ? <ActivityIndicator size={'small'} color={'white'}/> :'generate  code'}
+              text={
+                isLoading ? (
+                  <ActivityIndicator size={'small'} color={'white'} />
+                ) : (
+                  'generate  code'
+                )
+              }
               fontSize={moderateScale(12, 0.3)}
               textColor={Color.white}
               borderRadius={moderateScale(30, 0.3)}
@@ -404,14 +404,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 1,
   },
-  customBtn : { 
-    width : windowWidth * 0.13,
-    height : windowWidth * 0.13,
-    borderRadius : windowWidth * 0.13 /2,
-    justifyContent : 'center',
-    alignItems : 'center',
+  customBtn: {
+    width: windowWidth * 0.13,
+    height: windowWidth * 0.13,
+    borderRadius: (windowWidth * 0.13) / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
     // backgroundColor : Color.white,
-    marginHorizontal :moderateScale(15,.3)
-    
+    marginHorizontal: moderateScale(15, 0.3),
   },
 });

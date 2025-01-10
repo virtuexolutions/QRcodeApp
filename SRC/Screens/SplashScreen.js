@@ -11,12 +11,11 @@ const SplashScreen = () => {
     <SafeAreaView style={styles.container}>
       <View
         style={{
-          height: windowHeight*0.55,
-          width: windowWidth * 0.99, // flex: 1,
-         
+          height: windowHeight * 0.55,
+          width: windowWidth * 0.87, // flex: 1,
         }}>
         <FastImage
-          source={require('../Assets/Images/gif.gif')}
+          source={require('../Assets/Images/ScanV2.gif')}
           style={{width: '100%', height: '100%'}}
           animated
         />
@@ -31,8 +30,8 @@ const styles = ScaledSheet.create({
     width: windowWidth,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Color.themesplashblack,
-    // backgroundColor : 
+    // backgroundColor: Color.themesplashblack,
+    backgroundColor: 'black',
   },
   bottomImage: {
     width: windowWidth * 0.4,
