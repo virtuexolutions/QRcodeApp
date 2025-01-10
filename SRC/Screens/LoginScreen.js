@@ -12,8 +12,6 @@ import Zocial from 'react-native-vector-icons/Zocial';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   ActivityIndicator,
-  TouchableOpacity,
-  ImageBackground,
   Platform,
   ScrollView,
   ToastAndroid,
@@ -23,32 +21,21 @@ import {
 import CustomText from '../Components/CustomText';
 import CustomButton from '../Components/CustomButton';
 import TextInputWithTitle from '../Components/TextInputWithTitle';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import navigationService from '../navigationService';
 import {useDispatch} from 'react-redux';
-// import CardContainer from '../Components/CardContainer';
 import {SetUserRole, setUserToken} from '../Store/slices/auth';
 import {Post} from '../Axios/AxiosInterceptorFunction';
-import Fontisto from 'react-native-vector-icons/Fontisto';
-import {setUserData} from '../Store/slices/common';
-import DropDownSingleSelect from '../Components/DropDownSingleSelect';
-// import {useNavigation} from '@react-navigation/native';
-import {Icon} from 'native-base';
+import {setTotalQRcodes, setUserData} from '../Store/slices/common';
 import Entypo from 'react-native-vector-icons/Entypo';
-import ImagePickerModal from '../Components/ImagePickerModal';
+import navigationService from '../navigationService';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = props => {
-  const [username, setUserName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [imagePicker, setImagePicker] = useState(false);
-  const [image, setImage] = useState({});
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
-  const dispatch = useDispatch();
 
   const LoginUser = async () => {
     if (email == '' && password == '') {
@@ -78,6 +65,7 @@ const LoginScreen = props => {
       console.log('🚀 ~ LoginUser ~ response:', response?.data?.user_info);
       dispatch(setUserData(response?.data?.user_info));
       dispatch(setUserToken({token: response?.data?.token}));
+      dispatch(setTotalQRcodes(response?.data?.user_info?.document_image_count))
     }
   };
 
