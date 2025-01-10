@@ -1,4 +1,13 @@
-import {StyleSheet, Text, View, Image, ActivityIndicator, Platform, ToastAndroid, Alert} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ActivityIndicator,
+  Platform,
+  ToastAndroid,
+  Alert,
+} from 'react-native';
 import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import {windowHeight, windowWidth} from '../Utillity/utils';
@@ -77,9 +86,9 @@ const VerificationModal = ({
           setIsLoading(false);
           // this.setState({ busy: false, imageSaved: true  })
           // ToastAndroid.show('Saved to gallery !!', ToastAndroid.SHORT)
-          Platform.OS == 'android' ?
-          ToastAndroid.show('QR COde saved to gallery' , ToastAndroid.SHORT) :
-          Alert.alert('QR COde saved to gallery');
+          Platform.OS == 'android'
+            ? ToastAndroid.show('QR COde saved to gallery', ToastAndroid.SHORT)
+            : Alert.alert('QR COde saved to gallery');
           navigation.navigate('HomeScreen');
         });
     });
@@ -124,7 +133,13 @@ const VerificationModal = ({
                   width: '100%',
                 }}
                 // source={require('../Assets/Images/dummyUser1.png')}
-                source={fromGallery ? {uri: content} : {uri: data?.path}}
+                source={
+                  data
+                    ? {uri: data?.path}
+                    : fromGallery
+                    ? {uri: content}
+                    : {uri: data?.path}
+                }
               />
             </View>
           )
@@ -166,7 +181,7 @@ const VerificationModal = ({
               },
             ]}
             isBold>
-            {type}
+            {type || data?.type}
           </CustomText>
         </View>
         {[null, undefined, ''].includes(btnText) && (
@@ -184,7 +199,7 @@ const VerificationModal = ({
                 },
               ]}
               isBold>
-              {fromGallery ? name : qrName}
+              {data?.qr_name ? data?.qr_name : fromGallery ? name : qrName}
             </CustomText>
           </View>
         )}

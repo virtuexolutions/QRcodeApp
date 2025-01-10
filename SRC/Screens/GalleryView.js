@@ -40,6 +40,8 @@ const GalleryView = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [imageUrls, setImageUrls] = useState([]);
+  const [selectedData, setSelectedData] = useState(null);
+  console.log('🚀 ~ GalleryView ~ selectedData:', selectedData);
 
   function showModalAndSetIndex(index) {
     setIsVisible(true);
@@ -260,12 +262,12 @@ const GalleryView = () => {
                 data={
                   // selectedItem == 'image'
                   //   ?
-                     galleryImages?.image
-                    // : selectedItem == 'text'
-                    // ? galleryImages?.text
-                    // : selectedItem == 'pdf'
-                    // ? galleryImages?.pdf
-                    // : galleryImages?.url
+                  galleryImages?.image
+                  // : selectedItem == 'text'
+                  // ? galleryImages?.text
+                  // : selectedItem == 'pdf'
+                  // ? galleryImages?.pdf
+                  // : galleryImages?.url
                 }
                 keyExtractor={item => item.id}
                 contentContainerStyle={{
@@ -287,6 +289,7 @@ const GalleryView = () => {
                             }
                           }
                           onPress={() => {
+                            setSelectedData(item);
                             selectedImage?.length == 0
                               ? showModalAndSetIndex(index)
                               : selectedImage.some(
@@ -396,6 +399,8 @@ const GalleryView = () => {
                   ? galleryImages?.pdf
                   : galleryImages?.url
               }
+              selectedData={selectedData}
+              setSelectedData={setSelectedData}
               onPressInfo={() => {
                 setModalVisible(true), setIsVisible(false);
               }}
@@ -406,6 +411,7 @@ const GalleryView = () => {
           setModalVisible={setModalVisible}
           modalVisible={modalVisible}
           fromGallery={true}
+          data={selectedData}
           galleryImages={galleryImages}
           content={
             selectedImage[0]?.type == 'image'

@@ -56,13 +56,13 @@ const HomeScreen = () => {
       id: 2,
       image: require('../Assets/Images/Qrscan2.png'),
       title: 'GENERATE QRCODE',
-      onPress: () => navigation.navigate('LinkUrlScreen'),
+      onPress: () => navigation.navigate('SelectCategory'),
       // description: 'Create bespoke QR codes that are suited to your specific needs. Custom QR codes can help to empower your messaging.',
     },
     {
       id: 3,
-      image: require('../Assets/Images/photo.png'),
-      title: 'Qr Gallery',
+      image: require('../Assets/Images/Qrscan3.png'),
+      title: 'QR Code Gallery',
       onPress: () => navigation.navigate('GalleryView'),
       // description: 'View and explore your generated QR codes, seamlessly blending creativity with functionality',
     },
@@ -105,63 +105,27 @@ const HomeScreen = () => {
           // justifyContent: 'center',
           // alignItems: 'center',
         }}> */}
-        <View style={styles.container}>
-          <View style={styles.mainView}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Profile');
-              }}
-              style={styles.imagecontainer}>
-              <CustomImage
-                onPress={() => {
-                  navigation.navigate('Profile');
-                }}
-                style={{
-                  height: '100%',
-                  width: '100%',
-                }}
-                source={
-                  userData?.photo
-                    ? {uri: userData?.photo}
-                    : require('../Assets/Images/user.png')
-                }
-              />
-            </TouchableOpacity>
-
-            <View
-              style={{
-                paddingHorizontal: moderateScale(15, 0.6),
-              }}>
-              <CustomText
-                style={[
-                  styles.text1,
-                  {
-                    fontSize: moderateScale(18, 0.6),
-                    color: Color.white,
-                    fontWeight: 'bold',
-                    // backgroundColor:'red',
-                    width: windowWidth * 0.35,
-                  },
-                ]}>
-                {userData?.first_name}
-              </CustomText>
-            </View>
-          </View>
-
+      <View style={styles.container}>
+        <View style={styles.mainView}>
           <TouchableOpacity
             onPress={() => {
-              navigation.toggleDrawer();}}
-            >
-            <View
-              style={styles.generalBtn}
-              >
-              <Icon
-                name="menu"
-                as={Entypo}
-                size={moderateScale(20, 0.6)}
-                color={Color.white}
-              />
-            </View>
+              navigation.navigate('Profile');
+            }}
+            style={styles.imagecontainer}>
+            <CustomImage
+              // onPress={() => {
+              //   navigation.navigate('Profile');
+              // }}
+              style={{
+                height: '100%',
+                width: '100%',
+              }}
+              source={
+                userData?.photo
+                  ? {uri: userData?.photo}
+                  : require('../Assets/Images/user.png')
+              }
+            />
           </TouchableOpacity>
 
           <View
@@ -184,7 +148,7 @@ const HomeScreen = () => {
           </View>
         </View>
 
-        {/* <TouchableOpacity
+        <TouchableOpacity
         // onPress={() => {
         //   navigation.toggleDrawer();}}
         >
@@ -197,7 +161,7 @@ const HomeScreen = () => {
             />
           </View>
         </TouchableOpacity>
-      </View> */}
+      </View>
       {/* <View
           style={{
             paddingVertical: moderateScale(20, 0.6),
@@ -220,7 +184,7 @@ const HomeScreen = () => {
           }}
         >
           <LinearGradient
-            colors={['#000000', '#000000']}
+            colors={['#001D55', '#012497']}
             start={{x: 0, y: 0.5}}
             end={{x: 1, y: 0.5}}
             style={styles.cardContainner}>
@@ -272,14 +236,27 @@ const HomeScreen = () => {
             // paddingVertical:moderateScale(40,0.6)
             // justifyContent:'center'
           }}>
-          <CustomText
-            style={{
-              fontSize: moderateScale(11, 0.6),
-              color: Color.white,
-              textAlign: 'center',
-            }}>
-          Easily scan, generate, and share QR codes to simplify your digital experience—quick, secure, and always ready when you are.
-          </CustomText>
+          <FlatList
+            showsVerticalScrollIndicator={true}
+            nestedScrollEnabled={true}
+            scrollEnabled={true}
+            data={dataArray}
+            keyExtractor={item => item.id}
+            numColumns={1}
+            contentContainerStyle={{
+              gap: moderateScale(15, 0.6),
+              // marginHorizontal: moderateScale(10, 0.3),
+              // marginVertical: moderateScale(10, 0.3),
+              padding: moderateScale(20, 0.6),
+              // paddingHorizontal:moderateScale(10,0.6),
+              // marginLeft:moderateScale(15,0.6),
+              // paddingBottom: moderateScale(50, 0.6),
+              // backgroundColor:'green'
+            }}
+            renderItem={({item, index}) => {
+              return <CardComponent item={item} />;
+            }}
+          />
         </View>
 
         <View style={styles.scanImageStyle}>

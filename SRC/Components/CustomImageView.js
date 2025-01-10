@@ -31,6 +31,8 @@ const CustomImageView = ({
   setIsVisible,
   selectedItem,
   onPressInfo,
+  setSelectedData, 
+  selectedData
 }) => {
   console.log('===========>', galleryImages);
   const flatListRef = useRef(null);
@@ -174,22 +176,12 @@ const CustomImageView = ({
                     color: 'black',
                     paddingVertical: moderateScale(5, 0.6),
                   }}
-                  onPress={onPressInfo}
-                  // onPress={() => {
-                  //   // setIsVisible(false);
-                  //   // navigation.navigate('PrintQr',{
-                  //   //   qrImage: selectedImage
-                  //   // })
-                  //   // printImage();
-                  //   // setIsMenuVisible(false);
-                  // }}
-                >
+                  onPress={onPressInfo}>
                   {'Info'}
                 </CustomText>
               </TouchableOpacity>
             )}
             {/* </Modal> */}
-
             {/* <CustomButton
               iconStyle={{
                 width: windowWidth * 0.09,
