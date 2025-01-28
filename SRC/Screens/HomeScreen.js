@@ -56,7 +56,7 @@ const HomeScreen = () => {
       id: 2,
       image: require('../Assets/Images/Qrscan2.png'),
       title: 'GENERATE QRCODE',
-      onPress: () => navigation.navigate('SelectCategory'),
+      onPress: () => navigation.navigate('LinkUrlScreen'),
       // description: 'Create bespoke QR codes that are suited to your specific needs. Custom QR codes can help to empower your messaging.',
     },
     {
