@@ -149,8 +149,8 @@ const HomeScreen = () => {
         </View>
 
         <TouchableOpacity
-        // onPress={() => {
-        //   navigation.toggleDrawer();}}
+        onPress={() => {
+          navigation.toggleDrawer();}}
         >
           <View style={styles.generalBtn}>
             <Icon

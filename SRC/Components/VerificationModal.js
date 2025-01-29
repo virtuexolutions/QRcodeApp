@@ -76,7 +76,7 @@ const VerificationModal = ({
         'base64',
       )
         .then(success => {
-          console.log(success);
+          console.log('---------------- succes',success);
           return CameraRoll.saveToCameraRoll(
             RNFS.CachesDirectoryPath + `/${qrName}.png`,
             'photo',
